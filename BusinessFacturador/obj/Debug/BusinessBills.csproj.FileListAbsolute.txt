@@ -1,0 +1,3 @@
+C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessBills\HostelSystem\bin\Debug\HostelSystem.exe.config
+C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessBills\HostelSystem\obj\Debug\HostelSystem.exe
+C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessBills\HostelSystem\obj\Debug\HostelSystem.pdb
