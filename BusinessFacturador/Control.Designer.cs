@@ -41,10 +41,20 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.salirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nuevaFacturaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nuevaNominaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarFacturasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.facturasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.facturasToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.conceptosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nominasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.emisionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.empleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nuevaFacturaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.nuevaNominaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.salirToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.acercaDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,6 +111,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.archivoToolStripMenuItem,
             this.nuevaFacturaToolStripMenuItem,
+            this.nuevaNominaToolStripMenuItem,
             this.gestionarFacturasToolStripMenuItem,
             this.usuariosToolStripMenuItem,
             this.salirToolStripMenuItem1,
@@ -192,41 +203,117 @@
             this.nuevaFacturaToolStripMenuItem.Text = "Nueva factura";
             this.nuevaFacturaToolStripMenuItem.Click += new System.EventHandler(this.nuevaFacturaToolStripMenuItem_Click);
             // 
+            // nuevaNominaToolStripMenuItem
+            // 
+            this.nuevaNominaToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.nuevaNominaToolStripMenuItem.Image = global::HostelSystem.Properties.Resources._1480115178_billing;
+            this.nuevaNominaToolStripMenuItem.Name = "nuevaNominaToolStripMenuItem";
+            this.nuevaNominaToolStripMenuItem.Size = new System.Drawing.Size(140, 25);
+            this.nuevaNominaToolStripMenuItem.Text = "Nueva nomina";
+            this.nuevaNominaToolStripMenuItem.Click += new System.EventHandler(this.nuevaNominaToolStripMenuItem_Click);
+            // 
             // gestionarFacturasToolStripMenuItem
             // 
             this.gestionarFacturasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gestionarToolStripMenuItem,
-            this.clientesToolStripMenuItem,
-            this.conceptosToolStripMenuItem});
+            this.nuevaFacturaToolStripMenuItem1,
+            this.nuevaNominaToolStripMenuItem1});
             this.gestionarFacturasToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.gestionarFacturasToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.File;
             this.gestionarFacturasToolStripMenuItem.Name = "gestionarFacturasToolStripMenuItem";
-            this.gestionarFacturasToolStripMenuItem.Size = new System.Drawing.Size(95, 25);
-            this.gestionarFacturasToolStripMenuItem.Text = "Facturas";
+            this.gestionarFacturasToolStripMenuItem.Size = new System.Drawing.Size(66, 25);
+            this.gestionarFacturasToolStripMenuItem.Text = "Cfdi";
             // 
             // gestionarToolStripMenuItem
             // 
+            this.gestionarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.facturasToolStripMenuItem,
+            this.nominasToolStripMenuItem});
             this.gestionarToolStripMenuItem.Image = global::HostelSystem.Properties.Resources._1479773470_self1;
             this.gestionarToolStripMenuItem.Name = "gestionarToolStripMenuItem";
-            this.gestionarToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
+            this.gestionarToolStripMenuItem.Size = new System.Drawing.Size(182, 26);
             this.gestionarToolStripMenuItem.Text = "Gestionar";
-            this.gestionarToolStripMenuItem.Click += new System.EventHandler(this.gestionarToolStripMenuItem_Click);
+            // 
+            // facturasToolStripMenuItem
+            // 
+            this.facturasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.facturasToolStripMenuItem1,
+            this.toolStripSeparator5,
+            this.clientesToolStripMenuItem,
+            this.conceptosToolStripMenuItem});
+            this.facturasToolStripMenuItem.Name = "facturasToolStripMenuItem";
+            this.facturasToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.facturasToolStripMenuItem.Text = "Facturas";
+            // 
+            // facturasToolStripMenuItem1
+            // 
+            this.facturasToolStripMenuItem1.Name = "facturasToolStripMenuItem1";
+            this.facturasToolStripMenuItem1.Size = new System.Drawing.Size(153, 26);
+            this.facturasToolStripMenuItem1.Text = "Emisiones";
+            this.facturasToolStripMenuItem1.Click += new System.EventHandler(this.facturasToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(150, 6);
             // 
             // clientesToolStripMenuItem
             // 
-            this.clientesToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.Users;
             this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
             this.clientesToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
             this.clientesToolStripMenuItem.Text = "Clientes";
-            this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
+            this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click_1);
             // 
             // conceptosToolStripMenuItem
             // 
-            this.conceptosToolStripMenuItem.Image = global::HostelSystem.Properties.Resources._1480115178_billing;
             this.conceptosToolStripMenuItem.Name = "conceptosToolStripMenuItem";
             this.conceptosToolStripMenuItem.Size = new System.Drawing.Size(153, 26);
             this.conceptosToolStripMenuItem.Text = "Conceptos";
-            this.conceptosToolStripMenuItem.Click += new System.EventHandler(this.conceptosToolStripMenuItem_Click);
+            this.conceptosToolStripMenuItem.Click += new System.EventHandler(this.conceptosToolStripMenuItem_Click_1);
+            // 
+            // nominasToolStripMenuItem
+            // 
+            this.nominasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.emisionesToolStripMenuItem,
+            this.toolStripSeparator7,
+            this.empleadosToolStripMenuItem});
+            this.nominasToolStripMenuItem.Name = "nominasToolStripMenuItem";
+            this.nominasToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.nominasToolStripMenuItem.Text = "Nominas";
+            // 
+            // emisionesToolStripMenuItem
+            // 
+            this.emisionesToolStripMenuItem.Name = "emisionesToolStripMenuItem";
+            this.emisionesToolStripMenuItem.Size = new System.Drawing.Size(156, 26);
+            this.emisionesToolStripMenuItem.Text = "Emisiones";
+            this.emisionesToolStripMenuItem.Click += new System.EventHandler(this.emisionesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(153, 6);
+            // 
+            // empleadosToolStripMenuItem
+            // 
+            this.empleadosToolStripMenuItem.Name = "empleadosToolStripMenuItem";
+            this.empleadosToolStripMenuItem.Size = new System.Drawing.Size(156, 26);
+            this.empleadosToolStripMenuItem.Text = "Empleados";
+            this.empleadosToolStripMenuItem.Click += new System.EventHandler(this.empleadosToolStripMenuItem_Click);
+            // 
+            // nuevaFacturaToolStripMenuItem1
+            // 
+            this.nuevaFacturaToolStripMenuItem1.Image = global::HostelSystem.Properties.Resources.Activate;
+            this.nuevaFacturaToolStripMenuItem1.Name = "nuevaFacturaToolStripMenuItem1";
+            this.nuevaFacturaToolStripMenuItem1.Size = new System.Drawing.Size(182, 26);
+            this.nuevaFacturaToolStripMenuItem1.Text = "Nueva factura";
+            this.nuevaFacturaToolStripMenuItem1.Click += new System.EventHandler(this.nuevaFacturaToolStripMenuItem1_Click);
+            // 
+            // nuevaNominaToolStripMenuItem1
+            // 
+            this.nuevaNominaToolStripMenuItem1.Image = global::HostelSystem.Properties.Resources._1480115178_billing;
+            this.nuevaNominaToolStripMenuItem1.Name = "nuevaNominaToolStripMenuItem1";
+            this.nuevaNominaToolStripMenuItem1.Size = new System.Drawing.Size(182, 26);
+            this.nuevaNominaToolStripMenuItem1.Text = "Nueva nomina";
             // 
             // usuariosToolStripMenuItem
             // 
@@ -613,10 +700,20 @@
         private System.Windows.Forms.ToolStripMenuItem gestionarFacturasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem salirToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem gestionarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem conceptosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bloquearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem abrirDirecrotioToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem nuevaNominaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem facturasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem facturasToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem conceptosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nominasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem emisionesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem empleadosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nuevaFacturaToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem nuevaNominaToolStripMenuItem1;
     }
 }

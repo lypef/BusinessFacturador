@@ -71,6 +71,36 @@ namespace HostelSystem
             explocalidad.Text = datos.ReturnDatos("explocalidad", 1);
             expnoext.Text = datos.ReturnDatos("expnoext", 1);
             expcolonia.Text = datos.ReturnDatos("expcolonia", 1);
+
+            //Form de inicio
+            if (datos.ReturnDatos("inifactura", 1).ToLower() == "true")
+            {
+                inifactura.Checked = true;
+            }
+            else if (datos.ReturnDatos("ininomina", 1).ToLower() == "true")
+            {
+                ininomina.Checked = true;
+            }
+            else if (datos.ReturnDatos("inifaemisiones", 1).ToLower() == "true")
+            {
+                inifaemisiones.Checked = true;
+            }
+            else if (datos.ReturnDatos("inifaclientes", 1).ToLower() == "true")
+            {
+                inifaclientes.Checked = true;
+            }
+            else if (datos.ReturnDatos("inifaconceptos", 1).ToLower() == "true")
+            {
+                inifaconceptos.Checked = true;
+            }
+            else if (datos.ReturnDatos("ininoemision", 1).ToLower() == "true")
+            {
+                ininoemision.Checked = true;
+            }
+            else if (datos.ReturnDatos("ininoempleados", 1).ToLower() == "true")
+            {
+                ininoempleados.Checked = true;
+            }
         }
 
         private void OpnDialog(TextBox Txt)
@@ -183,7 +213,8 @@ namespace HostelSystem
             {
                 
                 coneccion.cnn.Close();
-                string ivainclutmp = "", demo = "";
+
+                string ivainclutmp = "", demo = "", inifacturatmp = "", ininominatmp = "", inifaemisionestmp = "", inifaclientestmp = "", inifaconceptostmp = "", ininoemisiontmp = "", ininoempleadostmp = "";
 
                 if (IvaInclu.Checked == true)
                 {
@@ -201,7 +232,71 @@ namespace HostelSystem
                 {
                     demo = "0";
                 }
-                coneccion.sql = "update configuracion set correo = '"+ TxtMail.Text + "', password = '" + Txtpass.Text + "', port = '" + TxtPort.Text + "', host = '" + TxtHost.Text + "', mailr = '" + TxtMailR.Text + "', urlsavefact = '" + UrlFacAll.Text + "', urllogofact = '" + UrlLogoFact.Text + "', urlcer = '" + Txtcer.Text + "', urlkey = '" + Txtkey.Text + "', passfact = '" + TxtPassFact.Text + "', ivainclu  = '" + ivainclutmp + "', lexpedicion = '" + lexpedicion.Text + "', regimenfiscal = '" + regimenfiscal.Text + "', conrfc = '" + conrfc.Text + "', connombre = '" + connombre.Text + "', dfcalle = '" + dfcalle.Text + "', dfnoext = '" + dfnoext.Text + "', dfcolonia = '" + dfcolonia.Text + "', dflocalidad = '" + dflocalidad.Text + "', dfmunicipio = '" + dfmunicipio.Text + "', dfestado = '" + dfestado.Text + "', dfpais = '" + dfpais.Text + "', dfcp = '" + dfcp.Text + "', expcalle = '" + expcalle.Text + "', expmunicipio = '" + expmunicipio.Text + "', expestado = '" + expestado.Text + "', expais = '" + expais.Text + "', expcp = '" + expcp.Text + "', explocalidad = '" + explocalidad.Text + "', expnoext = '" + expnoext.Text + "', expcolonia = '" + expcolonia.Text +"', demo = '"+ demo +"'  where id = '1' ";
+
+                // inicio
+                if (inifactura.Checked == true)
+                {
+                    inifacturatmp = "1";
+                }else
+                {
+                    inifacturatmp = "0";
+                }
+
+                if (ininomina.Checked == true)
+                {
+                    ininominatmp = "1";
+                }
+                else
+                {
+                    ininominatmp = "0";
+                }
+
+                if (inifaemisiones.Checked == true)
+                {
+                    inifaemisionestmp = "1";
+                }
+                else
+                {
+                    inifaemisionestmp = "0";
+                }
+
+                if (inifaclientes.Checked == true)
+                {
+                    inifaclientestmp = "1";
+                }
+                else
+                {
+                    inifaclientestmp = "0";
+                }
+
+                if (inifaconceptos.Checked == true)
+                {
+                    inifaconceptostmp = "1";
+                }
+                else
+                {
+                    inifaconceptostmp = "0";
+                }
+
+                if (ininoemision.Checked == true)
+                {
+                    ininoemisiontmp = "1";
+                }
+                else
+                {
+                    ininoemisiontmp = "0";
+                }
+
+                if (ininoempleados.Checked == true)
+                {
+                    ininoempleadostmp = "1";
+                }
+                else
+                {
+                    ininoempleadostmp = "0";
+                }
+
+                coneccion.sql = "update configuracion set correo = '"+ TxtMail.Text + "', password = '" + Txtpass.Text + "', port = '" + TxtPort.Text + "', host = '" + TxtHost.Text + "', mailr = '" + TxtMailR.Text + "', urlsavefact = '" + UrlFacAll.Text + "', urllogofact = '" + UrlLogoFact.Text + "', urlcer = '" + Txtcer.Text + "', urlkey = '" + Txtkey.Text + "', passfact = '" + TxtPassFact.Text + "', ivainclu  = '" + ivainclutmp + "', lexpedicion = '" + lexpedicion.Text + "', regimenfiscal = '" + regimenfiscal.Text + "', conrfc = '" + conrfc.Text + "', connombre = '" + connombre.Text + "', dfcalle = '" + dfcalle.Text + "', dfnoext = '" + dfnoext.Text + "', dfcolonia = '" + dfcolonia.Text + "', dflocalidad = '" + dflocalidad.Text + "', dfmunicipio = '" + dfmunicipio.Text + "', dfestado = '" + dfestado.Text + "', dfpais = '" + dfpais.Text + "', dfcp = '" + dfcp.Text + "', expcalle = '" + expcalle.Text + "', expmunicipio = '" + expmunicipio.Text + "', expestado = '" + expestado.Text + "', expais = '" + expais.Text + "', expcp = '" + expcp.Text + "', explocalidad = '" + explocalidad.Text + "', expnoext = '" + expnoext.Text + "', expcolonia = '" + expcolonia.Text +"', demo = '"+ demo + "', inifactura = '"+ inifacturatmp + "', ininomina = '" + ininominatmp + "', inifaemisiones = '" + inifaemisionestmp + "', inifaclientes = '" + inifaclientestmp + "', inifaconceptos = '" + inifaconceptostmp + "', ininoemision = '" + ininoemisiontmp + "', ininoempleados = '" + ininoempleadostmp + "'  where id = '1' ";
                 coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                 coneccion.cnn.Open();
                 coneccion.comandosql.ExecuteReader();

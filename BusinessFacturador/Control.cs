@@ -26,7 +26,49 @@ namespace HostelSystem
             nivel = level;
             usersystem = usersystemtmp;
             this.Text = "BUSINESS FACTURADOR - CONTRIBUYENTE: " + datos.ReturnDatos("conrfc", 1) + ", " + datos.ReturnDatos("connombre", 1);
-            ShowFacturas();
+            ShowFormIni();
+        }
+
+        private void ShowFormIni()
+        {
+            if (datos.ReturnDatos("inifactura", 1).ToLower() == "true")
+            {
+                ShowNewFacture();
+            }
+            else if (datos.ReturnDatos("ininomina", 1).ToLower() == "true")
+            {
+                ShowNewNomina();
+            }
+            else if (datos.ReturnDatos("inifaemisiones", 1).ToLower() == "true")
+            {
+                ShowFacturas();
+            }
+            else if (datos.ReturnDatos("inifaclientes", 1).ToLower() == "true")
+            {
+                ShowClientes();
+            }
+            else if (datos.ReturnDatos("inifaconceptos", 1).ToLower() == "true")
+            {
+                ShowClientes();
+            }
+            else if (datos.ReturnDatos("ininoemision", 1).ToLower() == "true")
+            {
+                ShowNominaEmisiones();
+            }
+            else if (datos.ReturnDatos("ininoempleados", 1).ToLower() == "true")
+            {
+                ShowNominaEmpleaodos();
+            }
+        }
+
+        private void ShowNominaEmpleaodos()
+        {
+            MessageBox.Show("modulo en dev");
+        }
+
+        private void ShowNominaEmisiones()
+        {
+            MessageBox.Show("modulo en dev");
         }
 
         private void acercaDeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -892,11 +934,6 @@ namespace HostelSystem
             form.Show();
         }
 
-        private void gestionarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowFacturas();
-        }
-
         private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowClientes();
@@ -979,6 +1016,46 @@ namespace HostelSystem
         private void abrirDirecrotioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(datos.ReturnDatos("urlsavefact", 1));
+        }
+
+        private void facturasToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ShowFacturas();
+        }
+
+        private void clientesToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ShowClientes();
+        }
+
+        private void conceptosToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ShowConceptos();
+        }
+
+        private void nuevaFacturaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ShowNewFacture();
+        }
+
+        private void nuevaNominaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowNewNomina();
+        }
+
+        private void ShowNewNomina()
+        {
+            MessageBox.Show("modulo en dev");
+        }
+
+        private void emisionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowNominaEmisiones();
+        }
+
+        private void empleadosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowNominaEmpleaodos();
         }
     }
 }

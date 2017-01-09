@@ -88,7 +88,6 @@ C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFa
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Debug\Microsoft.SqlServer.Types.dll
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Debug\Multifacturas.dll
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Debug\MySql.Data.dll
-C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Debug\BusinessFacturador.csprojResolveAssemblyReference.cache
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Debug\HostelSystem.clientes.resources
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Debug\HostelSystem.conceptos.resources
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Debug\HostelSystem.Configuracion.resources

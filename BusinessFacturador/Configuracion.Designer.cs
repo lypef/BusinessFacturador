@@ -102,11 +102,22 @@
             this.label25 = new System.Windows.Forms.Label();
             this.UrlLogoFact = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.inifactura = new System.Windows.Forms.RadioButton();
+            this.ininomina = new System.Windows.Forms.RadioButton();
+            this.inifaemisiones = new System.Windows.Forms.RadioButton();
+            this.inifaclientes = new System.Windows.Forms.RadioButton();
+            this.inifaconceptos = new System.Windows.Forms.RadioButton();
+            this.ininoemision = new System.Windows.Forms.RadioButton();
+            this.ininoempleados = new System.Windows.Forms.RadioButton();
             this.tabPage5.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -821,11 +832,116 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(7, 8);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(389, 404);
             this.tabControl1.TabIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(381, 378);
+            this.tabPage1.TabIndex = 7;
+            this.tabPage1.Text = "Inicio";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.ininoempleados);
+            this.groupBox1.Controls.Add(this.ininoemision);
+            this.groupBox1.Controls.Add(this.inifaconceptos);
+            this.groupBox1.Controls.Add(this.inifaclientes);
+            this.groupBox1.Controls.Add(this.inifaemisiones);
+            this.groupBox1.Controls.Add(this.ininomina);
+            this.groupBox1.Controls.Add(this.inifactura);
+            this.groupBox1.Location = new System.Drawing.Point(14, 9);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(352, 360);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "SELECCIONE EL MODULO DE INICIO";
+            // 
+            // inifactura
+            // 
+            this.inifactura.AutoSize = true;
+            this.inifactura.Location = new System.Drawing.Point(18, 32);
+            this.inifactura.Name = "inifactura";
+            this.inifactura.Size = new System.Drawing.Size(93, 17);
+            this.inifactura.TabIndex = 0;
+            this.inifactura.TabStop = true;
+            this.inifactura.Text = "Nueva factura";
+            this.inifactura.UseVisualStyleBackColor = true;
+            // 
+            // ininomina
+            // 
+            this.ininomina.AutoSize = true;
+            this.ininomina.Location = new System.Drawing.Point(18, 55);
+            this.ininomina.Name = "ininomina";
+            this.ininomina.Size = new System.Drawing.Size(94, 17);
+            this.ininomina.TabIndex = 1;
+            this.ininomina.TabStop = true;
+            this.ininomina.Text = "Nueva nomina";
+            this.ininomina.UseVisualStyleBackColor = true;
+            // 
+            // inifaemisiones
+            // 
+            this.inifaemisiones.AutoSize = true;
+            this.inifaemisiones.Location = new System.Drawing.Point(17, 78);
+            this.inifaemisiones.Name = "inifaemisiones";
+            this.inifaemisiones.Size = new System.Drawing.Size(125, 17);
+            this.inifaemisiones.TabIndex = 2;
+            this.inifaemisiones.TabStop = true;
+            this.inifaemisiones.Text = "Facturas > Emisiones";
+            this.inifaemisiones.UseVisualStyleBackColor = true;
+            // 
+            // inifaclientes
+            // 
+            this.inifaclientes.AutoSize = true;
+            this.inifaclientes.Location = new System.Drawing.Point(18, 101);
+            this.inifaclientes.Name = "inifaclientes";
+            this.inifaclientes.Size = new System.Drawing.Size(115, 17);
+            this.inifaclientes.TabIndex = 3;
+            this.inifaclientes.TabStop = true;
+            this.inifaclientes.Text = "Facturas > Clientes";
+            this.inifaclientes.UseVisualStyleBackColor = true;
+            // 
+            // inifaconceptos
+            // 
+            this.inifaconceptos.AutoSize = true;
+            this.inifaconceptos.Location = new System.Drawing.Point(18, 124);
+            this.inifaconceptos.Name = "inifaconceptos";
+            this.inifaconceptos.Size = new System.Drawing.Size(129, 17);
+            this.inifaconceptos.TabIndex = 4;
+            this.inifaconceptos.TabStop = true;
+            this.inifaconceptos.Text = "Facturas > Conceptos";
+            this.inifaconceptos.UseVisualStyleBackColor = true;
+            // 
+            // ininoemision
+            // 
+            this.ininoemision.AutoSize = true;
+            this.ininoemision.Location = new System.Drawing.Point(18, 147);
+            this.ininoemision.Name = "ininoemision";
+            this.ininoemision.Size = new System.Drawing.Size(109, 17);
+            this.ininoemision.TabIndex = 5;
+            this.ininoemision.TabStop = true;
+            this.ininoemision.Text = "Nomina > Emision";
+            this.ininoemision.UseVisualStyleBackColor = true;
+            // 
+            // ininoempleados
+            // 
+            this.ininoempleados.AutoSize = true;
+            this.ininoempleados.Location = new System.Drawing.Point(18, 170);
+            this.ininoempleados.Name = "ininoempleados";
+            this.ininoempleados.Size = new System.Drawing.Size(125, 17);
+            this.ininoempleados.TabIndex = 6;
+            this.ininoempleados.TabStop = true;
+            this.ininoempleados.Text = "Nomina > Empleados";
+            this.ininoempleados.UseVisualStyleBackColor = true;
             // 
             // Configuracion
             // 
@@ -844,6 +960,9 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -922,5 +1041,14 @@
         private System.Windows.Forms.TextBox UrlLogoFact;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.CheckBox CbxDemo;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton ininoempleados;
+        private System.Windows.Forms.RadioButton ininoemision;
+        private System.Windows.Forms.RadioButton inifaconceptos;
+        private System.Windows.Forms.RadioButton inifaclientes;
+        private System.Windows.Forms.RadioButton inifaemisiones;
+        private System.Windows.Forms.RadioButton ininomina;
+        private System.Windows.Forms.RadioButton inifactura;
     }
 }

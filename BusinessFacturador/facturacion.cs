@@ -53,7 +53,7 @@ namespace HostelSystem
             {
                 pac = new PAC("DEMO700101XXX", "DEMO700101XXX", production);
                 
-                conf = new Conf(coneccion.ReturnLocalData()+@"\SELLO_DIGITAL\CSD01_AAA010101AAA.cer", coneccion.ReturnLocalData() + @"\SELLO_DIGITAL\CSD01_AAA010101AAA.key", "12345678a");
+                conf = new Conf(coneccion.ReturnLocalData()+@"SELLO_DIGITAL\CSD01_AAA010101AAA.cer", coneccion.ReturnLocalData() + @"SELLO_DIGITAL\CSD01_AAA010101AAA.key", "12345678a");
             }
             
             
@@ -144,10 +144,10 @@ namespace HostelSystem
             foreach (var a in Conceptos)
             {
                 total += double.Parse(a.Importe);
-                iva += double.Parse(a.Importe) * .16;
             }
 
-            factura.SubTotal = (total - iva).ToString();
+            factura.SubTotal = (total / 1.16).ToString();
+            iva = double.Parse(factura.SubTotal) * .16;
             factura.Descuento = "0";
             factura.Total = total.ToString();
             factura.Conceptos = Conceptos;
