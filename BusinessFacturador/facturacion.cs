@@ -32,7 +32,7 @@ namespace HostelSystem
                 production = "SI";
             }
             LoadFacturas(DtvFacturas, "select fa.id, fa.nombre, fa.status, fa.id_huesped, cli.nombre from facturas fa, clientes cli where fa.id_huesped = cli.id order by fa.nombre desc");
-            rutasdk = coneccion.ReturnLocalData()+@"sdk\";
+            rutasdk = @"C:\multifacturas_sdk\";
         }
 
         public int FactAction(List <Concepto> Conceptos, int IdHuesped, string metododepago, string TipoComprobante)
