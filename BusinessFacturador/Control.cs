@@ -1057,5 +1057,15 @@ namespace HostelSystem
         {
             ShowNominaEmpleaodos();
         }
+
+        private void facturasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowFacturas();
+        }
+
+        private void nominasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowNominaEmisiones();
+        }
     }
 }

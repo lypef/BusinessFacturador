@@ -31,8 +31,8 @@ namespace HostelSystem
             {
                 production = "SI";
             }
-            LoadFacturas(DtvFacturas, "select fa.id, fa.nombre, fa.status, fa.id_huesped, cli.nombre from facturas fa, clientes cli where fa.id_huesped = cli.id order by fa.nombre desc");
             rutasdk = @"C:\multifacturas_sdk\";
+            UpdateDTV();
         }
 
         public int FactAction(List <Concepto> Conceptos, int IdHuesped, string metododepago, string TipoComprobante)
@@ -413,7 +413,7 @@ namespace HostelSystem
 
         private void UpdateDTV()
         {
-            LoadFacturas(DtvFacturas, "select fa.id, fa.nombre, fa.status, fa.id_huesped, cli.nombre from facturas fa, clientes cli where fa.id_huesped = cli.id order by fa.nombre desc");
+            LoadFacturas(DtvFacturas, "select fa.id, fa.nombre, fa.status, fa.id_huesped, cli.nombre from facturas fa, clientes cli where fa.id_huesped = cli.id order by fa.id desc");
         }
 
         private void CancelarFactura()
@@ -683,6 +683,7 @@ namespace HostelSystem
 
         private void RestoreDirectoryFacturas()
         {
+            restoredbfacturas();
             DirectoryInfo di = new DirectoryInfo(datos.ReturnDatos("urlsavefact", 1));
 
             foreach (var fi in di.GetFiles())
@@ -693,6 +694,24 @@ namespace HostelSystem
                 }
             }
             UpdateDTV();
+        }
+
+        private void restoredbfacturas()
+        {
+            try
+            {
+                coneccion.cnn.Close();
+                coneccion.sql = "delete from facturas DBCC CHECKIDENT(facturas, RESEED, 0)";
+                coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
+                coneccion.cnn.Open();
+                coneccion.comandosql.ExecuteReader();
+                coneccion.cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                coneccion.cnn.Close();
+                MessageBox.Show(ex.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
         }
 
         private void SearchAndProcessIDfactura(int factura)

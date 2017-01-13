@@ -244,6 +244,7 @@
             this.facturasToolStripMenuItem.Name = "facturasToolStripMenuItem";
             this.facturasToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
             this.facturasToolStripMenuItem.Text = "Facturas";
+            this.facturasToolStripMenuItem.Click += new System.EventHandler(this.facturasToolStripMenuItem_Click);
             // 
             // facturasToolStripMenuItem1
             // 
@@ -280,6 +281,7 @@
             this.nominasToolStripMenuItem.Name = "nominasToolStripMenuItem";
             this.nominasToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
             this.nominasToolStripMenuItem.Text = "Nominas";
+            this.nominasToolStripMenuItem.Click += new System.EventHandler(this.nominasToolStripMenuItem_Click);
             // 
             // emisionesToolStripMenuItem
             // 
