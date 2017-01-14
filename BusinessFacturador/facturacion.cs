@@ -38,7 +38,7 @@ namespace HostelSystem
         public int FactAction(List <Concepto> Conceptos, int IdHuesped, string metododepago, string TipoComprobante)
         {
             int status = 0;
-            string nombre_doc = ReturnIdFactura().ToString();
+            string nombre_doc = (ReturnIdFactura() + 1).ToString();
 
             PAC pac;
             Conf conf;
@@ -80,7 +80,7 @@ namespace HostelSystem
             factura.TipoDeCambio = "1.0";
             if (production.ToLower() == "si")
             {
-                factura.LugarDeExpedicion = datos.ReturnDatos("lexpedicion", 1) + " " + datos.ReturnDatos("expcalle", 1) + " " + datos.ReturnDatos("expmunicipio", 1) + " " + datos.ReturnDatos("expestado", 1) + " " + datos.ReturnDatos("expais", 1) + " " + datos.ReturnDatos("expcp", 1);
+                factura.LugarDeExpedicion = datos.ReturnDatos("lexpedicion", 1);
             }else
             {
                 factura.LugarDeExpedicion = "LUGAR DEMO";
@@ -228,8 +228,7 @@ namespace HostelSystem
             try
             {
                 coneccion.cnn.Close();
-
-                coneccion.sql = "insert into facturas (nombre,id_huesped,status) values ('"+nombre+"', '"+idHuesped+"', '"+ststus+"')";
+                coneccion.sql = "SET IDENTITY_INSERT facturas on INSERT INTO facturas(id, nombre, id_huesped, status) VALUES('" + nombre.Replace(".xml","") + "', '" + nombre  + "', '" + idHuesped + "', 'VALIDA') SET IDENTITY_INSERT facturas OFF";
                 coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                 coneccion.cnn.Open();
                 coneccion.comandosql.ExecuteReader();
@@ -237,6 +236,7 @@ namespace HostelSystem
             }
             catch (Exception a)
             {
+                coneccion.cnn.Close();
                 MessageBox.Show(a.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
 
@@ -264,7 +264,7 @@ namespace HostelSystem
             try
             {
                 coneccion.cnn.Close();
-                coneccion.sql = "SELECT IDENT_CURRENT('facturas') + IDENT_INCR('facturas');";
+                coneccion.sql = "SELECT IDENT_CURRENT('facturas');";
                 coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                 coneccion.cnn.Open();
                 SqlDataReader Reg = null;
