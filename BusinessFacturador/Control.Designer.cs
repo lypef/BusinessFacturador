@@ -59,26 +59,6 @@
             this.salirToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.acercaDeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Panel = new System.Windows.Forms.Panel();
-            this.MenuClickDerecho = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.verInformeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.cambiarHabitacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cambiarHuespedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
-            this.cambiarAbonoPagoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.regresarAbonoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
-            this.agregarHuespedExcedenteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
-            this.cambiarDescuentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cambiarFolioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cambiarModoArrendoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
-            this.modificarProductosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.agregarStadiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.disminuirStadiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.cancelarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Timer = new System.Windows.Forms.Timer(this.components);
             this.MenuMantenimiento = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cambiarALIBREToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,7 +78,6 @@
             this.cambiarALIMPIEZAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cambiarAMANTENIMIENTOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
-            this.MenuClickDerecho.SuspendLayout();
             this.MenuMantenimiento.SuspendLayout();
             this.MenuLimpieza.SuspendLayout();
             this.MenuLibre.SuspendLayout();
@@ -242,7 +221,7 @@
             this.clientesToolStripMenuItem,
             this.conceptosToolStripMenuItem});
             this.facturasToolStripMenuItem.Name = "facturasToolStripMenuItem";
-            this.facturasToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.facturasToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.facturasToolStripMenuItem.Text = "Facturas";
             this.facturasToolStripMenuItem.Click += new System.EventHandler(this.facturasToolStripMenuItem_Click);
             // 
@@ -279,7 +258,7 @@
             this.toolStripSeparator7,
             this.empleadosToolStripMenuItem});
             this.nominasToolStripMenuItem.Name = "nominasToolStripMenuItem";
-            this.nominasToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.nominasToolStripMenuItem.Size = new System.Drawing.Size(143, 26);
             this.nominasToolStripMenuItem.Text = "Nominas";
             this.nominasToolStripMenuItem.Click += new System.EventHandler(this.nominasToolStripMenuItem_Click);
             // 
@@ -351,152 +330,6 @@
             this.Panel.Name = "Panel";
             this.Panel.Size = new System.Drawing.Size(888, 493);
             this.Panel.TabIndex = 1;
-            // 
-            // MenuClickDerecho
-            // 
-            this.MenuClickDerecho.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.verInformeToolStripMenuItem,
-            this.toolStripSeparator4,
-            this.cambiarHabitacionToolStripMenuItem,
-            this.cambiarHuespedToolStripMenuItem,
-            this.toolStripSeparator19,
-            this.cambiarAbonoPagoToolStripMenuItem,
-            this.regresarAbonoToolStripMenuItem,
-            this.toolStripSeparator21,
-            this.agregarHuespedExcedenteToolStripMenuItem,
-            this.toolStripSeparator20,
-            this.cambiarDescuentoToolStripMenuItem,
-            this.cambiarFolioToolStripMenuItem,
-            this.cambiarModoArrendoToolStripMenuItem,
-            this.toolStripSeparator13,
-            this.modificarProductosToolStripMenuItem,
-            this.agregarStadiaToolStripMenuItem,
-            this.disminuirStadiaToolStripMenuItem,
-            this.toolStripSeparator3,
-            this.cancelarToolStripMenuItem});
-            this.MenuClickDerecho.Name = "MenuClickDerecho";
-            this.MenuClickDerecho.Size = new System.Drawing.Size(221, 326);
-            // 
-            // verInformeToolStripMenuItem
-            // 
-            this.verInformeToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.list_48;
-            this.verInformeToolStripMenuItem.Name = "verInformeToolStripMenuItem";
-            this.verInformeToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.verInformeToolStripMenuItem.Text = "Ver informe";
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(217, 6);
-            // 
-            // cambiarHabitacionToolStripMenuItem
-            // 
-            this.cambiarHabitacionToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.Room;
-            this.cambiarHabitacionToolStripMenuItem.Name = "cambiarHabitacionToolStripMenuItem";
-            this.cambiarHabitacionToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.cambiarHabitacionToolStripMenuItem.Text = "Cambiar habitacion";
-            // 
-            // cambiarHuespedToolStripMenuItem
-            // 
-            this.cambiarHuespedToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.Customers;
-            this.cambiarHuespedToolStripMenuItem.Name = "cambiarHuespedToolStripMenuItem";
-            this.cambiarHuespedToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.cambiarHuespedToolStripMenuItem.Text = "Cambiar huesped";
-            // 
-            // toolStripSeparator19
-            // 
-            this.toolStripSeparator19.Name = "toolStripSeparator19";
-            this.toolStripSeparator19.Size = new System.Drawing.Size(217, 6);
-            // 
-            // cambiarAbonoPagoToolStripMenuItem
-            // 
-            this.cambiarAbonoPagoToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.dollar;
-            this.cambiarAbonoPagoToolStripMenuItem.Name = "cambiarAbonoPagoToolStripMenuItem";
-            this.cambiarAbonoPagoToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.cambiarAbonoPagoToolStripMenuItem.Text = "Agregar abono / pago";
-            // 
-            // regresarAbonoToolStripMenuItem
-            // 
-            this.regresarAbonoToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.money22;
-            this.regresarAbonoToolStripMenuItem.Name = "regresarAbonoToolStripMenuItem";
-            this.regresarAbonoToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.regresarAbonoToolStripMenuItem.Text = "Reembolsar abono";
-            // 
-            // toolStripSeparator21
-            // 
-            this.toolStripSeparator21.Name = "toolStripSeparator21";
-            this.toolStripSeparator21.Size = new System.Drawing.Size(217, 6);
-            // 
-            // agregarHuespedExcedenteToolStripMenuItem
-            // 
-            this.agregarHuespedExcedenteToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.Users;
-            this.agregarHuespedExcedenteToolStripMenuItem.Name = "agregarHuespedExcedenteToolStripMenuItem";
-            this.agregarHuespedExcedenteToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.agregarHuespedExcedenteToolStripMenuItem.Text = "Agregar huesped Excedente";
-            // 
-            // toolStripSeparator20
-            // 
-            this.toolStripSeparator20.Name = "toolStripSeparator20";
-            this.toolStripSeparator20.Size = new System.Drawing.Size(217, 6);
-            // 
-            // cambiarDescuentoToolStripMenuItem
-            // 
-            this.cambiarDescuentoToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.red;
-            this.cambiarDescuentoToolStripMenuItem.Name = "cambiarDescuentoToolStripMenuItem";
-            this.cambiarDescuentoToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.cambiarDescuentoToolStripMenuItem.Text = "Cambiar descuento";
-            // 
-            // cambiarFolioToolStripMenuItem
-            // 
-            this.cambiarFolioToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.File;
-            this.cambiarFolioToolStripMenuItem.Name = "cambiarFolioToolStripMenuItem";
-            this.cambiarFolioToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.cambiarFolioToolStripMenuItem.Text = "Cambiar folio";
-            // 
-            // cambiarModoArrendoToolStripMenuItem
-            // 
-            this.cambiarModoArrendoToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.change_mode;
-            this.cambiarModoArrendoToolStripMenuItem.Name = "cambiarModoArrendoToolStripMenuItem";
-            this.cambiarModoArrendoToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.cambiarModoArrendoToolStripMenuItem.Text = "Cambiar modo arrendo";
-            // 
-            // toolStripSeparator13
-            // 
-            this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(217, 6);
-            // 
-            // modificarProductosToolStripMenuItem
-            // 
-            this.modificarProductosToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.sale;
-            this.modificarProductosToolStripMenuItem.Name = "modificarProductosToolStripMenuItem";
-            this.modificarProductosToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.modificarProductosToolStripMenuItem.Text = "Modificar productos";
-            // 
-            // agregarStadiaToolStripMenuItem
-            // 
-            this.agregarStadiaToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.stadia_add;
-            this.agregarStadiaToolStripMenuItem.Name = "agregarStadiaToolStripMenuItem";
-            this.agregarStadiaToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.agregarStadiaToolStripMenuItem.Text = "Agregar stadia";
-            // 
-            // disminuirStadiaToolStripMenuItem
-            // 
-            this.disminuirStadiaToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.stadia_remove;
-            this.disminuirStadiaToolStripMenuItem.Name = "disminuirStadiaToolStripMenuItem";
-            this.disminuirStadiaToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.disminuirStadiaToolStripMenuItem.Text = "Disminuir stadia";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(217, 6);
-            // 
-            // cancelarToolStripMenuItem
-            // 
-            this.cancelarToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.Exit;
-            this.cancelarToolStripMenuItem.Name = "cancelarToolStripMenuItem";
-            this.cancelarToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
-            this.cancelarToolStripMenuItem.Text = "Cancelar";
             // 
             // Timer
             // 
@@ -640,7 +473,6 @@
             this.Text = "Control";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.MenuClickDerecho.ResumeLayout(false);
             this.MenuMantenimiento.ResumeLayout(false);
             this.MenuLimpieza.ResumeLayout(false);
             this.MenuLibre.ResumeLayout(false);
@@ -658,24 +490,12 @@
         private System.Windows.Forms.ToolStripMenuItem configurarToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.Panel Panel;
-        private System.Windows.Forms.ContextMenuStrip MenuClickDerecho;
-        private System.Windows.Forms.ToolStripMenuItem cambiarHabitacionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cambiarHuespedToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem modificarProductosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem cancelarToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem verInformeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem agregarStadiaToolStripMenuItem;
         public System.Windows.Forms.Timer Timer;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem cambiarFolioToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip MenuMantenimiento;
         private System.Windows.Forms.ToolStripMenuItem carbiarStatusALIMPIEZAToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip MenuLimpieza;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem cambiarAbonoPagoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
         private System.Windows.Forms.ToolStripMenuItem cambiarALIBREToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem verUltimoFolioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cambiarALIBREToolStripMenuItem1;
@@ -689,14 +509,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator17;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator19;
-        private System.Windows.Forms.ToolStripMenuItem cambiarDescuentoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem agregarHuespedExcedenteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem disminuirStadiaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator20;
-        private System.Windows.Forms.ToolStripMenuItem cambiarModoArrendoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem regresarAbonoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator21;
         private System.Windows.Forms.ToolStripMenuItem vaciarReferenciasDeFacturasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nuevaFacturaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gestionarFacturasToolStripMenuItem;

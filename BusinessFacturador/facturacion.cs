@@ -38,7 +38,7 @@ namespace HostelSystem
         public int FactAction(List <Concepto> Conceptos, int IdHuesped, string metododepago, string TipoComprobante)
         {
             int status = 0;
-            string nombre_doc = (ReturnIdFactura() + 1).ToString();
+            string nombre_doc = ReturnIdFactura().ToString();
 
             PAC pac;
             Conf conf;
@@ -228,7 +228,7 @@ namespace HostelSystem
             try
             {
                 coneccion.cnn.Close();
-                coneccion.sql = "SET IDENTITY_INSERT facturas on INSERT INTO facturas(id, nombre, id_huesped, status) VALUES('" + nombre.Replace(".xml","") + "', '" + nombre  + "', '" + idHuesped + "', 'VALIDA') SET IDENTITY_INSERT facturas OFF";
+                coneccion.sql = "INSERT INTO facturas(id, nombre, id_huesped, status) VALUES('" + nombre.Replace(".xml","") + "', '" + nombre  + "', '" + idHuesped + "', 'VALIDA')";
                 coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                 coneccion.cnn.Open();
                 coneccion.comandosql.ExecuteReader();
@@ -264,7 +264,7 @@ namespace HostelSystem
             try
             {
                 coneccion.cnn.Close();
-                coneccion.sql = "SELECT IDENT_CURRENT('facturas');";
+                coneccion.sql = "select top 1* from facturas order by id desc";
                 coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                 coneccion.cnn.Open();
                 SqlDataReader Reg = null;
@@ -280,7 +280,7 @@ namespace HostelSystem
             {
                 MessageBox.Show(a.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
-            return i;
+            return i + 1;
         }
         
         private void LoadFacturas(DataGridView dtv, string consulta)
@@ -681,9 +681,8 @@ namespace HostelSystem
             RestoreDirectoryFacturas();
         }
 
-        private void RestoreDirectoryFacturas()
+        public void RestoreDirectoryFacturas()
         {
-            restoredbfacturas();
             DirectoryInfo di = new DirectoryInfo(datos.ReturnDatos("urlsavefact", 1));
 
             foreach (var fi in di.GetFiles())
@@ -694,24 +693,6 @@ namespace HostelSystem
                 }
             }
             UpdateDTV();
-        }
-
-        private void restoredbfacturas()
-        {
-            try
-            {
-                coneccion.cnn.Close();
-                coneccion.sql = "delete from facturas DBCC CHECKIDENT(facturas, RESEED, 0)";
-                coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
-                coneccion.cnn.Open();
-                coneccion.comandosql.ExecuteReader();
-                coneccion.cnn.Close();
-            }
-            catch (Exception ex)
-            {
-                coneccion.cnn.Close();
-                MessageBox.Show(ex.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
         }
 
         private void SearchAndProcessIDfactura(int factura)
@@ -744,7 +725,7 @@ namespace HostelSystem
             try
             {
                 coneccion.cnn.Close();
-                coneccion.sql = "SET IDENTITY_INSERT facturas on INSERT INTO facturas (id,nombre,id_huesped,status) VALUES ('" + factura + "','" + factura + ".xml" + "','" + 1 + "','VALIDA') SET IDENTITY_INSERT facturas OFF";
+                coneccion.sql = "INSERT INTO facturas (id,nombre,id_huesped,status) VALUES ('" + factura + "','" + factura + ".xml" + "','" + 1 + "','VALIDA')";
                 coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                 coneccion.cnn.Open();
                 coneccion.comandosql.ExecuteReader();

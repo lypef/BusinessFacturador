@@ -34,12 +34,16 @@
             this.DtvFacturas = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.abrirDirectorioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.abrirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cancelarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.generarArchivoPdfToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.enviarPorCorreoToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.regenerarDirectorioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buscarToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.actualizarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuDGV = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -52,10 +56,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.regenerarDirectorioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.abrirDirectorioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DtvFacturas)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -116,6 +116,19 @@
             this.archivoToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.archivoToolStripMenuItem.Text = "Archivo";
             // 
+            // abrirDirectorioToolStripMenuItem
+            // 
+            this.abrirDirectorioToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.ver;
+            this.abrirDirectorioToolStripMenuItem.Name = "abrirDirectorioToolStripMenuItem";
+            this.abrirDirectorioToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.abrirDirectorioToolStripMenuItem.Text = "Abrir directorio";
+            this.abrirDirectorioToolStripMenuItem.Click += new System.EventHandler(this.abrirDirectorioToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(178, 6);
+            // 
             // abrirToolStripMenuItem
             // 
             this.abrirToolStripMenuItem.Image = global::HostelSystem.Properties.Resources._1480727338_docs1;
@@ -157,6 +170,19 @@
             this.enviarPorCorreoToolStripMenuItem1.Size = new System.Drawing.Size(181, 22);
             this.enviarPorCorreoToolStripMenuItem1.Text = "Enviar por correo";
             this.enviarPorCorreoToolStripMenuItem1.Click += new System.EventHandler(this.enviarPorCorreoToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(178, 6);
+            // 
+            // regenerarDirectorioToolStripMenuItem
+            // 
+            this.regenerarDirectorioToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.change_mode;
+            this.regenerarDirectorioToolStripMenuItem.Name = "regenerarDirectorioToolStripMenuItem";
+            this.regenerarDirectorioToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.regenerarDirectorioToolStripMenuItem.Text = "Regenerar directorio";
+            this.regenerarDirectorioToolStripMenuItem.Click += new System.EventHandler(this.regenerarDirectorioToolStripMenuItem_Click);
             // 
             // buscarToolStripMenuItem1
             // 
@@ -254,32 +280,6 @@
             this.pictureBox3.Size = new System.Drawing.Size(46, 23);
             this.pictureBox3.TabIndex = 4;
             this.pictureBox3.TabStop = false;
-            // 
-            // regenerarDirectorioToolStripMenuItem
-            // 
-            this.regenerarDirectorioToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.change_mode;
-            this.regenerarDirectorioToolStripMenuItem.Name = "regenerarDirectorioToolStripMenuItem";
-            this.regenerarDirectorioToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.regenerarDirectorioToolStripMenuItem.Text = "Regenerar directorio";
-            this.regenerarDirectorioToolStripMenuItem.Click += new System.EventHandler(this.regenerarDirectorioToolStripMenuItem_Click);
-            // 
-            // abrirDirectorioToolStripMenuItem
-            // 
-            this.abrirDirectorioToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.ver;
-            this.abrirDirectorioToolStripMenuItem.Name = "abrirDirectorioToolStripMenuItem";
-            this.abrirDirectorioToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.abrirDirectorioToolStripMenuItem.Text = "Abrir directorio";
-            this.abrirDirectorioToolStripMenuItem.Click += new System.EventHandler(this.abrirDirectorioToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(178, 6);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(178, 6);
             // 
             // facturacion
             // 

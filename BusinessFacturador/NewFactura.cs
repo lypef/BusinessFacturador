@@ -19,11 +19,7 @@ namespace HostelSystem
         {
             InitializeComponent();
             this.CenterToScreen();
-            loadventas(DtvVentas, "select * from conceptos  order by id desc");            
-            LoadDtvHuespeds(DtvClientes, "select * from clientes order by nombre desc");
-            LoadReadyFact(DtvProductFact);
-            MetodPago.SelectedIndex = 0;
-            TipoComprobante.SelectedIndex = 0;
+            CleanDGV();
         }
 
         private void LoadReadyFact(DataGridView dtv)
@@ -121,21 +117,45 @@ namespace HostelSystem
             {
                 if (mov == 1)
                 {
-                    loadventas(DtvVentas, "select * from conceptos  order by id desc");
-                    LoadDtvHuespeds(DtvClientes, "select * from clientes order by nombre desc");
-                    LoadReadyFact(DtvProductFact);
-                    mov = 0;
+                    CleanDGV();
                 }
                 else
                 {
+                    facturacion form = new facturacion();
+                    form.RestoreDirectoryFacturas();
+                    form.Dispose();
                     BackgroundWorker process = new BackgroundWorker();
                     process.DoWork += Facturar;
+                    process.RunWorkerCompleted += FacturarComplet;
                     process.RunWorkerAsync();
                 }
             }else
             {
                 MessageBox.Show("Otra factura esta en proceso, porfavor espere.","ESPERE", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
+        }
+
+        private void FacturarComplet(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (mov == 1)
+            {
+                CleanDGV();
+            }
+        }
+
+        private void CleanDGV()
+        {
+            loadventas(DtvVentas, "select * from conceptos  order by id desc");
+            LoadDtvHuespeds(DtvClientes, "select * from clientes order by nombre desc");
+            LoadReadyFact(DtvProductFact);
+            MetodPago.SelectedIndex = 0;
+            TipoComprobante.SelectedIndex = 0;
+            Image1.Image = null;
+            Image2.Image = null;
+            mov = 0;
+            TxtManualId.Text = "";
+            TxtManualConcepto.Text = "";
+            TxtManualMonto.Text = "";
         }
 
         private void FacturarActionProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -278,10 +298,7 @@ namespace HostelSystem
         {
             if (mov == 1)
             {
-                loadventas(DtvVentas, "select * from conceptos  order by id desc");
-                LoadDtvHuespeds(DtvClientes, "select * from clientes order by nombre desc");
-                LoadReadyFact(DtvProductFact);
-                mov = 0;
+                CleanDGV();
             }else
             {
                 try
@@ -393,6 +410,42 @@ namespace HostelSystem
             }
         }
 
+        private void BtnAddManual_Click(object sender, EventArgs e)
+        {
+            if (mov == 1)
+            {
+                CleanDGV();
+            }
+            else
+            {
+                try
+                {
+                    if (IsNumeric(TxtManualMonto.Text.Replace(",", ".").Replace(" ","")) == true)
+                    {
+                        LoadReadyFactAdd(DtvProductFact, TxtManualId.Text.ToUpper(), TxtManualConcepto.Text.ToUpper(), TxtManualMonto.Text.Replace(",", "."));
+                    }else
+                    {
+                        MessageBox.Show("Verifique el monto.", "No Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Verifique su seleccion", "No Found", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
+            }
+        }
+
+        private void TxtManualId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsLetter(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
+            {
+                MessageBox.Show("No se permiten numeros.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+                return;
+            }
+        }
+
         private void DtvHuespedes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
@@ -406,5 +459,18 @@ namespace HostelSystem
             }
         }
 
+        public bool IsNumeric(object Expression)
+
+        {
+
+            bool isNum;
+
+            double retNum;
+
+            isNum = Double.TryParse(Convert.ToString(Expression), out retNum);
+
+            return isNum;
+
+        }
     }
 }
