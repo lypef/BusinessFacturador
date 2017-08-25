@@ -1067,5 +1067,15 @@ namespace HostelSystem
         {
             ShowNominaEmisiones();
         }
+
+        private void conceptosToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ShowConceptos();
+        }
+
+        private void clientesToolStripMenuItem_Click_2(object sender, EventArgs e)
+        {
+            ShowClientes();
+        }
     }
 }

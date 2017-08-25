@@ -11,6 +11,37 @@ namespace HostelSystem
     class Datos
     {
         Conexion coneccion = new Conexion();
+        public string EmisorLugarDeExpedicion = "lexpedicion";
+        public string EmisorRegimenfiscal = "regimenfiscal";
+        public string EmisorRfc = "conrfc";
+        public string EmisorNombre = "connombre";
+        public string EmisorCalleDF = "dfcalle";
+        public string EmisorNoexteriorDF = "dfnoext";
+        public string EmisorColoniaDF = "dfcolonia";
+        public string EmisorLocalidadDF = "dflocalidad";
+        public string EmisorMunicipioDF = "dfmunicipio";
+        public string EmisorEstadoDF = "dfestado";
+        public string EmisorPaisDF = "dfpais";
+        public string EmisorCodigoPostalDF = "dfcp";
+        public string EmisorExpedidoCalle = "expcalle";
+        public string EmisorExpedidoMunicipio = "expmunicipio";
+        public string EmisorExpedidoEstado = "expestado";
+        public string EmisorExpedidoPais = "expais";
+        public string EmisorExpedidoLocalidad = "explocalidad";
+        public string EmisorExpedidoNoExt = "expnoext";
+        public string EmisorExpedidoColonia = "expcolonia";
+        public string EmisorExpedidoCodigoPostal = "expcp";
+        public string ReceptorRfc = "rfc";
+        public string ReceptorRazonSocial = "razonsocial";
+        public string ReceptorCalle = "calle";
+        public string ReceptorNoExterior = "noext";
+        public string ReceptorNoInterior = "noint";
+        public string ReceptorColonia = "colonia";
+        public string ReceptorLocalidad = "loc";
+        public string ReceptorMunicipio = "municipio";
+        public string ReceptorEstado = "estado";
+        public string ReceptorPais = "pais";
+        public string ReceptorCP = "cp";
 
         public string ReturnDatos (string campo , int id)
         {

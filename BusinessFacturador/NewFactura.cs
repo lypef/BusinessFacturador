@@ -31,19 +31,19 @@ namespace HostelSystem
 
                 dtv.Columns.Add("id", "ID");
                 dtv.Columns["id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
-
+                dtv.Columns.Add("unidad", "UNIDAD");
+                dtv.Columns.Add("cantidad", "CANTIDAD");
                 dtv.Columns.Add("concepto", "CONCEPTO");
 
                 dtv.Columns.Add("monto", "MONTO");
                 dtv.Columns["monto"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
-
-                dtv.ReadOnly = true;
+                
                 dtv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 dtv.RowHeadersVisible = false;
                 dtv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dtv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
                 dtv.MultiSelect = true;
-                dtv.DefaultCellStyle.SelectionBackColor = Color.Brown;
+                dtv.DefaultCellStyle.SelectionBackColor = Color.YellowGreen;
                 dtv.Focus();
                 coneccion.cnn.Close();
             }
@@ -53,11 +53,11 @@ namespace HostelSystem
                 MessageBox.Show(e.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
-        private void LoadReadyFactAdd(DataGridView dtv, string id, string concepto, string precio)
+        private void LoadReadyFactAdd(DataGridView dtv, string id, int cantidad, string unidad, string concepto, string precio)
         {
             try
             {
-                dtv.Rows.Add(id, concepto, precio);
+                dtv.Rows.Add( id, unidad.ToUpper(), cantidad, concepto.ToUpper(), precio);
             }
             catch(Exception ex)
             {
@@ -100,7 +100,7 @@ namespace HostelSystem
                 dtv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 dtv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
                 dtv.MultiSelect = true;
-                dtv.DefaultCellStyle.SelectionBackColor = Color.Brown;
+                dtv.DefaultCellStyle.SelectionBackColor = Color.DarkBlue;
                 dtv.Focus();
                 coneccion.cnn.Close();
             }
@@ -153,7 +153,7 @@ namespace HostelSystem
             Image1.Image = null;
             Image2.Image = null;
             mov = 0;
-            TxtManualId.Text = "";
+            TxtIdentificador.Text = "";
             TxtManualConcepto.Text = "";
             TxtManualMonto.Text = "";
         }
@@ -182,10 +182,10 @@ namespace HostelSystem
             {
                 if (item.Cells[0].Value != null)
                 {
-                    articulos += item.Cells["concepto"].Value.ToString() + ", MONTO $" + item.Cells["monto"].Value.ToString() + "\n";
-                    total += double.Parse(item.Cells["monto"].Value.ToString());
+                    articulos += item.Cells["cantidad"].Value.ToString() + " " + item.Cells["concepto"].Value.ToString() + ", MONTO $" + item.Cells["monto"].Value.ToString() + " C/U\n";
+                    total += double.Parse(item.Cells["cantidad"].Value.ToString()) * double.Parse(item.Cells["monto"].Value.ToString());
 
-                    concepto = new Concepto("1", "pieza", item.Cells["id"].Value.ToString(), item.Cells["concepto"].Value.ToString(), item.Cells["monto"].Value.ToString(), item.Cells["monto"].Value.ToString());
+                    concepto = new Concepto(item.Cells["cantidad"].Value.ToString(), item.Cells["unidad"].Value.ToString().ToUpper(), item.Cells["id"].Value.ToString(), item.Cells["concepto"].Value.ToString().ToUpper(), item.Cells["monto"].Value.ToString(), item.Cells["monto"].Value.ToString());
 
                     conceptos.Add(concepto);
                 }
@@ -249,7 +249,8 @@ namespace HostelSystem
 
                 dtv.Columns.Add("id", "ID");
                 dtv.Columns["id"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
-
+                dtv.Columns.Add("unidad", "UNIDAD");
+                dtv.Columns.Add("cantidad", "CANTIDAD");
                 dtv.Columns.Add("concepto", "CONCEPTO");
                 
                 dtv.Columns.Add("monto", "MONTO");
@@ -258,7 +259,7 @@ namespace HostelSystem
 
                 while (Reg.Read())
                 {
-                    dtv.Rows.Add(Reg["id"].ToString(), Reg["concepto"].ToString().ToUpper(), Reg["monto"].ToString());
+                    dtv.Rows.Add(Reg["id"].ToString(),"N/A",1, Reg["concepto"].ToString().ToUpper(), Reg["monto"].ToString());
                 }
 
                 dtv.ReadOnly = true;
@@ -304,8 +305,9 @@ namespace HostelSystem
                 try
                 {
                     DataGridViewRow row = this.DtvVentas.CurrentRow;
-                    LoadReadyFactAdd(DtvProductFact, row.Cells["id"].Value.ToString(), row.Cells["concepto"].Value.ToString(), row.Cells["monto"].Value.ToString().Replace(",", "."));
-                }catch(Exception)
+                    LoadReadyFactAdd(DtvProductFact, row.Cells["id"].Value.ToString(), 1, row.Cells["unidad"].Value.ToString(), row.Cells["concepto"].Value.ToString(), row.Cells["monto"].Value.ToString().Replace(",", "."));
+                }
+                catch(Exception)
                 {
                     MessageBox.Show("Verifique su seleccion", "No Found", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
@@ -422,8 +424,9 @@ namespace HostelSystem
                 {
                     if (IsNumeric(TxtManualMonto.Text.Replace(",", ".").Replace(" ","")) == true)
                     {
-                        LoadReadyFactAdd(DtvProductFact, TxtManualId.Text.ToUpper(), TxtManualConcepto.Text.ToUpper(), TxtManualMonto.Text.Replace(",", "."));
-                    }else
+                        LoadReadyFactAdd(DtvProductFact ,TxtIdentificador.Text.ToUpper(), Convert.ToInt32(TxtCantidad.Text.Replace(" ", "")), TxtUnidad.Text, TxtManualConcepto.Text.ToUpper(), TxtManualMonto.Text.Replace(",", "."));
+                    }
+                    else
                     {
                         MessageBox.Show("Verifique el monto.", "No Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
@@ -456,6 +459,36 @@ namespace HostelSystem
             catch (Exception)
             {
                MessageBox.Show("Verifique su seleccion", "No Found", MessageBoxButtons.OK, MessageBoxIcon.Stop); 
+            }
+        }
+
+        private void TxtCantidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((char.IsLetter(e.KeyChar)))
+            {
+                MessageBox.Show("No se permiten letras.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+                return;
+            }
+        }
+
+        private void TxtUnidad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!(char.IsLetter(e.KeyChar)) && (e.KeyChar != (char)Keys.Back))
+            {
+                MessageBox.Show("No se permiten numeros.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+                return;
+            }
+        }
+
+        private void TxtManualMonto_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((char.IsLetter(e.KeyChar)))
+            {
+                MessageBox.Show("No se permiten letras.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                e.Handled = true;
+                return;
             }
         }
 

@@ -14,7 +14,7 @@ namespace HostelSystem
 
         public Conexion()
         {
-            this.cadenaconexion = (@"Data Source=(LocalDB)\bussinessfacturador;AttachDbFilename="+ReturnLocalData()+@"db\hostelsystem.mdf;Integrated Security=True;Connect Timeout=30");
+            this.cadenaconexion = (@"Data Source=(LocalDB)\bussinessfacturador;AttachDbFilename="+ReturnLocalData()+ @"db\BussinesFacturador.mdf;Integrated Security=True;Connect Timeout=30");
             this.cnn = new SqlConnection(this.cadenaconexion);
         }
 
