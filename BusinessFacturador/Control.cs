@@ -991,15 +991,7 @@ namespace HostelSystem
 
         private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (nivel == "administrador")
-            {
-                ShowUsuarios();
-            }
-            else
-            {
-                Timer.Start();
-                MessageBox.Show("Acceso no autorizado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
+            
         }
         private void ShowUsuarios()
         {
@@ -1070,10 +1062,43 @@ namespace HostelSystem
 
         private void conceptosToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            ShowConceptos();
+           
         }
 
         private void clientesToolStripMenuItem_Click_2(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void emisionesToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ShowFacturas();
+        }
+
+        private void clientesToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ShowClientes();
+        }
+
+        private void conceptosToolStripMenuItem_Click_2(object sender, EventArgs e)
+        {
+            ShowConceptos();
+        }
+
+        private void usuariosToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (nivel == "administrador")
+            {
+                ShowUsuarios();
+            }
+            else
+            {
+                Timer.Start();
+                MessageBox.Show("Acceso no autorizado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             ShowClientes();
         }

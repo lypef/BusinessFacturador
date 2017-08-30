@@ -12,6 +12,8 @@ namespace HostelSystem
         public clientes()
         {
             InitializeComponent();
+            loadClientes(DgConsultarClientes, "select * from clientes");
+            TabHuespedes.SelectedIndex = 1;
         }
 
         private void BtnAddHuesped_Click(object sender, EventArgs e)

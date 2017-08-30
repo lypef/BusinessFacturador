@@ -809,7 +809,8 @@ namespace HostelSystem
             //Email a quien se le envia
             if (correofact.Replace(" ","") != "")
             {
-                correofact += d.ReturnDatos("mailr", 1);
+                correofact += ","+d.ReturnDatos("mailr", 1);
+                correofact = correofact.Replace(",,", ",");
                 msg.To.Add(correofact);
             }else
             {

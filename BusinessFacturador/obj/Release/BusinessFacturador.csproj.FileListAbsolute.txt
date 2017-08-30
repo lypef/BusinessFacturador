@@ -52,3 +52,4 @@ C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFa
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Release\BusinessFacturador.application
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Release\BusinessFacturador.exe
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Release\BusinessFacturador.pdb
+C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Release\BusinessFacturador.csprojResolveAssemblyReference.cache

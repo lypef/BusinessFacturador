@@ -34,9 +34,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.DtvVentas = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.DtvClientes = new System.Windows.Forms.DataGridView();
-            this.TxtHuesped = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.ComboClientes = new System.Windows.Forms.ComboBox();
             this.button4 = new System.Windows.Forms.Button();
             this.TxtConceptos = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -66,7 +64,6 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DtvVentas)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DtvClientes)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DtvProductFact)).BeginInit();
             this.MenuVentas.SuspendLayout();
@@ -82,7 +79,7 @@
             // 
             this.BtnFacturar.Image = global::HostelSystem.Properties.Resources.Activate;
             this.BtnFacturar.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnFacturar.Location = new System.Drawing.Point(507, 423);
+            this.BtnFacturar.Location = new System.Drawing.Point(510, 423);
             this.BtnFacturar.Name = "BtnFacturar";
             this.BtnFacturar.Size = new System.Drawing.Size(314, 50);
             this.BtnFacturar.TabIndex = 0;
@@ -95,7 +92,7 @@
             this.groupBox1.Controls.Add(this.DtvVentas);
             this.groupBox1.Location = new System.Drawing.Point(13, 56);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(429, 166);
+            this.groupBox1.Size = new System.Drawing.Size(429, 226);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "CONCEPTOS";
@@ -106,51 +103,30 @@
             this.DtvVentas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DtvVentas.Location = new System.Drawing.Point(3, 16);
             this.DtvVentas.Name = "DtvVentas";
-            this.DtvVentas.Size = new System.Drawing.Size(423, 147);
+            this.DtvVentas.Size = new System.Drawing.Size(423, 207);
             this.DtvVentas.TabIndex = 0;
             this.DtvVentas.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DtvVentas_CellDoubleClick);
             this.DtvVentas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DtvVentas_MouseDown);
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.DtvClientes);
-            this.groupBox2.Location = new System.Drawing.Point(448, 56);
+            this.groupBox2.Controls.Add(this.ComboClientes);
+            this.groupBox2.Location = new System.Drawing.Point(451, 7);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(429, 192);
+            this.groupBox2.Size = new System.Drawing.Size(429, 57);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "CLIENTES";
             // 
-            // DtvClientes
+            // ComboClientes
             // 
-            this.DtvClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DtvClientes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DtvClientes.Location = new System.Drawing.Point(3, 16);
-            this.DtvClientes.Name = "DtvClientes";
-            this.DtvClientes.Size = new System.Drawing.Size(423, 173);
-            this.DtvClientes.TabIndex = 1;
-            // 
-            // TxtHuesped
-            // 
-            this.TxtHuesped.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtHuesped.Location = new System.Drawing.Point(448, 12);
-            this.TxtHuesped.Name = "TxtHuesped";
-            this.TxtHuesped.Size = new System.Drawing.Size(253, 31);
-            this.TxtHuesped.TabIndex = 4;
-            this.TxtHuesped.TextChanged += new System.EventHandler(this.TxtHuesped_TextChanged);
-            this.TxtHuesped.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtHuesped_KeyPress);
-            // 
-            // button3
-            // 
-            this.button3.Image = global::HostelSystem.Properties.Resources.search;
-            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button3.Location = new System.Drawing.Point(705, 7);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(172, 42);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "BUSCAR CLIENTE";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.ComboClientes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComboClientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ComboClientes.FormattingEnabled = true;
+            this.ComboClientes.Location = new System.Drawing.Point(6, 19);
+            this.ComboClientes.Name = "ComboClientes";
+            this.ComboClientes.Size = new System.Drawing.Size(417, 28);
+            this.ComboClientes.TabIndex = 19;
             // 
             // button4
             // 
@@ -176,9 +152,9 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.DtvProductFact);
-            this.groupBox3.Location = new System.Drawing.Point(451, 254);
+            this.groupBox3.Location = new System.Drawing.Point(451, 132);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(429, 156);
+            this.groupBox3.Size = new System.Drawing.Size(429, 278);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "PRODUCTOS A FACTURAR";
@@ -189,7 +165,7 @@
             this.DtvProductFact.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DtvProductFact.Location = new System.Drawing.Point(3, 16);
             this.DtvProductFact.Name = "DtvProductFact";
-            this.DtvProductFact.Size = new System.Drawing.Size(423, 137);
+            this.DtvProductFact.Size = new System.Drawing.Size(423, 259);
             this.DtvProductFact.TabIndex = 1;
             this.DtvProductFact.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DtvProductFact_CellDoubleClick);
             this.DtvProductFact.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DtvProductFact_MouseDown);
@@ -224,7 +200,7 @@
             // 
             // Image1
             // 
-            this.Image1.Location = new System.Drawing.Point(451, 423);
+            this.Image1.Location = new System.Drawing.Point(454, 423);
             this.Image1.Name = "Image1";
             this.Image1.Size = new System.Drawing.Size(50, 50);
             this.Image1.TabIndex = 10;
@@ -251,7 +227,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.MetodPago);
-            this.groupBox4.Location = new System.Drawing.Point(13, 419);
+            this.groupBox4.Location = new System.Drawing.Point(451, 72);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(268, 54);
             this.groupBox4.TabIndex = 15;
@@ -261,7 +237,7 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.TipoComprobante);
-            this.groupBox5.Location = new System.Drawing.Point(287, 419);
+            this.groupBox5.Location = new System.Drawing.Point(725, 72);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(155, 54);
             this.groupBox5.TabIndex = 16;
@@ -283,7 +259,7 @@
             // 
             // Image2
             // 
-            this.Image2.Location = new System.Drawing.Point(827, 423);
+            this.Image2.Location = new System.Drawing.Point(830, 423);
             this.Image2.Name = "Image2";
             this.Image2.Size = new System.Drawing.Size(50, 50);
             this.Image2.TabIndex = 17;
@@ -302,7 +278,7 @@
             this.groupBox6.Controls.Add(this.TxtManualConcepto);
             this.groupBox6.Controls.Add(this.label1);
             this.groupBox6.Controls.Add(this.TxtIdentificador);
-            this.groupBox6.Location = new System.Drawing.Point(13, 228);
+            this.groupBox6.Location = new System.Drawing.Point(12, 288);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(429, 185);
             this.groupBox6.TabIndex = 18;
@@ -426,8 +402,6 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.TxtConceptos);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.TxtHuesped);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.BtnFacturar);
@@ -438,7 +412,6 @@
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DtvVentas)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DtvClientes)).EndInit();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DtvProductFact)).EndInit();
             this.MenuVentas.ResumeLayout(false);
@@ -460,9 +433,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView DtvVentas;
-        private System.Windows.Forms.DataGridView DtvClientes;
-        private System.Windows.Forms.TextBox TxtHuesped;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.TextBox TxtConceptos;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -489,5 +459,6 @@
         private System.Windows.Forms.TextBox TxtUnidad;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox TxtCantidad;
+        private System.Windows.Forms.ComboBox ComboClientes;
     }
 }
