@@ -3,27 +3,28 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using Multifacturas.SDK;
+using MultiFacturasSDK;
+using System.IO;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Threading;
 using System.Net.Mail;
-using System.IO;
 
 namespace HostelSystem
 {
     public partial class facturacion : Form
     {
-        Datos d = new Datos();
+        MFSDK sdk;
+        Datos datos = new Datos();
         Conexion coneccion = new Conexion();
-        private string rutaxml, rutasave, rutalogo, mailfact, production, rutasdk;
+        private string rutaxml, rutasave, production,  rutalogo, mailfact, nombrexml, totalfact;
         private int idfacturadb;
 
         public facturacion()
         {
             InitializeComponent();
             this.CenterToScreen();
-            if (d.ReturnDatos("demo", 1).ToLower() == "true")
+            if (datos.ReturnDatos("demo", 1).ToLower() == "true")
             {
                 production = "NO";
             }
@@ -31,202 +32,170 @@ namespace HostelSystem
             {
                 production = "SI";
             }
-            rutasdk = @"C:\multifacturas_sdk\";
             UpdateDTV();
         }
 
-        public int FactAction(List <Concepto> Conceptos, int IdHuesped, string metododepago, string TipoComprobante)
+        public MFObject PAC()
         {
-            int status = 0;
-            string nombre_doc = ReturnIdFactura().ToString();
+            MFObject pac = new MFObject("PAC");
 
-            PAC pac;
-            Conf conf;
+            pac["usuario"] = "DEMO700101XXX";//"DEMO700101XXX"
+            pac["pass"] = "DEMO700101XXX";//"DEMO700101XXX"
+            pac["produccion"] = "NO";
 
-            if (production.ToLower() == "si")
+            return pac;
+        }
+
+        public MFObject Conf()
+        {
+            MFObject conf = new MFObject("conf");
+            conf["cer"] = datos.ReturnDatos("urlcer", 1);
+            conf["key"] = datos.ReturnDatos("urlkey", 1);
+            conf["pass"] = datos.ReturnDatosMinMa("passfact", 1);
+            return conf;
+        }
+
+        public void MostrarDatos(MFSDK sdk)
+        {
+
+            TreeNode raiz = new TreeNode("Archivo INI"); //Nombre del archivo
+
+            //Se agregan los campos iniciales a la raíz del árbol
+            foreach (KeyValuePair<string, string> campo in sdk.Iniciales)
             {
-                pac = new PAC(d.ReturnDatos("conrfc", 1), d.ReturnDatosMinMa("passfact", 1), production);
-
-                conf = new Conf(d.ReturnDatosMinMa("urlcer", 1), d.ReturnDatosMinMa("urlkey", 1), d.ReturnDatosMinMa("passfact", 1));
+                TreeNode inicia = new TreeNode(campo.Key + "=" + campo.Value);
+                raiz.Nodes.Add(inicia);
             }
-            else
+            //Se asigna el orden correcto para cada nodo de la factura
+            sdk.AsignaValor();
+            //Se agrega cada apartado con sus campos
+            foreach (KeyValuePair<string, MFObject> sub in sdk.Apartados)
             {
-                pac = new PAC("DEMO700101XXX", "DEMO700101XXX", production);
-                
-                conf = new Conf(coneccion.ReturnLocalData()+@"SELLO_DIGITAL\CSD01_AAA010101AAA.cer", coneccion.ReturnLocalData() + @"SELLO_DIGITAL\CSD01_AAA010101AAA.key", "12345678a");
-            }
-            
-            
-            // Se crea un objeto SDKConfig con el PAC, CONF y la ruta del SDK
-            // NOTA: La ruta del SDK debe terminar con la diagonal invertida
-            SDKConfig sdkConf = new SDKConfig(pac, conf, rutasdk);
-
-
-            // Se crea el objeto SDK
-            SDK sdk = new SDK(sdkConf);
-
-
-            // Se inicializa el SDK
-            sdk = new SDK(sdkConf);
-
-            CFDI factura = new CFDI();
-
-            factura.Serie = "A";
-            factura.Folio = nombre_doc;
-            factura.FechaDeExpedicion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            factura.MetodoDePago = metododepago.ToLower(); //efectivo
-            factura.FormaDePago = "PAGO EN UNA SOLA EXHIBICION";
-            factura.TipoDeComprobante = TipoComprobante.ToLower(); //ingreso
-            factura.TipoDeCambio = "1.0";
-            if (production.ToLower() == "si")
-            {
-                factura.LugarDeExpedicion = d.ReturnDatos(d.EmisorLugarDeExpedicion, 1);
-            }else
-            {
-                factura.LugarDeExpedicion = "LUGAR DEMO";
-            }
-                
-            factura.RegimenFiscal = d.ReturnDatos(d.EmisorRegimenfiscal, 1);
-
-
-            Emisor emisor = new Emisor();
-            if (production.ToLower() == "si")
-            {
-                emisor.RFC = d.ReturnDatos(d.EmisorRfc, 1);
-            }
-            else
-            {
-                emisor.RFC = "aaa010101aaa".ToUpper();
-            }
-            
-            emisor.Nombre = d.ReturnDatos(d.EmisorNombre, 1);
-
-            DomicilioFiscal DomFis = new DomicilioFiscal();
-            DomFis.Calle = d.ReturnDatos(d.EmisorCalleDF, 1);
-            DomFis.NoExterior = d.ReturnDatos(d.EmisorNoexteriorDF, 1);
-            DomFis.Colonia = d.ReturnDatos(d.EmisorColoniaDF, 1);
-            DomFis.Localidad = d.ReturnDatos(d.EmisorLocalidadDF, 1);
-            DomFis.Municipio = d.ReturnDatos(d.EmisorMunicipioDF, 1);
-            DomFis.Estado = d.ReturnDatos(d.EmisorEstadoDF, 1);
-            DomFis.Pais = d.ReturnDatos(d.EmisorPaisDF, 1);
-            DomFis.CodigoPostal = d.ReturnDatos(d.EmisorCodigoPostalDF, 1);
-
-            ExpedidoEn expedido = new ExpedidoEn(d.ReturnDatos(d.EmisorExpedidoCalle, 1), d.ReturnDatos(d.EmisorExpedidoMunicipio, 1), d.ReturnDatos(d.EmisorExpedidoMunicipio, 1), d.ReturnDatos(d.EmisorExpedidoPais, 1), d.ReturnDatos(d.EmisorExpedidoCodigoPostal, 1));
-            expedido.Localidad = d.ReturnDatos(d.EmisorExpedidoLocalidad, 1);
-            expedido.NoExterior = d.ReturnDatos(d.EmisorExpedidoNoExt, 1);
-            expedido.Colonia = d.ReturnDatos(d.EmisorExpedidoColonia, 1);
-
-            emisor.Domicilio = DomFis;
-            emisor.ExpedidoEn = expedido;
-            factura.Emisor = emisor;
-
-            Receptor receptor = new Receptor();
-            receptor.RFC = ReturnDatosHuesped(d.ReceptorRfc, IdHuesped).ToUpper();
-            receptor.Nombre = ReturnDatosHuesped(d.ReceptorRazonSocial, IdHuesped);
-
-            Domicilio domRceptor = new Domicilio();
-            domRceptor.Calle = ReturnDatosHuesped(d.ReceptorCalle, IdHuesped);
-            domRceptor.NoExterior = ReturnDatosHuesped(d.ReceptorNoExterior, IdHuesped);
-            domRceptor.NoInterior = ReturnDatosHuesped(d.ReceptorNoInterior, IdHuesped);
-            domRceptor.Colonia = ReturnDatosHuesped(d.ReceptorColonia, IdHuesped);
-            domRceptor.Localidad = ReturnDatosHuesped(d.ReceptorLocalidad, IdHuesped);
-            domRceptor.Municipio = ReturnDatosHuesped(d.ReceptorMunicipio, IdHuesped);
-            domRceptor.Estado = ReturnDatosHuesped(d.ReceptorEstado, IdHuesped);
-            domRceptor.Pais = ReturnDatosHuesped(d.ReceptorPais, IdHuesped);
-            domRceptor.CodigoPostal = ReturnDatosHuesped(d.ReceptorCP, IdHuesped);
-
-            receptor.Domicilio = domRceptor;
-            factura.Receptor = receptor;
-
-
-            double iva = 0, total = 0;
-
-            foreach (var a in Conceptos)
-            {
-                a.Importe = Convert.ToString(Convert.ToDouble(double.Parse(a.Importe) * double.Parse(a.Cantidad)));
-                total += double.Parse(a.Importe);
-            }
-
-            factura.SubTotal = (total / 1.16).ToString();
-            iva = double.Parse(factura.SubTotal) * .16;
-            factura.Descuento = "0";
-            factura.Total = total.ToString();
-            foreach (var a in Conceptos)
-            {
-                a.ValorUnitario = (Double.Parse(a.ValorUnitario) / 1.16).ToString("N2").Replace(",", "");
-                a.Importe = (Double.Parse(a.Importe) / 1.16).ToString("N2").Replace(",", "");
-            }
-            factura.Conceptos = Conceptos;
-
-            Impuestos impuestos = new Impuestos();
-            Translado traslado = new Translado();
-
-            traslado.Impuesto = "IVA";
-            traslado.Tasa = "16";
-            traslado.Importe = iva.ToString();
-
-            impuestos.AgregaTraslado(traslado);
-            factura.Impuestos = impuestos;
-
-            
-            sdk.CreaINI(factura, d.ReturnDatos("urlsavefact", 1) + nombre_doc +".ini");
-
-            SDKRespuesta respuesta = sdk.Timbrar(factura, d.ReturnDatos("urlsavefact", 1),nombre_doc);
-            
-            if (respuesta.Codigo_MF_Numero == "0")
-            {
-                if (production.ToLower() == "no")
+                string nombre = sub.Key;
+                TreeNode aparta = new TreeNode(nombre);
+                foreach (KeyValuePair<string, string> dato in sub.Value.Atributos)
                 {
-                    Notificacion("Factura timbrada correctamente en modo demo, la factura no es valida ante el sat.", 2);
+                    TreeNode info = new TreeNode(dato.Key + "=" + dato.Value);
+                    aparta.Nodes.Add(info);
                 }
-                else
+                raiz.Nodes.Add(aparta);
+                //Si el apartado tiene subnodos, se recorren
+                if (sub.Value.Subnodos.Count > 0)
                 {
-                    Notificacion("Factura timbrada correctamente", 1);
-                }                
-                AddFactureDB(nombre_doc + ".xml",IdHuesped,"VALIDA");
-                GeneratePdfFactura(d.ReturnDatos("urlsavefact", 1) + nombre_doc + ".xml", d.ReturnDatos("urlsavefact", 1) + nombre_doc + ".pdf", d.ReturnDatos("urllogofact", 1), ReturnDatosHuesped("mail", IdHuesped) );
+                    foreach (KeyValuePair<string, MFObject> subnodo in sub.Value.Subnodos)
+                    {
+                        string aps = nombre + "." + subnodo.Key;
+                        recorreSubnodos(aps, subnodo.Value, aparta);
+                    }
+                }
             }
-            else if(respuesta.Codigo_MF_Numero == "1")
+        }
+
+        public void recorreSubnodos(string apartado, MFObject subnodo, TreeNode padre)
+        {
+            //Agrega el nombre y los atributos de los subnodos al árbol
+            TreeNode hijo = new TreeNode(apartado);
+            foreach (KeyValuePair<string, string> dato in subnodo.Atributos)
             {
-                status = 1;
-                Notificacion(respuesta.Codigo_MF_Texto, 3);
+                TreeNode info = new TreeNode(dato.Key + "=" + dato.Value);
+                hijo.Nodes.Add(info);
             }
-            else if (respuesta.Codigo_MF_Numero == "2")
+            padre.Nodes.Add(hijo);
+            foreach (KeyValuePair<string, MFObject> dato in subnodo.Subnodos)
             {
-                status = 2;
-                Notificacion(respuesta.Codigo_MF_Texto, 3);
+                string respaldo = apartado;
+                string nombre = dato.Key;
+                apartado += "." + nombre;
+                recorreSubnodos(apartado, dato.Value, hijo);
+                apartado = respaldo;
             }
-            else if (respuesta.Codigo_MF_Numero == "3")
+        }
+        public int FactAction(MFObject conceptos, double iva, int IdHuesped, string metododepago, string TipoComprobante, string total, List<int> ids)
+        {
+            sdk = new MFSDK();
+            sdk.Iniciales.Add("version_cfdi", "3.3");
+            sdk.Iniciales.Add("MODOINI", "DIVISOR");
+            string nombre_doc = ReturnIdFactura().ToString();
+            sdk.Iniciales.Add("cfdi", datos.ReturnDatos("urlsavefact", 1) + nombre_doc + ".xml");
+            sdk.Iniciales.Add("xml_debug", datos.ReturnDatos("urlsavefact", 1) + nombre_doc + "_debug.xml");
+            sdk.Iniciales.Add("remueve_acentos", "NO");
+            sdk.Iniciales.Add("RESPUESTA_UTF8", "SI");
+            sdk.Iniciales.Add("html_a_txt", "NO");
+
+            MFObject factura = new MFObject("factura");
+            factura["serie"] = "A";
+            factura["folio"] = nombre_doc;
+            factura["fecha_expedicion"] = DateTime.Now.ToString("s");
+            factura["metodo_pago"] = "PUE";
+            String[] substrings = metododepago.Split('-');
+            factura["forma_pago"] = substrings[0];
+            factura["condicionesDePago"] = "condiciones";
+            String[] tcomp = TipoComprobante.Split('-');
+            factura["tipocomprobante"] = tcomp[0].ToUpper();
+            factura["moneda"] = "MXN";
+            factura["tipocambio"] = "1.00";
+            factura["LugarExpedicion"] = datos.ReturnDatos("lexpedicion", 1);
+            factura["RegimenFiscal"] = datos.ReturnDatos("regimenfiscal", 1); ;
+            factura["subtotal"] = (float.Parse(total) - iva).ToString("#.##");// Total / 1.16
+            factura["descuento"] = "0.00";
+            factura["total"] = total;//Total con iva
+
+            MFObject emisor = new MFObject("emisor");
+            emisor["rfc"] = datos.ReturnDatos("conrfc", 1); //LAN7008173R5
+            emisor["nombre"] = datos.ReturnDatos("connombre", 1);
+            emisor["RegimenFiscal"] = datos.ReturnDatos("regimenfiscal", 1);
+
+            
+            MFObject receptor = new MFObject("receptor");
+            receptor["rfc"] = ReturnDatosHuesped("rfc", IdHuesped).ToUpper();
+            receptor["nombre"] = ReturnDatosHuesped("razonsocial", IdHuesped);
+            receptor["UsoCFDI"] = "G03";
+            
+            // Impuestos
+            MFObject impuestos = new MFObject("impuestos");
+            impuestos["TotalImpuestosTrasladados"] = iva.ToString("#.##");
+
+            // Traslados
+            MFObject itras = new MFObject("translados");
+            MFObject itra0 = new MFObject("0");
+            itra0["Impuesto"] = "002";
+            itra0["Importe"] = iva.ToString("#.##");
+            itra0["TasaOCuota"] = "0.160000";
+            itra0["TipoFactor"] = "Tasa";
+            itras.AgregaSubnodo(itra0);
+            impuestos.AgregaSubnodo(itras);
+
+
+            sdk.AgregaObjeto(PAC());
+            sdk.AgregaObjeto(Conf());
+            sdk.AgregaObjeto(factura);
+            sdk.AgregaObjeto(emisor);
+            sdk.AgregaObjeto(receptor);
+            sdk.AgregaObjeto(conceptos);
+            sdk.AgregaObjeto(impuestos);
+            // Muestras la estructura
+            MostrarDatos(sdk);
+
+            // Se timbra el CFDI
+            SDKRespuesta respuesta = sdk.Timbrar(@"C:\sdk2\timbrar32.bat", @"C:\sdk2\timbrados\", "factura", false);
+
+            if (Convert.ToInt32(respuesta.Codigo_MF_Numero) == 0)
             {
-                status = 3;
-                Notificacion(respuesta.Codigo_MF_Texto, 3);
+                Notificacion("Factura A" + nombre_doc + " timbrada correctamente", 1);
+                foreach (int item in ids)
+                {
+                    ChangeFacturadoIdVenta(item.ToString());
+                }
+                GeneratePdfFactura(datos.ReturnDatos("urlsavefact", 1) + nombre_doc + ".xml", datos.ReturnDatos("urlsavefact", 1) + nombre_doc + ".pdf", datos.ReturnDatos("urllogofact", 1), ReturnDatosHuesped("email", IdHuesped), nombre_doc, total);
+                AddFactureDB(nombre_doc + ".xml", IdHuesped, "VALIDA");
             }
-            else if (respuesta.Codigo_MF_Numero == "4")
+            else
             {
-                status = 4;
-                Notificacion(respuesta.Codigo_MF_Texto, 3);
+                Notificacion(respuesta.Codigo_MF_Texto, 2);
             }
-            else if (respuesta.Codigo_MF_Numero == "5")
-            {
-                status = 5;
-                Notificacion(respuesta.Codigo_MF_Texto, 3);
-            }
-            else if (respuesta.Codigo_MF_Numero == "6")
-            {
-                status = 6;
-                Notificacion(respuesta.Codigo_MF_Texto, 3);
-            }
-            else if (respuesta.Codigo_MF_Numero == "7")
-            {
-                status = 7;
-                Notificacion(respuesta.Codigo_MF_Texto, 3);
-            }
-            else if (respuesta.Codigo_MF_Numero == "8")
-            {
-                status = 8;
-                Notificacion(respuesta.Codigo_MF_Texto, 3);
-            }
-            return status;
+
+            return Convert.ToInt32(respuesta.Codigo_MF_Numero);
+
         }
 
         private void AddFactureDB(string nombre, int idHuesped, string ststus)
@@ -234,7 +203,7 @@ namespace HostelSystem
             try
             {
                 coneccion.cnn.Close();
-                coneccion.sql = "INSERT INTO facturas(id, nombre, id_huesped, status) VALUES('" + nombre.Replace(".xml","") + "', '" + nombre  + "', '" + idHuesped + "', 'VALIDA')";
+                coneccion.sql = "INSERT INTO facturas(id, nombre, id_huesped, status) VALUES('" + nombre.Replace(".xml", "") + "', '" + nombre + "', '" + idHuesped + "', 'VALIDA')";
                 coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                 coneccion.cnn.Open();
                 coneccion.comandosql.ExecuteReader();
@@ -245,15 +214,15 @@ namespace HostelSystem
                 coneccion.cnn.Close();
                 MessageBox.Show(a.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
-
         }
+
         private void UpdateFactureDB(int id, string status)
         {
             try
             {
                 coneccion.cnn.Close();
-                    
-                coneccion.sql = "update facturas set status = '"+status+"' where id = '"+id+"'";
+
+                coneccion.sql = "update facturas set status = '" + status + "' where id = '" + id + "'";
                 coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                 coneccion.cnn.Open();
                 coneccion.comandosql.ExecuteReader();
@@ -263,6 +232,7 @@ namespace HostelSystem
             {
                 MessageBox.Show(a.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
+
         }
         private int ReturnIdFactura()
         {
@@ -284,11 +254,31 @@ namespace HostelSystem
             }
             catch (Exception a)
             {
+                coneccion.cnn.Close();
                 MessageBox.Show(a.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
+            coneccion.cnn.Close();
             return i + 1;
         }
-        
+
+        private void ChangeFacturadoIdVenta(string id)
+        {
+            try
+            {
+                coneccion.sql = "update ventas set facturado = 1 where id = '" + id + "'";
+                coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
+                coneccion.cnn.Open();
+                SqlDataReader Reg = null;
+                Reg = coneccion.comandosql.ExecuteReader();
+                coneccion.cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                coneccion.cnn.Close();
+                MessageBox.Show(ex.ToString(), datos.ReturnDatos("nombre", 1), MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+        }
+
         private void LoadFacturas(DataGridView dtv, string consulta)
         {
             dtv.DataSource = null;
@@ -340,11 +330,12 @@ namespace HostelSystem
                 MessageBox.Show(e.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
-        
+
         private void loadSearch()
         {
-            string valor = valor = Microsoft.VisualBasic.Interaction.InputBox("Ingrese numero de factura o nombre del huesped.", d.ReturnDatos("Nombre", 1), "", -1, -1);
-            LoadFacturas(DtvFacturas, "select fa.id, fa.nombre, fa.status, fa.id_huesped, cli.nombre from facturas fa, clientes cli where fa.id_huesped = cli.id and fa.nombre like '%" + valor + "%' or fa.id_huesped = cli.id and cli.nombre like '%" + valor + "%' order by id desc");
+            string valor = valor = Microsoft.VisualBasic.Interaction.InputBox("Ingrese numero de factura o nombre del huesped.", datos.ReturnDatos("Nombre", 1), "", -1, -1);
+
+            LoadFacturas(DtvFacturas, "select fa.id, fa.nombre, fa.status, fa.id_huesped, hu.nombre from facturas fa, huespedes hu where fa.id_huesped = hu.id and fa.nombre like '%" + valor + "%' or fa.id_huesped = hu.id and hu.nombre like '%" + valor + "%' order by id desc");
         }
 
         private void DtvFacturas_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -363,10 +354,13 @@ namespace HostelSystem
             {
                 try
                 {
+                    var hti = DtvFacturas.HitTest(e.X, e.Y);
+                    DtvFacturas.ClearSelection();
+                    DtvFacturas.Rows[hti.RowIndex].Selected = true;
                     this.ContextMenuStrip = this.MenuDGV;
                 }
-                catch(Exception)
-                {}
+                catch (Exception)
+                { }
             }
         }
 
@@ -382,6 +376,7 @@ namespace HostelSystem
 
         private void nuevaFacturaToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            this.Dispose();
             NewFactura form = new NewFactura();
             form.Show();
         }
@@ -396,11 +391,11 @@ namespace HostelSystem
             try
             {
                 DataGridViewRow row = DtvFacturas.CurrentRow;
-                System.Diagnostics.Process.Start(d.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString().Replace(".xml", ".pdf"));
+                System.Diagnostics.Process.Start(datos.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString().Replace(".xml", ".pdf"));
             }
             catch (Exception)
             {
-                if (MessageBox.Show("Verifique sus movimientos, posiblemente la factura PDF, ya no existe en la carpeta : " + d.ReturnDatos("urlsavefact", 1) + "\n\nDESEA QUE EL SISTEMA TRATE DE GENERAR NUEVAMENTE EL PDF ?", "Alert", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) == DialogResult.Yes)
+                if (MessageBox.Show("Verifique sus movimientos, posiblemente la factura PDF, ya no existe en la carpeta : " + datos.ReturnDatos("urlsavefact", 1) + "\n\nDESEA QUE EL SISTEMA TRATE DE GENERAR NUEVAMENTE EL PDF ?", "Alert", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) == DialogResult.Yes)
                 {
                     RegeneratePDF();
                 }
@@ -428,15 +423,15 @@ namespace HostelSystem
             {
                 DataGridViewRow rowtmp = DtvFacturas.CurrentRow;
 
-                if (MessageBox.Show("Cancelar factura : " + rowtmp.Cells["nombre"].Value.ToString(), "CANCELAR FACTURA PDF- " + d.ReturnDatos("connombre", 1), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                if (MessageBox.Show("Cancelar factura : " + rowtmp.Cells["nombre"].Value.ToString(), "CANCELAR FACTURA PDF- " + datos.ReturnDatos("nombre", 1), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    pictureBox1.Load(coneccion.ReturnLocalData()+@"resources\spin.gif");
+                    pictureBox1.Load(@"C:\HostelData\resources\spin.gif");
                     pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-                    pictureBox2.Load(coneccion.ReturnLocalData() + @"resources\spin.gif");
+                    pictureBox2.Load(@"C:\HostelData\resources\spin.gif");
                     pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-                    pictureBox3.Load(coneccion.ReturnLocalData() + @"resources\spin.gif");
+                    pictureBox3.Load(@"C:\HostelData\resources\spin.gif");
                     pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-                    CancellFactura(Convert.ToInt32(rowtmp.Cells["id"].Value),d.ReturnDatos("urlsavefact", 1) + rowtmp.Cells["nombre"].Value.ToString());
+                    CancellFactura(Convert.ToInt32(rowtmp.Cells["id"].Value), datos.ReturnDatos("urlsavefact", 1) + rowtmp.Cells["nombre"].Value.ToString());
                 }
             }
             catch (Exception a)
@@ -445,8 +440,10 @@ namespace HostelSystem
             }
         }
 
-        public void GeneratePdfFactura(string rutaxmltmp, string rutasavetmp, string rutalogotmp, string mailtmp)
+        public void GeneratePdfFactura(string rutaxmltmp, string rutasavetmp, string rutalogotmp, string mailtmp, string nombre_doc, string total)
         {
+            nombrexml = nombre_doc;
+            totalfact = total;
             rutaxml = rutaxmltmp;
             rutasave = rutasavetmp;
             rutalogo = rutalogotmp;
@@ -461,12 +458,12 @@ namespace HostelSystem
             ci.NumberFormat.NumberDecimalSeparator = ".";
             Thread.CurrentThread.CurrentCulture = ci;
 
-            DocumentoPDF.CreaPDF crearPDF = new DocumentoPDF.CreaPDF(rutaxml, rutasave, Image.FromFile(rutalogo) );
+            DocumentoPDF.CreaPDF crearPDF = new DocumentoPDF.CreaPDF(rutaxml, rutasave, Image.FromFile(rutalogo));
             List<string> list = new List<string>();
             list.Add(rutaxml);
-            list.Add(rutaxml.Replace(".xml",".pdf"));
+            list.Add(rutaxml.Replace(".xml", ".pdf"));
 
-            SendMail(list,mailfact);
+            SendMail(list, mailfact);
 
             ci.NumberFormat.NumberDecimalSeparator = ",";
             Thread.CurrentThread.CurrentCulture = ci;
@@ -502,13 +499,14 @@ namespace HostelSystem
 
                 ci.NumberFormat.NumberDecimalSeparator = ",";
                 Thread.CurrentThread.CurrentCulture = ci;
-            }catch(Exception ee)
+            }
+            catch (Exception ee)
             {
-                MessageBox.Show(ee.ToString(),"ERROR", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(ee.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
-        
-        public void CancellFactura(int id,string rutaxmltmp)
+
+        public void CancellFactura(int id, string rutaxmltmp)
         {
             rutaxml = rutaxmltmp;
             idfacturadb = id;
@@ -528,37 +526,21 @@ namespace HostelSystem
 
         public void CancellFacturaAction(object o, DoWorkEventArgs e)
         {
-            PAC pac;
-            Conf conf;
-
-            if (production.ToLower() == "si")
-            {
-                pac = new PAC(d.ReturnDatos("conrfc", 1), d.ReturnDatosMinMa("passfact", 1), production);
-
-                conf = new Conf(d.ReturnDatosMinMa("urlcer", 1), d.ReturnDatosMinMa("urlkey", 1), d.ReturnDatosMinMa("passfact", 1));
-            }
-            else
-            {
-                pac = new PAC("DEMO700101XXX", "DEMO700101XXX", production);
-
-                conf = new Conf(coneccion.ReturnLocalData()+@"SELLO_DIGITAL\CSD01_AAA010101AAA.cer", coneccion.ReturnLocalData() + @"SELLO_DIGITAL\CSD01_AAA010101AAA.key", "12345678a");
-            }
-
-            SDKConfig sdkConf = new SDKConfig(pac, conf, rutasdk);
-
-            SDK sdk = new SDK(sdkConf);
-            sdk = new SDK(sdkConf);
-
-            // Se cancela el CFDI
-
-            SDKRespuesta respuesta = sdk.CancelarConAcuse(rutaxml);
+            sdk = new MFSDK();
+            sdk.Iniciales.Add("cfdi", rutaxml);
+            sdk.Iniciales.Add("cancelar", "SI");
+            sdk.AgregaObjeto(PAC());
+            sdk.AgregaObjeto(Conf());
+            // Se timbra el CFDI
+            SDKRespuesta respuesta = sdk.Timbrar(@"C:\sdk2\timbrar32.bat", @"C:\sdk2\timbrados\", "factura", false);
             if (respuesta.Codigo_MF_Numero == "0")
             {
                 Conexion coneccion = new Conexion();
                 try
                 {
-                    
+
                     coneccion.cnn.Close();
+
                     coneccion.sql = "update facturas set status = 'CANCELADA' where id = '" + idfacturadb + "'";
                     coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                     coneccion.cnn.Open();
@@ -566,41 +548,14 @@ namespace HostelSystem
                     coneccion.cnn.Close();
                 }
                 catch (Exception)
-                { coneccion.cnn.Close();}
-                MessageBox.Show(respuesta.Codigo_MF_Texto + "\n\nConsulte su acuse de cancelacion en : " + rutaxml.Replace(".xml", "_acuse.xml"), "ACUSE CANCELACION", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                { coneccion.cnn.Close(); }
+                //UpdateDTV();
+                Notificacion(respuesta.Codigo_MF_Texto, 1);
             }
-            else if (respuesta.Codigo_MF_Numero == "1")
+            else
             {
-                MessageBox.Show(respuesta.Codigo_MF_Texto, "SALDO INSUFICIENTE", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                Notificacion(respuesta.Codigo_MF_Texto, 3);
             }
-            else if (respuesta.Codigo_MF_Numero == "2")
-            {
-                MessageBox.Show(respuesta.Codigo_MF_Texto, "ERROR AL TIMBRAR", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-            else if (respuesta.Codigo_MF_Numero == "3")
-            {
-                MessageBox.Show(respuesta.Codigo_MF_Texto, "TIEMPO EXCEDIDO", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-            else if (respuesta.Codigo_MF_Numero == "4")
-            {
-                MessageBox.Show(respuesta.Codigo_MF_Texto, "USUARIO O CONTRASEÑA INCORRECTOS", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-            else if (respuesta.Codigo_MF_Numero == "5")
-            {
-                MessageBox.Show(respuesta.Codigo_MF_Texto, "USUARIO O CONTRASEÑA INCORRECTOS", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-            else if (respuesta.Codigo_MF_Numero == "6")
-            {
-                MessageBox.Show(respuesta.Codigo_MF_Texto, "ERROR PAC", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-            else if (respuesta.Codigo_MF_Numero == "7")
-            {
-                MessageBox.Show(respuesta.Codigo_MF_Texto, "ERROR INTERNO", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-            else if (respuesta.Codigo_MF_Numero == "8")
-            {
-                MessageBox.Show(respuesta.Codigo_MF_Texto, "ERROR TICKET", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-           }            
         }
         private void enviarPorCorreoToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -614,16 +569,16 @@ namespace HostelSystem
                 DataGridViewRow row = DtvFacturas.CurrentRow;
 
                 List<string> list = new List<string>();
-                list.Add(d.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString());
-                list.Add(d.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString().Replace(".xml", ".pdf"));
-
-                SendMail(list, ReturnDatosHuesped("mail", Convert.ToInt32(row.Cells["id_huesped"].Value.ToString())));
+                list.Add(datos.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString());
+                list.Add(datos.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString().Replace(".xml", ".pdf"));
+                nombrexml = row.Cells["nombre"].Value.ToString();
+                SendMail(list, ReturnDatosHuesped("email", Convert.ToInt32(row.Cells["id_huesped"].Value.ToString())));
 
                 MessageBox.Show("La factura se enviara en un momento, puede realizar otras tareas, el sistema le avisara.", "FACTURA SEND", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception)
             {
-                MessageBox.Show("Verifique sus movimientos, posiblemente la factura ya no existe en la carpeta : " + d.ReturnDatos("urlsavefact", 1), "Alert", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show("Verifique sus movimientos, posiblemente la factura ya no existe en la carpeta : " + datos.ReturnDatos("urlsavefact", 1), "Alert", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
 
@@ -642,25 +597,25 @@ namespace HostelSystem
             try
             {
                 DataGridViewRow row = DtvFacturas.CurrentRow;
-                
-                if (MessageBox.Show("Se intentara generar nuevamente el pdf de la factura : " + row.Cells["nombre"].Value.ToString() + ", en caso de existir un pdf con el mismo nombre este se reemplazara.", "REGENERACION FACTURA PDF- " + d.ReturnDatos("nombre", 1), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+
+                if (MessageBox.Show("Se intentara generar nuevamente el pdf de la factura : " + row.Cells["nombre"].Value.ToString() + ", en caso de existir un pdf con el mismo nombre este se reemplazara.", "REGENERACION FACTURA PDF- " + datos.ReturnDatos("nombre", 1), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    pictureBox1.Load(coneccion.ReturnLocalData() +@"resources\spin.gif");
+                    pictureBox1.Load(@"C:\HostelData\resources\spin.gif");
                     pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-                    pictureBox2.Load(coneccion.ReturnLocalData() + @"resources\spin.gif");
+                    pictureBox2.Load(@"C:\HostelData\resources\spin.gif");
                     pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-                    pictureBox3.Load(coneccion.ReturnLocalData() + @"resources\spin.gif");
+                    pictureBox3.Load(@"C:\HostelData\resources\spin.gif");
                     pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
 
                     if (row.Cells["status"].Value.ToString().ToLower() == "valida")
                     {
-                        ReGeneratePdfFactura(d.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString(), d.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString().Replace(".xml", ".pdf"), d.ReturnDatos("urllogofact", 1));
+                        ReGeneratePdfFactura(datos.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString(), datos.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString().Replace(".xml", ".pdf"), datos.ReturnDatos("urllogofact", 1));
                     }
                     else if (row.Cells["status"].Value.ToString().ToLower() == "cancelada")
                     {
-                        GeneratePdfAcuse(d.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString().Replace(".xml","_acuse.xml"), d.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString().Replace(".xml", "_acuse.pdf"));
+                        GeneratePdfAcuse(datos.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString().Replace(".xml", "_acuse.xml"), datos.ReturnDatos("urlsavefact", 1) + row.Cells["nombre"].Value.ToString().Replace(".xml", "_acuse.pdf"));
                     }
-                }                
+                }
             }
             catch (Exception a)
             {
@@ -681,14 +636,45 @@ namespace HostelSystem
             RegeneratePDF();
         }
 
-        private void regenerarDirectorioToolStripMenuItem_Click(object sender, EventArgs e)
+        public string ReturnDatosHuesped(string dato, int huesped)
+        {
+            string valor = "";
+
+            try
+            {
+                coneccion.cnn.Close();
+                coneccion.sql = "SELECT " + dato + " FROM clientes WHERE id= " + huesped + "";
+                coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
+                coneccion.cnn.Open();
+                SqlDataReader Reg = null;
+                Reg = coneccion.comandosql.ExecuteReader();
+
+                if (Reg.Read())
+                {
+                    if (Reg[0] != null)
+                    {
+                        valor = Reg[0].ToString().ToLower();
+                    }
+                }
+                coneccion.cnn.Close();
+            }
+            catch (Exception e)
+            {
+                coneccion.cnn.Close();
+                MessageBox.Show(e.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
+            coneccion.cnn.Close();
+            return valor;
+        }
+
+        private void regenerarDirecorioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RestoreDirectoryFacturas();
         }
 
         public void RestoreDirectoryFacturas()
         {
-            DirectoryInfo di = new DirectoryInfo(d.ReturnDatos("urlsavefact", 1));
+            DirectoryInfo di = new DirectoryInfo(datos.ReturnDatos("urlsavefact", 1));
 
             foreach (var fi in di.GetFiles())
             {
@@ -698,6 +684,25 @@ namespace HostelSystem
                 }
             }
             UpdateDTV();
+        }
+
+        public void CleanTableDb(String sql, string tableDB)
+        {
+
+            try
+            {
+                coneccion.cnn.Close();
+                coneccion.sql = sql;
+                coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
+                coneccion.cnn.Open();
+                coneccion.comandosql.ExecuteReader();
+                coneccion.cnn.Close();
+            }
+            catch (Exception e)
+            {
+                coneccion.cnn.Close();
+                MessageBox.Show(e.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+            }
         }
 
         private void SearchAndProcessIDfactura(int factura)
@@ -730,6 +735,7 @@ namespace HostelSystem
             try
             {
                 coneccion.cnn.Close();
+
                 coneccion.sql = "INSERT INTO facturas (id,nombre,id_huesped,status) VALUES ('" + factura + "','" + factura + ".xml" + "','" + 1 + "','VALIDA')";
                 coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                 coneccion.cnn.Open();
@@ -743,88 +749,48 @@ namespace HostelSystem
             }
         }
 
-        private void abrirDirectorioToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowDirectorio();
-        }
-
-        private void ShowDirectorio()
-        {
-            System.Diagnostics.Process.Start(d.ReturnDatos("urlsavefact", 1));
-        }
-
-        public string ReturnDatosHuesped(string dato, int huesped)
-        {
-            string valor = "";
-
-            try
-            {
-                coneccion.cnn.Close();
-                coneccion.sql = "SELECT "+ dato +" FROM clientes WHERE id= " + huesped + "";
-                coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
-                coneccion.cnn.Open();
-                SqlDataReader Reg = null;
-                Reg = coneccion.comandosql.ExecuteReader();
-
-                if (Reg.Read())
-                {
-                    if (Reg[0] != null)
-                    {
-                        valor = Reg[0].ToString().ToLower();
-                    }
-                }
-                coneccion.cnn.Close();
-            }
-            catch (Exception e)
-            {
-                coneccion.cnn.Close();
-                MessageBox.Show(e.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
-            return valor;
-        }
-
         private string correofact = "";
         private List<string> lista = new List<string>();
 
-        public void SendMail(List<string>list, string mail)
+        public void SendMail(List<string> list, string mail)
         {
             BackgroundWorker process = new BackgroundWorker();
             lista = list;
             correofact = mail;
             process.DoWork += SendMailStart;
-            process.RunWorkerAsync();    
+            process.RunWorkerAsync();
         }
 
         public void SendMailStart(object o, DoWorkEventArgs e)
         {
-            pictureBox1.Load(coneccion.ReturnLocalData()+@"resources\spin.gif");
+            pictureBox1.Load(@"C:\HostelData\resources\spin.gif");
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox2.Load(coneccion.ReturnLocalData() + @"resources\spin.gif");
+            pictureBox2.Load(@"C:\HostelData\resources\spin.gif");
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.Load(coneccion.ReturnLocalData() + @"resources\spin.gif");
+            pictureBox3.Load(@"C:\HostelData\resources\spin.gif");
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
 
             MailMessage msg = new MailMessage();
 
             //Email a quien se le envia
-            if (correofact.Replace(" ","") != "")
+            if (correofact.Replace(" ", "") != "")
             {
-                correofact += ","+d.ReturnDatos("mailr", 1);
-                correofact = correofact.Replace(",,", ",");
                 msg.To.Add(correofact);
-            }else
-            {
-                msg.To.Add(d.ReturnDatos("mailr",1));
+                msg.To.Add(datos.ReturnDatos("mailr", 1));
             }
-            
-            //Email que quieras que aparezca de quien envia y nombre de quien aparece
-            msg.From = new MailAddress(d.ReturnDatosMinMa("correo", 1), d.ReturnDatos("correo", 1));
+            else
+            {
+                msg.To.Add(datos.ReturnDatos("mailr", 1));
+            }
 
-            msg.Subject = "FACTURA - "+ d.ReturnDatos("connombre", 1);
-            msg.Body = "Estimado cliente, se adjunta el xml y pdf de su factura valida ante el sat.\n\n" + d.ReturnDatos("connombre", 1) + "\nDIRECCION: " + d.ReturnDatos("dfcalle", 1)  + "\nCORREO ELECTRONICO: " + d.ReturnDatos("correo", 1) + "\n\n\nESTE ES UN CORREO AUTOMATICO, NO ES NECESARIO QUE LO RESPONDA\nSOFTWARE Y MAS: " + d.ReturnDatos("web", 1);
+            //Email que quieras que aparezca de quien envia y nombre de quien aparece
+            msg.From = new MailAddress(datos.ReturnDatosMinMa("correo", 1), datos.ReturnDatos("nombre", 1));
+
+            msg.Subject = "FACTURA: A" + nombrexml.Replace(".xml", "") + ", TOTAL: $ " + totalfact;
+            msg.Body = "Estimado cliente, se adjunta el xml y pdf de su factura valida ante el sat.\n\n" + datos.ReturnDatos("nombre", 1) + "\nDIRECCION: " + datos.ReturnDatos("direccion", 1) + "\nTELEFONO'S: " + datos.ReturnDatos("telefono", 1) + "\nCORREO ELECTRONICO: " + datos.ReturnDatos("mailr", 1) + "\n\n\nESTE ES UN CORREO AUTOMATICO, NO ES NECESARIO QUE LO RESPONDA\nSOFTWARE Y MAS: " + datos.ReturnDatos("web", 1);
             msg.SubjectEncoding = System.Text.Encoding.UTF8;
 
-            foreach(var item in lista)
+            foreach (var item in lista)
             {
                 msg.Attachments.Add(new Attachment(item));
             }
@@ -834,11 +800,11 @@ namespace HostelSystem
             SmtpClient client = new SmtpClient();
 
             client.UseDefaultCredentials = false;
-            client.Credentials = new System.Net.NetworkCredential(d.ReturnDatosMinMa("correo", 1), d.ReturnDatosMinMa("password", 1));
+            client.Credentials = new System.Net.NetworkCredential(datos.ReturnDatosMinMa("correo", 1), datos.ReturnDatosMinMa("password", 1));
 
-            client.Port = Convert.ToInt32(d.ReturnDatosMinMa("port", 1));
+            client.Port = Convert.ToInt32(datos.ReturnDatosMinMa("port", 1));
 
-            client.Host = d.ReturnDatosMinMa("host", 1);
+            client.Host = datos.ReturnDatosMinMa("host", 1);
 
             client.EnableSsl = true;
 
@@ -850,7 +816,7 @@ namespace HostelSystem
                 pictureBox3.Image = null;
                 NotifyIcon notificacion = new NotifyIcon();
                 notificacion.Icon = SystemIcons.Information;
-                notificacion.BalloonTipTitle = d.ReturnDatos("connombre", 1);
+                notificacion.BalloonTipTitle = datos.ReturnDatos("nombre", 1);
                 notificacion.BalloonTipText = "Reporte enviado";
                 notificacion.BalloonTipIcon = ToolTipIcon.Info;
                 notificacion.Visible = true;
@@ -867,7 +833,7 @@ namespace HostelSystem
                 pictureBox3.Image = null;
                 NotifyIcon notificacion = new NotifyIcon();
                 notificacion.Icon = SystemIcons.Error;
-                notificacion.BalloonTipTitle = d.ReturnDatos("connombre", 1);
+                notificacion.BalloonTipTitle = datos.ReturnDatos("nombre", 1);
                 notificacion.BalloonTipText = "No se pudo enviar el reporte.";
                 notificacion.BalloonTipIcon = ToolTipIcon.Error;
                 notificacion.Visible = true;
@@ -882,9 +848,22 @@ namespace HostelSystem
             }
 
         }
-        private static string msgg;
+        private static string msgg, titlee;
+
+        private void abrirFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(datos.ReturnDatos("urlsavefact", 1));
+        }
+
+        private void emitirFacturaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+            NewFactura form = new NewFactura();
+            form.Show();
+        }
+
         private static int CodeIconG;
-        public void Notificacion (string msg, int CodeIcon)
+        public void Notificacion(string msg, int CodeIcon)
         {
             BackgroundWorker proceso = new BackgroundWorker();
             msgg = msg;
@@ -911,8 +890,44 @@ namespace HostelSystem
                 notificacion.Icon = SystemIcons.Error;
                 notificacion.BalloonTipIcon = ToolTipIcon.Error;
             }
-            
-            notificacion.BalloonTipTitle = d.ReturnDatos("connombre", 1);
+
+            notificacion.BalloonTipTitle = datos.ReturnDatos("nombre", 1);
+            notificacion.BalloonTipText = msgg;
+            notificacion.Visible = true;
+            notificacion.ShowBalloonTip(30000);
+            Thread.Sleep(30000);
+            notificacion.Dispose();
+        }
+        public void NotificacionGBL(string title, string msg, int CodeIcon)
+        {
+            BackgroundWorker proceso = new BackgroundWorker();
+            msgg = msg;
+            titlee = title;
+            CodeIconG = CodeIcon;
+            proceso.DoWork += NoticiacionProcesGBL;
+            proceso.RunWorkerAsync();
+        }
+
+        private void NoticiacionProcesGBL(object sender, DoWorkEventArgs e)
+        {
+            NotifyIcon notificacion = new NotifyIcon();
+            if (CodeIconG == 1)
+            {
+                notificacion.Icon = SystemIcons.Information;
+                notificacion.BalloonTipIcon = ToolTipIcon.Info;
+            }
+            else if (CodeIconG == 2)
+            {
+                notificacion.Icon = SystemIcons.Warning;
+                notificacion.BalloonTipIcon = ToolTipIcon.Warning;
+            }
+            else if (CodeIconG == 3)
+            {
+                notificacion.Icon = SystemIcons.Error;
+                notificacion.BalloonTipIcon = ToolTipIcon.Error;
+            }
+
+            notificacion.BalloonTipTitle = titlee;
             notificacion.BalloonTipText = msgg;
             notificacion.Visible = true;
             notificacion.ShowBalloonTip(30000);

@@ -208,17 +208,19 @@
             // 
             // MetodPago
             // 
+            this.MetodPago.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.MetodPago.FormattingEnabled = true;
             this.MetodPago.Items.AddRange(new object[] {
-            "EFECTIVO",
-            "CHEQUE NOMINATIVO",
-            "TRANSFERENCIA ELECTRONICA DE FONDOS",
-            "TARJETA DE CREDITO",
-            "MONEDERO ELECTRONICO",
-            "VALES DE DESPENSA",
-            "TARJETA DE DEBITO",
-            "TARJETA DE SERVICIO",
-            "OTROS"});
+            "01-Efectivo",
+            "02-Cheque Nominativo",
+            "03-Transferencia electrónica de fondos",
+            "04-Tarjetas de crédito",
+            "05-Monedero electrónico",
+            "06-Dinero electrónico",
+            "08-Vales de despensa",
+            "28-Tarjeta de Débito",
+            "29-Tarjeta de Servicio",
+            "99-Otros"});
             this.MetodPago.Location = new System.Drawing.Point(11, 21);
             this.MetodPago.Name = "MetodPago";
             this.MetodPago.Size = new System.Drawing.Size(243, 21);

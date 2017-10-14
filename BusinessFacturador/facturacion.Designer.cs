@@ -122,7 +122,6 @@
             this.abrirDirectorioToolStripMenuItem.Name = "abrirDirectorioToolStripMenuItem";
             this.abrirDirectorioToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.abrirDirectorioToolStripMenuItem.Text = "Abrir directorio";
-            this.abrirDirectorioToolStripMenuItem.Click += new System.EventHandler(this.abrirDirectorioToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
@@ -182,7 +181,6 @@
             this.regenerarDirectorioToolStripMenuItem.Name = "regenerarDirectorioToolStripMenuItem";
             this.regenerarDirectorioToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.regenerarDirectorioToolStripMenuItem.Text = "Regenerar directorio";
-            this.regenerarDirectorioToolStripMenuItem.Click += new System.EventHandler(this.regenerarDirectorioToolStripMenuItem_Click);
             // 
             // buscarToolStripMenuItem1
             // 

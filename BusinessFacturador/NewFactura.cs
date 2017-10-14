@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
-using Multifacturas.SDK;
+using MultiFacturasSDK;
 using System.Globalization;
 using System.Threading;
 
@@ -15,6 +15,7 @@ namespace HostelSystem
         Conexion coneccion = new Conexion();
         Datos datos = new Datos();
         int status = 0, mov = 0;
+        
         public NewFactura()
         {
             InitializeComponent();
@@ -100,9 +101,6 @@ namespace HostelSystem
                 }
                 else
                 {
-                    facturacion form = new facturacion();
-                    form.RestoreDirectoryFacturas();
-                    form.Dispose();
                     BackgroundWorker process = new BackgroundWorker();
                     process.DoWork += Facturar;
                     process.RunWorkerCompleted += FacturarComplet;
@@ -137,6 +135,19 @@ namespace HostelSystem
             TxtManualMonto.Text = "";
         }
 
+        public bool IsInt(object Expression)
+        {
+
+            bool isNum;
+
+            int retNum;
+
+            isNum = int.TryParse(Convert.ToString(Expression), out retNum);
+
+            return isNum;
+
+        }
+
         private void FacturarActionProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             //progressBar1.Increment(Convert.ToInt32(e));
@@ -144,6 +155,64 @@ namespace HostelSystem
 
         private void Facturar(object sender, DoWorkEventArgs e)
         {
+            facturacion form = new facturacion();
+            form.RestoreDirectoryFacturas();
+            
+            status = 1;
+            
+            MFObject conceptos = new MFObject("conceptos");
+
+            string articulos = "";
+            float total = 0;
+            float iva = 0;
+
+            CultureInfo ci = new CultureInfo("en-US");
+            ci.NumberFormat.NumberDecimalSeparator = ".";
+            Thread.CurrentThread.CurrentCulture = ci;
+            int cont = 0;
+            List<int> ids = new List<int>();
+            
+            foreach (DataGridViewRow item in DtvProductFact.Rows)
+            {
+                if (item.Cells[0].Value != null)
+                {
+                    if (item.Cells["cantidad"].Value.ToString().Replace(" ", "") == "")
+                    {
+                        item.Cells["cantidad"].Value = 1;
+                    }
+                    articulos += item.Cells["cantidad"].Value.ToString() + " - " + item.Cells["concepto"].Value.ToString() + ", MONTO $" + item.Cells["monto"].Value.ToString() + " C/U\n";
+                    total += float.Parse(item.Cells["cantidad"].Value.ToString()) * float.Parse(item.Cells["monto"].Value.ToString());
+
+                    if (IsInt(item.Cells["id"].Value.ToString().Replace(" ", "")))
+                    {
+                        ids.Add(Convert.ToInt32(item.Cells["id"].Value.ToString().Replace(" ", "")));
+                    }
+
+                    MFObject concepto0 = new MFObject(cont.ToString());
+                    concepto0["ClaveProdServ"] = "01010101";
+                    concepto0["NoIdentificacion"] = item.Cells["id"].Value.ToString();
+                    concepto0["Cantidad"] = item.Cells["cantidad"].Value.ToString();
+                    concepto0["Unidad"] = item.Cells["unidad"].Value.ToString();
+                    concepto0["ClaveUnidad"] = "C81";
+                    concepto0["Descripcion"] = item.Cells["concepto"].Value.ToString();
+                    concepto0["ValorUnitario"] = (float.Parse(item.Cells["monto"].Value.ToString()) / 1.160000).ToString("#.##");
+                    concepto0["Importe"] = ((float.Parse(item.Cells["monto"].Value.ToString()) * float.Parse(item.Cells["cantidad"].Value.ToString())) / 1.160000).ToString("#.##");
+                    MFObject conimp0 = new MFObject("Impuestos");
+                    MFObject conimp0tras = new MFObject("Traslados");
+                    MFObject contra0 = new MFObject("0");
+                    contra0["Base"] = ((float.Parse(item.Cells["monto"].Value.ToString()) * float.Parse(item.Cells["cantidad"].Value.ToString())) / 1.160000).ToString("#.##");
+                    contra0["Importe"] = (((float.Parse(item.Cells["monto"].Value.ToString()) * float.Parse(item.Cells["cantidad"].Value.ToString())) / 1.160000) * 0.160000).ToString("#.##");
+                    iva += float.Parse(contra0["Importe"]);
+                    contra0["Impuesto"] = "002";
+                    contra0["TasaOCuota"] = "0.1600";
+                    contra0["TipoFactor"] = "Tasa";
+                    conimp0tras.AgregaSubnodo(contra0);
+                    conimp0.AgregaSubnodo(conimp0tras);
+                    concepto0.AgregaSubnodo(conimp0);
+                    conceptos.AgregaSubnodo(concepto0);
+                    cont++;
+                }
+            }
             string a = "";
 
             if (InvokeRequired)
@@ -152,50 +221,20 @@ namespace HostelSystem
             }
             String[] substrings = a.Split('[');
             int huesped = 0;
-            try {
+            try
+            {
                 huesped = Convert.ToInt32(substrings[1].Replace("]", ""));
             }
-            catch (Exception){}
-
+            catch (Exception) { }
+            
             if (huesped > 0)
             {
-                status = 1;
-
-                List<Concepto> conceptos = new List<Concepto>();
-
-                Concepto concepto;
-
-                string articulos = "";
-                double total = 0;
-
-                CultureInfo ci = new CultureInfo("en-US");
-                ci.NumberFormat.NumberDecimalSeparator = ".";
-                Thread.CurrentThread.CurrentCulture = ci;
-
-                foreach (DataGridViewRow item in DtvProductFact.Rows)
-                {
-                    if (item.Cells[0].Value != null)
-                    {
-                        articulos += item.Cells["cantidad"].Value.ToString() + " " + item.Cells["concepto"].Value.ToString() + ", MONTO $" + item.Cells["monto"].Value.ToString() + " C/U\n";
-                        total += double.Parse(item.Cells["cantidad"].Value.ToString()) * double.Parse(item.Cells["monto"].Value.ToString());
-
-                        concepto = new Concepto(item.Cells["cantidad"].Value.ToString(), item.Cells["unidad"].Value.ToString().ToUpper(), item.Cells["id"].Value.ToString(), item.Cells["concepto"].Value.ToString().ToUpper(), item.Cells["monto"].Value.ToString(), item.Cells["monto"].Value.ToString());
-
-                        conceptos.Add(concepto);
-                    }
-                }
-
-
-
-                if (MessageBox.Show("SE EMITIRA LA SIGUIENTE FACTURA.\n\n" + articulos + "\nTOTAL: $" + total.ToString() + "\n\nPARA EL HUESPED: " + datos.ReturnDatosCliente(huesped, "nombre") + "(" + datos.ReturnDatosCliente(huesped, "RFC") + ")", "EMISION FACTURA - " + datos.ReturnDatos("connombre", 1) + " - " + datos.ReturnDatos("conrfc", 1), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                if (MessageBox.Show("SE EMITIRA LA SIGUIENTE FACTURA.\n\n" + articulos + "\nTOTAL: $" + total.ToString() + "\n\nPARA: " + datos.ReturnDatosCliente(huesped, "nombre") + "(" + datos.ReturnDatosCliente(huesped, "RFC") + ")", "EMISION FACTURA - " + datos.ReturnDatos("connombre", 1), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     mov = 1;
-                    Image1.Load(coneccion.ReturnLocalData() + @"\resources\spin.gif");
+                    Image1.Load(@"C:\HostelData\resources\spin.gif");
                     Image1.SizeMode = PictureBoxSizeMode.Zoom;
-                    Image2.Load(coneccion.ReturnLocalData() + @"\resources\spin.gif");
-                    Image2.SizeMode = PictureBoxSizeMode.Zoom;
-
-                    facturacion form = new facturacion();
+                    
 
                     string MetodoPagoInvoke = "", TipoComprobanteInvoke = "";
 
@@ -205,18 +244,16 @@ namespace HostelSystem
                         Invoke(new Action(() => TipoComprobanteInvoke = TipoComprobante.Text));
                     }
 
-                    if (form.FactAction(conceptos, huesped, MetodoPagoInvoke, TipoComprobanteInvoke) == 0)
+                    if (form.FactAction(conceptos, iva, huesped, MetodoPagoInvoke, TipoComprobanteInvoke, total.ToString(), ids) == 0)
                     {
                         Image1.Image = Properties.Resources.Libre128;
-                        Image2.Image = Properties.Resources.Libre128;
+                        status = 0;
                     }
                     else
                     {
                         Image1.Image = Properties.Resources.Ocupada128;
-                        Image2.Image = Properties.Resources.Ocupada128;
                     }
                     form.Dispose();
-                    status = 0;
                 }
                 else
                 {
@@ -224,11 +261,12 @@ namespace HostelSystem
                 }
                 ci.NumberFormat.NumberDecimalSeparator = ",";
                 Thread.CurrentThread.CurrentCulture = ci;
-            }else
+            }
+            else
             {
                 MessageBox.Show("Seleccione un cliente", "Cliente", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+            form.Dispose();
         }
 
         private void loadventas(DataGridView dtv, string consulta)
