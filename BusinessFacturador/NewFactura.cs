@@ -125,8 +125,10 @@ namespace HostelSystem
             loadventas(DtvVentas, "select * from conceptos  order by id desc");
             LoadDtvHuespeds(ComboClientes, "select * from clientes order by nombre desc");
             LoadReadyFact(DtvProductFact);
-            MetodPago.SelectedIndex = 0;
+            Metodo_pago.SelectedIndex = 0;
             TipoComprobante.SelectedIndex = 0;
+            usocfdi.SelectedIndex = 0;
+            Forma_pago.SelectedIndex = 0;
             Image1.Image = null;
             Image2.Image = null;
             mov = 0;
@@ -234,17 +236,18 @@ namespace HostelSystem
                     mov = 1;
                     Image1.Load(@"C:\HostelData\resources\spin.gif");
                     Image1.SizeMode = PictureBoxSizeMode.Zoom;
-                    
 
-                    string MetodoPagoInvoke = "", TipoComprobanteInvoke = "";
+
+                    string MetodoPagoInvoke = "", TipoComprobanteInvoke = "", usocfdiinvoke = "", metodopagoinvokev = "";
 
                     if (InvokeRequired)
                     {
-                        Invoke(new Action(() => MetodoPagoInvoke = MetodPago.Text));
+                        Invoke(new Action(() => MetodoPagoInvoke = Forma_pago.Text));
                         Invoke(new Action(() => TipoComprobanteInvoke = TipoComprobante.Text));
+                        Invoke(new Action(() => usocfdiinvoke = usocfdi.Text));
+                        Invoke(new Action(() => metodopagoinvokev = Metodo_pago.Text));
                     }
-
-                    if (form.FactAction(conceptos, iva, huesped, MetodoPagoInvoke, TipoComprobanteInvoke, total.ToString(), ids) == 0)
+                    if (form.FactAction(conceptos, iva, huesped, MetodoPagoInvoke, TipoComprobanteInvoke, total.ToString(), ids, usocfdiinvoke, metodopagoinvokev) == 0)
                     {
                         Image1.Image = Properties.Resources.Libre128;
                         status = 0;
@@ -252,6 +255,7 @@ namespace HostelSystem
                     else
                     {
                         Image1.Image = Properties.Resources.Ocupada128;
+                        status = 0;
                     }
                     form.Dispose();
                 }
@@ -265,6 +269,7 @@ namespace HostelSystem
             else
             {
                 MessageBox.Show("Seleccione un cliente", "Cliente", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                status = 0;
             }
             form.Dispose();
         }

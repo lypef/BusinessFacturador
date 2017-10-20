@@ -30,6 +30,9 @@ namespace DocumentoPDF
         public string cp = string.Empty;
         public string telefono = string.Empty;
 
+        public string Nombre { get; internal set; }
+        public string RegimenFiscal { get; internal set; }
+        public string usocfdi { get; internal set; }
     }
 
     public class ProductoCFD
@@ -41,6 +44,13 @@ namespace DocumentoPDF
         public float valorUnitario = 0.00f;
         public float importe = 0.00f;
         public string numIdentificacion = string.Empty;
+
+        public string ClaveProducto { get; internal set; }
+        public string id { get; internal set; }
+        public string c_unidad { get; internal set; }
+        public string desc { get; internal set; }
+        public string v_unitario { get; internal set; }
+        public string descuento { get; internal set; }
     }
 
     public class ImpuestoCFD
@@ -90,6 +100,8 @@ namespace DocumentoPDF
 
         public string totalEnLetra = string.Empty;
         public float totalImpuestosRetenidos = 0.00f;
+
+        public string tipo_cambio { get; internal set; }
     }
 
     public class CreaPDF
@@ -162,24 +174,24 @@ namespace DocumentoPDF
                 return;
 
             XmlNodeList comprobante = xDoc.GetElementsByTagName("cfdi:Comprobante");
-            if (((XmlElement)comprobante[0]).GetAttribute("serie") != null)
-                _templatePDF.serie = ((XmlElement)comprobante[0]).GetAttribute("serie");
-            if (((XmlElement)comprobante[0]).GetAttribute("folio") != null)
-                _templatePDF.folio = ((XmlElement)comprobante[0]).GetAttribute("folio");
-            if (((XmlElement)comprobante[0]).GetAttribute("fecha") != null)
-                _templatePDF.fechaEmisionCFDI = ((XmlElement)comprobante[0]).GetAttribute("fecha");
-            if (((XmlElement)comprobante[0]).GetAttribute("sello") != null)
-                _templatePDF.selloDigitalCFDI = ((XmlElement)comprobante[0]).GetAttribute("sello");
-            if (((XmlElement)comprobante[0]).GetAttribute("noCertificado") != null)
-                _templatePDF.noSerieCertificadoEmisor = ((XmlElement)comprobante[0]).GetAttribute("noCertificado");
-            if (((XmlElement)comprobante[0]).GetAttribute("subTotal") != null)
+            if (((XmlElement)comprobante[0]).GetAttribute("Serie") != null)
+                _templatePDF.serie = ((XmlElement)comprobante[0]).GetAttribute("Serie");
+            if (((XmlElement)comprobante[0]).GetAttribute("Folio") != null)
+                _templatePDF.folio = ((XmlElement)comprobante[0]).GetAttribute("Folio");
+            if (((XmlElement)comprobante[0]).GetAttribute("Fecha") != null)
+                _templatePDF.fechaEmisionCFDI = ((XmlElement)comprobante[0]).GetAttribute("Fecha");
+            if (((XmlElement)comprobante[0]).GetAttribute("Sello") != null)
+                _templatePDF.selloDigitalCFDI = ((XmlElement)comprobante[0]).GetAttribute("Sello");
+            if (((XmlElement)comprobante[0]).GetAttribute("NoCertificado") != null)
+                _templatePDF.noSerieCertificadoEmisor = ((XmlElement)comprobante[0]).GetAttribute("NoCertificado");
+            if (((XmlElement)comprobante[0]).GetAttribute("SubTotal") != null)
             {
-                float.TryParse(((XmlElement)comprobante[0]).GetAttribute("subTotal"), out valFloat);
+                float.TryParse(((XmlElement)comprobante[0]).GetAttribute("SubTotal"), out valFloat);
                 _templatePDF.subtotal = valFloat;
             }
-            if (((XmlElement)comprobante[0]).GetAttribute("total") != null)
+            if (((XmlElement)comprobante[0]).GetAttribute("Total") != null)
             {
-                float.TryParse(((XmlElement)comprobante[0]).GetAttribute("total"), out valFloat);
+                float.TryParse(((XmlElement)comprobante[0]).GetAttribute("Total"), out valFloat);
                 _templatePDF.total = valFloat;
 
                 Numalet numaLet = new Numalet();
@@ -189,20 +201,20 @@ namespace DocumentoPDF
                 numaLet.LetraCapital = true;
                 _templatePDF.totalEnLetra = numaLet.ToCustomString(double.Parse(_templatePDF.total.ToString()));
             }
-            if (((XmlElement)comprobante[0]).GetAttribute("descuento") != null)
+            if (((XmlElement)comprobante[0]).GetAttribute("Descuento") != null)
             {
-                float.TryParse(((XmlElement)comprobante[0]).GetAttribute("descuento"), out valFloat);
+                float.TryParse(((XmlElement)comprobante[0]).GetAttribute("Descuento"), out valFloat);
                 _templatePDF.descuento = valFloat;
             }
 
             if (((XmlElement)comprobante[0]).GetAttribute("Moneda") != null)
                 _templatePDF.claveMoneda = ((XmlElement)comprobante[0]).GetAttribute("Moneda");
-            if (((XmlElement)comprobante[0]).GetAttribute("metodoDePago") != null)
-                _templatePDF.metodoPago = ((XmlElement)comprobante[0]).GetAttribute("metodoDePago");
-            if (((XmlElement)comprobante[0]).GetAttribute("formaDePago") != null)
-                _templatePDF.formaPago = ((XmlElement)comprobante[0]).GetAttribute("formaDePago");
-            if (((XmlElement)comprobante[0]).GetAttribute("LugarExpedicion") != null)
-                _templatePDF.lugarExpedicion = ((XmlElement)comprobante[0]).GetAttribute("LugarExpedicion");
+            if (((XmlElement)comprobante[0]).GetAttribute("MetodoPago") != null)
+                _templatePDF.metodoPago = ((XmlElement)comprobante[0]).GetAttribute("MetodoPago");
+            if (((XmlElement)comprobante[0]).GetAttribute("FormaPago") != null)
+                _templatePDF.formaPago = ((XmlElement)comprobante[0]).GetAttribute("FormaPago");
+            if (((XmlElement)comprobante[0]).GetAttribute("TipoCambio") != null)
+                _templatePDF.tipo_cambio = ((XmlElement)comprobante[0]).GetAttribute("TipoCambio");
         }
 
         private void ObtenerNodoEmisor()
@@ -211,74 +223,22 @@ namespace DocumentoPDF
             if (xDoc.GetElementsByTagName("cfdi:Emisor") == null)
                 return;
             XmlNodeList emisor = xDoc.GetElementsByTagName("cfdi:Emisor");
-            _templatePDF.emisor.rfc = ((XmlElement)emisor[0]).GetAttribute("rfc");
-            _templatePDF.emisor.razonSocial = ((XmlElement)emisor[0]).GetAttribute("nombre");
-
-            if (((XmlElement)emisor[0]).GetElementsByTagName("cfdi:DomicilioFiscal") == null)
-                return;
-
-            XmlNodeList domicilioFiscal = ((XmlElement)emisor[0]).GetElementsByTagName("cfdi:DomicilioFiscal");
-
-            _templatePDF.emisor.calle = ((XmlElement)domicilioFiscal[0]).GetAttribute("calle");
-            if (((XmlElement)domicilioFiscal[0]).GetAttribute("noExterior") != null)
-                _templatePDF.emisor.numeroExterior = ((XmlElement)domicilioFiscal[0]).GetAttribute("noExterior");
-            if (((XmlElement)domicilioFiscal[0]).GetAttribute("noInterior") != null)
-                _templatePDF.emisor.numeroInterior = ((XmlElement)domicilioFiscal[0]).GetAttribute("noInterior");
-            if (((XmlElement)domicilioFiscal[0]).GetAttribute("colonia") != null)
-                _templatePDF.emisor.colonia = ((XmlElement)domicilioFiscal[0]).GetAttribute("colonia");
-            if (((XmlElement)domicilioFiscal[0]).GetAttribute("localidad") != null)
-                _templatePDF.emisor.localidad = ((XmlElement)domicilioFiscal[0]).GetAttribute("localidad");
-            if (((XmlElement)domicilioFiscal[0]).GetAttribute("municipio") != null)
-                _templatePDF.emisor.municipio = ((XmlElement)domicilioFiscal[0]).GetAttribute("municipio");
-            if (((XmlElement)domicilioFiscal[0]).GetAttribute("estado") != null)
-                _templatePDF.emisor.estado = ((XmlElement)domicilioFiscal[0]).GetAttribute("estado");
-            if (((XmlElement)domicilioFiscal[0]).GetAttribute("pais") != null)
-                _templatePDF.emisor.pais = ((XmlElement)domicilioFiscal[0]).GetAttribute("pais");
-            if (((XmlElement)domicilioFiscal[0]).GetAttribute("cp") != null)
-                _templatePDF.emisor.cp = ((XmlElement)domicilioFiscal[0]).GetAttribute("cp");
-
-            if (((XmlElement)emisor[0]).GetElementsByTagName("cfdi:RegimenFiscal") == null)
-                return;
-            XmlNodeList regimenFiscal = ((XmlElement)emisor[0]).GetElementsByTagName("cfdi:RegimenFiscal");
-
-            if (((XmlElement)regimenFiscal[0]).GetAttribute("Regimen") != null)
-                _templatePDF.regimenFiscal = ((XmlElement)regimenFiscal[0]).GetAttribute("Regimen");
+            _templatePDF.emisor.rfc = ((XmlElement)emisor[0]).GetAttribute("Rfc");
+            _templatePDF.emisor.Nombre = ((XmlElement)emisor[0]).GetAttribute("Nombre");
+            _templatePDF.emisor.RegimenFiscal = ((XmlElement)emisor[0]).GetAttribute("RegimenFiscal");
         }
 
         private void ObtenerNodoReceptor()
         {
             //Trabajamos con receptor
             XmlNodeList receptor = xDoc.GetElementsByTagName("cfdi:Receptor");
-            _templatePDF.receptor.razonSocial = ((XmlElement)receptor[0]).GetAttribute("nombre");
-            _templatePDF.receptor.rfc = ((XmlElement)receptor[0]).GetAttribute("rfc");
-
-            XmlNodeList domicilio = ((XmlElement)receptor[0]).GetElementsByTagName("cfdi:Domicilio");
-
-            if (domicilio.Count == 0)
-                return;
-            if (((XmlElement)domicilio[0]).GetAttribute("calle") != null)
-                _templatePDF.receptor.calle = ((XmlElement)domicilio[0]).GetAttribute("calle");
-            if (((XmlElement)domicilio[0]).GetAttribute("noExterior") != null)
-                _templatePDF.receptor.numeroExterior = ((XmlElement)domicilio[0]).GetAttribute("noExterior");
-            if (((XmlElement)domicilio[0]).GetAttribute("noInterior") != null)
-                _templatePDF.receptor.numeroInterior = ((XmlElement)domicilio[0]).GetAttribute("noInterior");
-            if (((XmlElement)domicilio[0]).GetAttribute("colonia") != null)
-                _templatePDF.receptor.colonia = ((XmlElement)domicilio[0]).GetAttribute("colonia");
-            if (((XmlElement)domicilio[0]).GetAttribute("localidad") != null)
-                _templatePDF.receptor.localidad = ((XmlElement)domicilio[0]).GetAttribute("localidad");
-            if (((XmlElement)domicilio[0]).GetAttribute("municipio") != null)
-                _templatePDF.receptor.municipio = ((XmlElement)domicilio[0]).GetAttribute("municipio");
-            if (((XmlElement)domicilio[0]).GetAttribute("estado") != null)
-                _templatePDF.receptor.estado = ((XmlElement)domicilio[0]).GetAttribute("estado");
-            if (((XmlElement)domicilio[0]).GetAttribute("pais") != null)
-                _templatePDF.receptor.pais = ((XmlElement)domicilio[0]).GetAttribute("pais");
-            if (((XmlElement)domicilio[0]).GetAttribute("cp") != null)
-                _templatePDF.receptor.cp = ((XmlElement)domicilio[0]).GetAttribute("cp");
+            _templatePDF.receptor.razonSocial = ((XmlElement)receptor[0]).GetAttribute("Nombre");
+            _templatePDF.receptor.rfc = ((XmlElement)receptor[0]).GetAttribute("Rfc");
+            _templatePDF.receptor.usocfdi = ((XmlElement)receptor[0]).GetAttribute("UsoCFDI");
         }
 
         private void ObtenerNodoConceptos()
         {
-            float valFloat;
             ProductoCFD p;
 
             if (xDoc.GetElementsByTagName("cfdi:Conceptos") == null)
@@ -292,15 +252,16 @@ namespace DocumentoPDF
             foreach (XmlElement nodo in lista)
             {
                 p = new ProductoCFD();
-                p.cantidad = nodo.GetAttribute("cantidad");
-                p.descripcion = nodo.GetAttribute("descripcion");
-                p.unidad = nodo.GetAttribute("unidad");
-                p.numIdentificacion = nodo.GetAttribute("noIdentificacion");
 
-                float.TryParse(nodo.GetAttribute("valorUnitario"), out valFloat);
-                p.valorUnitario = valFloat;
-                float.TryParse(nodo.GetAttribute("importe"), out valFloat);
-                p.importe = valFloat;
+                p.ClaveProducto = nodo.GetAttribute("ClaveProdServ");
+                p.id = nodo.GetAttribute("NoIdentificacion");
+                p.cantidad = nodo.GetAttribute("Cantidad");
+                p.c_unidad = nodo.GetAttribute("ClaveUnidad");
+                p.unidad = nodo.GetAttribute("Unidad");
+                p.desc = nodo.GetAttribute("Descripcion");
+                p.v_unitario = nodo.GetAttribute("ValorUnitario");
+                p.importe = float.Parse(nodo.GetAttribute("Importe"));
+                p.descuento = "0.0";
 
                 _templatePDF.productos.Add(p);
             }
@@ -314,12 +275,12 @@ namespace DocumentoPDF
 
             if (((XmlElement)tfDigital[0]).GetAttribute("UUID") != null)
                 _templatePDF.folioFiscalUUID = ((XmlElement)tfDigital[0]).GetAttribute("UUID");
-            if (((XmlElement)tfDigital[0]).GetAttribute("noCertificadoSAT") != null)
-                _templatePDF.noSerieCertificadoSAT = ((XmlElement)tfDigital[0]).GetAttribute("noCertificadoSAT");
+            if (((XmlElement)tfDigital[0]).GetAttribute("NoCertificadoSAT") != null)
+                _templatePDF.noSerieCertificadoSAT = ((XmlElement)tfDigital[0]).GetAttribute("NoCertificadoSAT");
             if (((XmlElement)tfDigital[0]).GetAttribute("FechaTimbrado") != null)
                 _templatePDF.fechaCertificacion = ((XmlElement)tfDigital[0]).GetAttribute("FechaTimbrado");
-            if (((XmlElement)tfDigital[0]).GetAttribute("selloSAT") != null)
-                _templatePDF.selloDigitalSAT = ((XmlElement)tfDigital[0]).GetAttribute("selloSAT");
+            if (((XmlElement)tfDigital[0]).GetAttribute("SelloSAT") != null)
+                _templatePDF.selloDigitalSAT = ((XmlElement)tfDigital[0]).GetAttribute("SelloSAT");
         }
 
         private void ObtenerNodoImpuestos()
@@ -406,27 +367,123 @@ namespace DocumentoPDF
 
         private void AgregarDatosEmisor()
         {
-            string calleNumero = _templatePDF.emisor.calle + " " + _templatePDF.emisor.numeroExterior + " " + _templatePDF.emisor.numeroInterior;
-            string coloniaCP = _templatePDF.emisor.colonia + " " + _templatePDF.emisor.cp;
-            string municipioEstadoPais = _templatePDF.emisor.municipio + " " + _templatePDF.emisor.estado + " " + _templatePDF.emisor.pais;
-
             //Datos del emisor
             Paragraph p1 = new Paragraph();
             p1.IndentationLeft = 150f;
             p1.SpacingAfter = -60;
             p1.Leading = 9;
-            p1.Add(new Phrase(_templatePDF.emisor.razonSocial, new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+            p1.Add(new Phrase("DATOS DEL EMISOR", new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD)));
             p1.Add("\n");
-            p1.Add(new Phrase(_templatePDF.emisor.rfc, new Font(Font.FontFamily.HELVETICA, 8)));
+            p1.Add(new Phrase(_templatePDF.emisor.Nombre, new Font(Font.FontFamily.HELVETICA, 10)));
+            p1.Add("\n");
+            p1.Add(new Phrase("RFC Emisor: " + _templatePDF.emisor.rfc, new Font(Font.FontFamily.HELVETICA, 10)));
+            p1.Add("\n");
+
+            String regimen_fiscal = "";
+
+            if (_templatePDF.emisor.RegimenFiscal == "601")
+            {
+                regimen_fiscal = "Regimen Fiscal: 601 General de Ley Personas Morales";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "603")
+            {
+                regimen_fiscal = "Regimen Fiscal: 603 Personas Morales con Fines no Lucrativos";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "605")
+            {
+                regimen_fiscal = "Regimen Fiscal: 605 Sueldos y Salarios e Ingresos Asimilados a Salarios";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "606")
+            {
+                regimen_fiscal = "Regimen Fiscal: 606 Arrendamiento";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "608")
+            {
+                regimen_fiscal = "Regimen Fiscal: 608 Demás ingresos";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "609")
+            {
+                regimen_fiscal = "Regimen Fiscal: 609 Consolidación";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "610")
+            {
+                regimen_fiscal = "Regimen Fiscal: 610 Residentes en el Extranjero sin Establecimiento Permanente en México";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "611")
+            {
+                regimen_fiscal = "Regimen Fiscal: 611 Ingresos por Dividendos (socios y accionistas)";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "612")
+            {
+                regimen_fiscal = "Regimen Fiscal: 612 Personas Físicas con Actividades Empresariales y Profesionales";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "614")
+            {
+                regimen_fiscal = "Regimen Fiscal: 614 Ingresos por intereses";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "616")
+            {
+                regimen_fiscal = "Regimen Fiscal: 616 Sin obligaciones fiscales";
+            }
+            if (_templatePDF.emisor.RegimenFiscal == "620")
+            {
+                regimen_fiscal = "Regimen Fiscal: 620 Sociedades Cooperativas de Producción que optan por diferir sus ingresos";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "621")
+            {
+                regimen_fiscal = "Regimen Fiscal: 621 Incorporación Fiscal";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "622")
+            {
+                regimen_fiscal = "Regimen Fiscal: 622 Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "624")
+            {
+                regimen_fiscal = "Regimen Fiscal: 624 Coordinados";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "628")
+            {
+                regimen_fiscal = "Regimen Fiscal: 628 Hidrocarburos";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "607")
+            {
+                regimen_fiscal = "Regimen Fiscal: 607 Régimen de Enajenación o Adquisición de Bienes";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "629")
+            {
+                regimen_fiscal = "Regimen Fiscal: 629 De los Regímenes Fiscales Preferentes y de las Empresas Multinacionales";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "630")
+            {
+                regimen_fiscal = "Regimen Fiscal: 630 Enajenación de acciones en bolsa de valores";
+            }
+
+            if (_templatePDF.emisor.RegimenFiscal == "615")
+            {
+                regimen_fiscal = "Regimen Fiscal: 615 Régimen de los ingresos por obtención de premios";
+            }
+
+            p1.Add(new Phrase(regimen_fiscal, new Font(Font.FontFamily.HELVETICA, 10)));
             p1.Add("\n");
             p1.Add("\n");
-            p1.Add(new Phrase("Direccion fiscal".ToUpper(), new Font(Font.FontFamily.HELVETICA, 8, Font.UNDERLINE)));
             p1.Add("\n");
-            p1.Add(new Phrase(calleNumero, new Font(Font.FontFamily.HELVETICA, 8)));
-            p1.Add("\n");
-            p1.Add(new Phrase(coloniaCP, new Font(Font.FontFamily.HELVETICA, 8)));
-            p1.Add("\n");
-            p1.Add(new Phrase(municipioEstadoPais, new Font(Font.FontFamily.HELVETICA, 8)));
             p1.Add("\n");
             if (_templatePDF.emisor.telefono != string.Empty)
             {
@@ -482,17 +539,6 @@ namespace DocumentoPDF
 
         private void AgregarDatosReceptorEmisor()
         {
-            StringBuilder direccionReceptor = new StringBuilder();
-            direccionReceptor.Append(_templatePDF.receptor.calle + " ");
-            direccionReceptor.Append(_templatePDF.receptor.numeroExterior + " ");
-            direccionReceptor.Append(_templatePDF.receptor.numeroInterior + " ");
-            direccionReceptor.Append(_templatePDF.receptor.colonia + " ");
-            direccionReceptor.Append(_templatePDF.receptor.cp + " ");
-            direccionReceptor.Append(_templatePDF.receptor.localidad + " ");
-            direccionReceptor.Append(_templatePDF.receptor.municipio + " ");
-            direccionReceptor.Append(_templatePDF.receptor.estado + " ");
-            direccionReceptor.Append(_templatePDF.receptor.pais + " ");
-
             float[] anchoColumasTablaDatosEmisorReceptor = { 180f, 420f };
             PdfPTable tablaDatosEmisorReceptor = new PdfPTable(anchoColumasTablaDatosEmisorReceptor);
             tablaDatosEmisorReceptor.DefaultCell.Border = Rectangle.NO_BORDER;
@@ -508,12 +554,127 @@ namespace DocumentoPDF
             tabla.SetTotalWidth(anchoColumnas);
             tabla.HorizontalAlignment = Element.ALIGN_LEFT;
             tabla.LockedWidth = true;
-            tabla.AddCell(new Phrase("CLIENTE:", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+            tabla.AddCell(new Phrase("RECEPTOR: ", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
             tabla.AddCell(new Phrase(_templatePDF.receptor.razonSocial.ToUpper(), new Font(Font.FontFamily.HELVETICA, 8)));
-            tabla.AddCell(new Phrase("R.F.C.:", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+
+            tabla.AddCell(new Phrase("RFC: ", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
             tabla.AddCell(new Phrase(_templatePDF.receptor.rfc, new Font(Font.FontFamily.HELVETICA, 8)));
-            tabla.AddCell(new Phrase("DIRECCIÓN:", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
-            tabla.AddCell(new Phrase(direccionReceptor.ToString().ToUpper(), new Font(Font.FontFamily.HELVETICA, 8)));
+
+            string usocfdi = "";
+            if (_templatePDF.receptor.usocfdi == "G01")
+            {
+                usocfdi = "G01: Adquisición de mercancias";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "G02")
+            {
+                usocfdi = "G02: Devoluciones, descuentos o bonificaciones";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "G03")
+            {
+                usocfdi = "G03: Gastos en general";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "I01")
+            {
+                usocfdi = "I01: Construcciones";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "I02")
+            {
+                usocfdi = "I02: Mobilario y equipo de oficina por inversiones";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "I03")
+            {
+                usocfdi = "I03: Equipo de transporte";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "I04")
+            {
+                usocfdi = "I04: Equipo de computo y accesorios";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "I05")
+            {
+                usocfdi = "I05: Dados, troqueles, moldes, matrices y herramental";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "I06")
+            {
+                usocfdi = "I06: Comunicaciones telefónicas";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "I08")
+            {
+                usocfdi = "I08: Otra maquinaria y equipo";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "D01")
+            {
+                usocfdi = "D01: Honorarios médicos, dentales y gastos hospitalarios.";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "D02")
+            {
+                usocfdi = "D02: Gastos médicos por incapacidad o discapacidad";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "D03")
+            {
+                usocfdi = "D03: Gastos funerales.";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "G01")
+            {
+                usocfdi = "G01: Adquisición de mercancias";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "D05")
+            {
+                usocfdi = "D05: Intereses reales efectivamente pagados por créditos hipotecarios (casa habitación).";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "D06")
+            {
+                usocfdi = "D06: Aportaciones voluntarias al SAR.";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "D07")
+            {
+                usocfdi = "D07: Primas por seguros de gastos médicos.";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "G01")
+            {
+                usocfdi = "G01: Adquisición de mercancias";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "D08")
+            {
+                usocfdi = "D08: Gastos de transportación escolar obligatoria.";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "D09")
+            {
+                usocfdi = "D09: Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones.";
+            }
+
+
+            if (_templatePDF.receptor.usocfdi == "D10")
+            {
+                usocfdi = "D10: Pagos por servicios educativos (colegiaturas)";
+            }
+
+            if (_templatePDF.receptor.usocfdi == "P01")
+            {
+                usocfdi = "P01: Por definir";
+            }
+
+
+            tabla.AddCell(new Phrase("Uso CFDI: ", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+            tabla.AddCell(new Phrase(usocfdi.ToUpper(), new Font(Font.FontFamily.HELVETICA, 8)));
 
             //Datos del emisor
             float[] anchoColumnas1 = { 80f, 120F, 80f, 120F };
@@ -522,22 +683,144 @@ namespace DocumentoPDF
             tabla1.SetTotalWidth(anchoColumnas1);
             tabla1.HorizontalAlignment = Element.ALIGN_LEFT;
             tabla1.LockedWidth = true;
-            tabla1.AddCell(new Phrase("Régimen fiscal:".ToUpper(), new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
-            PdfPCell celdaRegimen = new PdfPCell(new Phrase(_templatePDF.regimenFiscal, new Font(Font.FontFamily.HELVETICA, 8)));
+            tabla1.AddCell(new Phrase("MONEDA:".ToUpper(), new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+            PdfPCell celdaRegimen = new PdfPCell(new Phrase(_templatePDF.claveMoneda, new Font(Font.FontFamily.HELVETICA, 8)));
             celdaRegimen.Colspan = 3;
             celdaRegimen.Border = Rectangle.NO_BORDER;
             tabla1.AddCell(celdaRegimen);
-            tabla1.AddCell(new Phrase("Lugar de expedición:".ToUpper(), new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
-            tabla1.AddCell(new Phrase(_templatePDF.lugarExpedicion.ToUpper(), new Font(Font.FontFamily.HELVETICA, 8)));
+            tabla1.AddCell(new Phrase("FORMA DE PAGO:".ToUpper(), new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+            string f_pago = "";
+
+            if (_templatePDF.formaPago == "01")
+            {
+                f_pago = "01: Efectivo";
+            }
+
+            if (_templatePDF.formaPago == "02")
+            {
+                f_pago = "02: Cheque nominativo";
+            }
+
+            if (_templatePDF.formaPago == "03")
+            {
+                f_pago = "03: Transferencia electrónica de fondos";
+            }
+
+            if (_templatePDF.formaPago == "04")
+            {
+                f_pago = "04: Tarjeta de crédito";
+            }
+
+            if (_templatePDF.formaPago == "05")
+            {
+                f_pago = "05: Monedero electrónico";
+            }
+
+            if (_templatePDF.formaPago == "06")
+            {
+                f_pago = "06: Dinero electrónico";
+            }
+
+            if (_templatePDF.formaPago == "08")
+            {
+                f_pago = "08: Vales de despensa";
+            }
+
+            if (_templatePDF.formaPago == "12")
+            {
+                f_pago = "12: Dación en pago";
+            }
+
+            if (_templatePDF.formaPago == "13")
+            {
+                f_pago = "13: Pago por subrogación";
+            }
+
+            if (_templatePDF.formaPago == "14")
+            {
+                f_pago = "14: Pago por consignación";
+            }
+
+            if (_templatePDF.formaPago == "15")
+            {
+                f_pago = "15: Condonación";
+            }
+
+            if (_templatePDF.formaPago == "17")
+            {
+                f_pago = "17: Compensación";
+            }
+
+            if (_templatePDF.formaPago == "23")
+            {
+                f_pago = "23: Novación";
+            }
+
+            if (_templatePDF.formaPago == "24")
+            {
+                f_pago = "24: Confusión";
+            }
+
+            if (_templatePDF.formaPago == "25")
+            {
+                f_pago = "25: Remisión de deuda";
+            }
+
+            if (_templatePDF.formaPago == "26")
+            {
+                f_pago = "26: Prescripción o caducidad";
+            }
+
+            if (_templatePDF.formaPago == "01")
+            {
+                f_pago = "01: Efectivo";
+            }
+
+            if (_templatePDF.formaPago == "27")
+            {
+                f_pago = "27: A satisfacción del acreedor";
+            }
+
+            if (_templatePDF.formaPago == "28")
+            {
+                f_pago = "28: Tarjeta de débito";
+            }
+
+            if (_templatePDF.formaPago == "29")
+            {
+                f_pago = "29: Tarjeta de servicios";
+            }
+
+            if (_templatePDF.formaPago == "99")
+            {
+                f_pago = "99: Por definir";
+            }
+
+            tabla1.AddCell(new Phrase(f_pago.ToUpper(), new Font(Font.FontFamily.HELVETICA, 8)));
             tabla1.AddCell(new Phrase(" ", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
             tabla1.AddCell(new Phrase(_templatePDF.fechaExpedicion, new Font(Font.FontFamily.HELVETICA, 8)));
-            tabla1.AddCell(new Phrase("Forma de pago".ToUpper(), new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
-            tabla1.AddCell(new Phrase(_templatePDF.formaPago, new Font(Font.FontFamily.HELVETICA, 8)));
-            tabla1.AddCell(new Phrase("Metodo de pago".ToUpper(), new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
-            tabla1.AddCell(new Phrase(ReturnClavePago(_templatePDF.metodoPago), new Font(Font.FontFamily.HELVETICA, 8)));
-            tabla1.AddCell(new Phrase("Clave de moneda".ToUpper(), new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
-            tabla1.AddCell(new Phrase(_templatePDF.claveMoneda, new Font(Font.FontFamily.HELVETICA, 8)));
-            tabla1.AddCell(new Phrase("\n\n", new Font(Font.FontFamily.HELVETICA, 8)));
+            tabla1.AddCell(new Phrase("METODO DE PAGO".ToUpper(), new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+
+            string m_pago = "";
+
+            if (_templatePDF.metodoPago == "PUE")
+            {
+                m_pago = "PUE: Pago en una sola exhibición";
+            }
+
+            if (_templatePDF.metodoPago == "PIP")
+            {
+                m_pago = "PIP: Pago en parcialidades o diferido";
+            }
+
+            if (_templatePDF.metodoPago == "PPD")
+            {
+                m_pago = "PPD: Pago en parcialidades o diferido";
+            }
+
+            tabla1.AddCell(new Phrase(m_pago.ToUpper(), new Font(Font.FontFamily.HELVETICA, 8)));
+            tabla1.AddCell(new Phrase("TIPO DE CAMBIO".ToUpper(), new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+            tabla1.AddCell(new Phrase(ReturnClavePago(_templatePDF.tipo_cambio), new Font(Font.FontFamily.HELVETICA, 8)));
             tabla1.AddCell(new Phrase("\n\n", new Font(Font.FontFamily.HELVETICA, 8)));
 
 
@@ -550,46 +833,7 @@ namespace DocumentoPDF
         {
             string valor = "";
 
-            if (clave.ToLower().Replace(" ", "") == "efectivo")
-            {
-                valor = "01 - " + clave;
-            }
-            else if (clave.ToLower().Replace(" ", "") == "chequenominativo")
-            {
-                valor = "02 - " + clave;
-            }
-            else if (clave.ToLower().Replace(" ", "") == "transferenciaelectronicadefondos")
-            {
-                valor = "03 - " + clave;
-            }
-            else if (clave.ToLower().Replace(" ", "") == "tarjetadecredito")
-            {
-                valor = "04 - " + clave;
-            }
-            else if (clave.ToLower().Replace(" ", "") == "monederoelectronico")
-            {
-                valor = "05 - " + clave;
-            }
-            else if (clave.ToLower().Replace(" ", "") == "dineroelectronico")
-            {
-                valor = "06 - " + clave;
-            }
-            else if (clave.ToLower().Replace(" ", "") == "valesdedespensa")
-            {
-                valor = "08 - " + clave;
-            }
-            else if (clave.ToLower().Replace(" ", "") == "tarjetadedebito")
-            {
-                valor = "28 - " + clave;
-            }
-            else if (clave.ToLower().Replace(" ", "") == "tarjetadeservicio")
-            {
-                valor = "29 - " + clave;
-            }
-            else if (clave.ToLower().Replace(" ", "") == "otros")
-            {
-                valor = "99 - " + clave;
-            }
+            valor = clave;
 
             return valor.ToString().ToUpper();
         }
@@ -606,23 +850,26 @@ namespace DocumentoPDF
 
 
             //Datos de los productos
-            float[] tamanoColumnas = { 60f, 60F, 50f, 250f, 90f, 90f };
+            float[] tamanoColumnas = { 60f, 60F, 50f, 70f, 170f, 75f, 60f, 75f };
             PdfPTable tablaProductosTitulos = new PdfPTable(tamanoColumnas);
             //tablaProductosTitulos.DefaultCell.Border = Rectangle.NO_BORDER;
             tablaProductosTitulos.SetTotalWidth(tamanoColumnas);
             tablaProductosTitulos.HorizontalAlignment = Element.ALIGN_LEFT;
             tablaProductosTitulos.DefaultCell.HorizontalAlignment = Element.ALIGN_LEFT;
             tablaProductosTitulos.LockedWidth = true;
+
+            tablaProductosTitulos.AddCell(new Phrase("CLAVEPRODUCTO O SERVICIO", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+            tablaProductosTitulos.AddCell(new Phrase("NO. IDENTIFICACION", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
             tablaProductosTitulos.AddCell(new Phrase("CANTIDAD", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
-            tablaProductosTitulos.AddCell(new Phrase("UNIDAD", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
-            tablaProductosTitulos.AddCell(new Phrase("IDENTIFICADOR", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
-            tablaProductosTitulos.AddCell(new Phrase("DESCRIPCIÓN DEL PRODUCTO", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
-            tablaProductosTitulos.AddCell(new Phrase("PRECIO", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+            tablaProductosTitulos.AddCell(new Phrase("CLAVE UNIDAD", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+            tablaProductosTitulos.AddCell(new Phrase("DESCRIPCION", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+            tablaProductosTitulos.AddCell(new Phrase("VALOR UNITARIO", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
             tablaProductosTitulos.AddCell(new Phrase("IMPORTE", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+            tablaProductosTitulos.AddCell(new Phrase("DESCUENTO", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
 
 
 
-            float[] tamanoColumnasProductos = { 60f, 60F, 50f, 250f, 90f, 90f };
+            float[] tamanoColumnasProductos = { 60f, 60F, 50f, 70f, 170f, 75f, 60f, 75f };
             PdfPTable tablaProductos = new PdfPTable(tamanoColumnas);
             //tablaProductos.SpacingBefore = 1;
             //tablaProductos.DefaultCell.Border = Rectangle.NO_BORDER;
@@ -636,31 +883,14 @@ namespace DocumentoPDF
             tablaProductos.LockedWidth = true;
             foreach (ProductoCFD p in _templatePDF.productos)
             {
+                tablaProductos.AddCell(new Phrase(p.ClaveProducto, new Font(Font.FontFamily.HELVETICA, 8)));
+                tablaProductos.AddCell(new Phrase(p.id, new Font(Font.FontFamily.HELVETICA, 8)));
                 tablaProductos.AddCell(new Phrase(p.cantidad, new Font(Font.FontFamily.HELVETICA, 8)));
-                tablaProductos.AddCell(new Phrase(p.unidad, new Font(Font.FontFamily.HELVETICA, 8)));
-                tablaProductos.AddCell(new Phrase(p.numIdentificacion, new Font(Font.FontFamily.HELVETICA, 8)));
-                tablaProductos.AddCell(new Phrase(p.descripcion, new Font(Font.FontFamily.HELVETICA, 8)));
-
-                PdfPCell celdaValorUnitario = new PdfPCell(new Phrase(p.valorUnitario.ToString("C"), new Font(Font.FontFamily.HELVETICA, 8)));
-                celdaValorUnitario.HorizontalAlignment = Element.ALIGN_RIGHT;
-                celdaValorUnitario.BorderWidthLeft = 0.1f;
-                celdaValorUnitario.BorderWidthRight = 0.0f;
-                celdaValorUnitario.BorderWidthBottom = 0.0f;
-                celdaValorUnitario.BorderWidthTop = 0.0f;
-                //valorUnitario.Border = Rectangle.NO_BORDER;
-                tablaProductos.AddCell(celdaValorUnitario);
-
-                PdfPCell importe = new PdfPCell(new Phrase(p.importe.ToString("C"), new Font(Font.FontFamily.HELVETICA, 8)));
-                importe.HorizontalAlignment = Element.ALIGN_RIGHT;
-                importe.HorizontalAlignment = Element.ALIGN_RIGHT;
-                importe.BorderWidthLeft = 0.1f;
-                importe.BorderWidthRight = 0.0f;
-                importe.BorderWidthBottom = 0.0f;
-                importe.BorderWidthTop = 0.0f;
-                tablaProductos.AddCell(importe);
-
-                //tablaProductos.AddCell(new Phrase(p.importe, new Font(Font.FontFamily.HELVETICA, 8)));
-
+                tablaProductos.AddCell(new Phrase(p.c_unidad, new Font(Font.FontFamily.HELVETICA, 8)));
+                tablaProductos.AddCell(new Phrase(p.desc, new Font(Font.FontFamily.HELVETICA, 8)));
+                tablaProductos.AddCell(new Phrase(p.v_unitario, new Font(Font.FontFamily.HELVETICA, 8)));
+                tablaProductos.AddCell(new Phrase(p.importe.ToString(), new Font(Font.FontFamily.HELVETICA, 8)));
+                tablaProductos.AddCell(new Phrase(p.descuento, new Font(Font.FontFamily.HELVETICA, 8)));
             }
 
 
@@ -823,13 +1053,9 @@ namespace DocumentoPDF
                 footerTemplate = cb.CreateTemplate(50, 50);
             }
             catch (DocumentException)
-            {
-
-            }
+            { }
             catch (System.IO.IOException)
-            {
-
-            }
+            { }
         }
 
         public override void OnEndPage(iTextSharp.text.pdf.PdfWriter writer, iTextSharp.text.Document document)
@@ -884,10 +1110,9 @@ namespace DocumentoPDF
                 tabla.HorizontalAlignment = Element.ALIGN_CENTER;
                 tabla.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
                 tabla.LockedWidth = true;
-                tabla.AddCell(new Phrase("Este documento es una representación impresa de un CFDI\nSOFTWARE Y MAS ! WWW.CYBERCHOAPAS.COM", new Font(Font.FontFamily.HELVETICA, 8)));
+                tabla.AddCell(new Phrase("Este documento es una representación impresa de un CFDI 3.3", new Font(Font.FontFamily.HELVETICA, 10)));
+                tabla.AddCell(new Phrase("SOFTWARE Y MAS ! WWW.CYBERCHOAPAS.COM", new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD)));
                 tabla.WriteSelectedRows(0, -1, 5, document.PageSize.GetBottom(40), writer.DirectContent);
-
-
 
             }
 
@@ -981,8 +1206,6 @@ namespace DocumentoPDF
             footerTemplate.SetTextMatrix(0, 0);
             footerTemplate.ShowText((writer.PageNumber - 1).ToString());
             footerTemplate.EndText();
-
-
         }
     }
     #endregion

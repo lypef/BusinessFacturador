@@ -41,36 +41,11 @@ namespace HostelSystem
             {
                 IvaInclu.Checked = false;
             }
-
-            if (datos.ReturnDatos("demo", 1).ToLower() == "true")
-            {
-                CbxDemo.Checked = true;
-            }
-            else
-            {
-                CbxDemo.Checked = false;
-            }
-
+            
             lexpedicion.Text = datos.ReturnDatos("lexpedicion", 1);
             regimenfiscal.Text = datos.ReturnDatos("regimenfiscal", 1);
             conrfc.Text = datos.ReturnDatos("conrfc", 1);
             connombre.Text = datos.ReturnDatos("connombre", 1);
-            dfcalle.Text = datos.ReturnDatos("dfcalle", 1);
-            dfnoext.Text = datos.ReturnDatos("dfnoext", 1);
-            dfcolonia.Text = datos.ReturnDatos("dfcolonia", 1);
-            dflocalidad.Text = datos.ReturnDatos("dflocalidad", 1);
-            dfmunicipio.Text = datos.ReturnDatos("dfmunicipio", 1);
-            dfestado.Text = datos.ReturnDatos("dfestado", 1);
-            dfpais.Text = datos.ReturnDatos("dfpais", 1);
-            dfcp.Text = datos.ReturnDatos("dfcp", 1);
-            expcalle.Text = datos.ReturnDatos("expcalle", 1);
-            expmunicipio.Text = datos.ReturnDatos("expmunicipio", 1);
-            expestado.Text = datos.ReturnDatos("expestado", 1);
-            expais.Text = datos.ReturnDatos("expais", 1);
-            expcp.Text = datos.ReturnDatos("expcp", 1);
-            explocalidad.Text = datos.ReturnDatos("explocalidad", 1);
-            expnoext.Text = datos.ReturnDatos("expnoext", 1);
-            expcolonia.Text = datos.ReturnDatos("expcolonia", 1);
 
             //Form de inicio
             if (datos.ReturnDatos("inifactura", 1).ToLower() == "true")
@@ -214,7 +189,7 @@ namespace HostelSystem
                 
                 coneccion.cnn.Close();
 
-                string ivainclutmp = "", demo = "", inifacturatmp = "", ininominatmp = "", inifaemisionestmp = "", inifaclientestmp = "", inifaconceptostmp = "", ininoemisiontmp = "", ininoempleadostmp = "";
+                string ivainclutmp = "", inifacturatmp = "", ininominatmp = "", inifaemisionestmp = "", inifaclientestmp = "", inifaconceptostmp = "", ininoemisiontmp = "", ininoempleadostmp = "";
 
                 if (IvaInclu.Checked == true)
                 {
@@ -222,15 +197,6 @@ namespace HostelSystem
                 }else
                 {
                     ivainclutmp = "0";
-                }
-
-                if (CbxDemo.Checked == true)
-                {
-                    demo = "1";
-                }
-                else
-                {
-                    demo = "0";
                 }
 
                 // inicio
@@ -296,7 +262,7 @@ namespace HostelSystem
                     ininoempleadostmp = "0";
                 }
 
-                coneccion.sql = "update configuracion set correo = '"+ TxtMail.Text + "', password = '" + Txtpass.Text + "', port = '" + TxtPort.Text + "', host = '" + TxtHost.Text + "', mailr = '" + TxtMailR.Text + "', urlsavefact = '" + UrlFacAll.Text + "', urllogofact = '" + UrlLogoFact.Text + "', urlcer = '" + Txtcer.Text + "', urlkey = '" + Txtkey.Text + "', passfact = '" + TxtPassFact.Text + "', ivainclu  = '" + ivainclutmp + "', lexpedicion = '" + lexpedicion.Text + "', regimenfiscal = '" + regimenfiscal.Text + "', conrfc = '" + conrfc.Text + "', connombre = '" + connombre.Text + "', dfcalle = '" + dfcalle.Text + "', dfnoext = '" + dfnoext.Text + "', dfcolonia = '" + dfcolonia.Text + "', dflocalidad = '" + dflocalidad.Text + "', dfmunicipio = '" + dfmunicipio.Text + "', dfestado = '" + dfestado.Text + "', dfpais = '" + dfpais.Text + "', dfcp = '" + dfcp.Text + "', expcalle = '" + expcalle.Text + "', expmunicipio = '" + expmunicipio.Text + "', expestado = '" + expestado.Text + "', expais = '" + expais.Text + "', expcp = '" + expcp.Text + "', explocalidad = '" + explocalidad.Text + "', expnoext = '" + expnoext.Text + "', expcolonia = '" + expcolonia.Text +"', demo = '"+ demo + "', inifactura = '"+ inifacturatmp + "', ininomina = '" + ininominatmp + "', inifaemisiones = '" + inifaemisionestmp + "', inifaclientes = '" + inifaclientestmp + "', inifaconceptos = '" + inifaconceptostmp + "', ininoemision = '" + ininoemisiontmp + "', ininoempleados = '" + ininoempleadostmp + "'  where id = '1' ";
+                coneccion.sql = "update configuracion set correo = '"+ TxtMail.Text + "', password = '" + Txtpass.Text + "', port = '" + TxtPort.Text + "', host = '" + TxtHost.Text + "', mailr = '" + TxtMailR.Text + "', urlsavefact = '" + UrlFacAll.Text + "', urllogofact = '" + UrlLogoFact.Text + "', urlcer = '" + Txtcer.Text + "', urlkey = '" + Txtkey.Text + "', passfact = '" + TxtPassFact.Text + "', ivainclu  = '" + ivainclutmp + "', lexpedicion = '" + lexpedicion.Text + "', regimenfiscal = '" + regimenfiscal.Text + "', conrfc = '" + conrfc.Text + "', connombre = '" + connombre.Text + "', inifactura = '"+ inifacturatmp + "', ininomina = '" + ininominatmp + "', inifaemisiones = '" + inifaemisionestmp + "', inifaclientes = '" + inifaclientestmp + "', inifaconceptos = '" + inifaconceptostmp + "', ininoemision = '" + ininoemisiontmp + "', ininoempleados = '" + ininoempleadostmp + "'  where id = '1' ";
                 coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                 coneccion.cnn.Open();
                 coneccion.comandosql.ExecuteReader();

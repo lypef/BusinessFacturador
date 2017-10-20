@@ -44,14 +44,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BusinessFacturador.exe" size="3276288">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BusinessFacturador.exe" size="3277824">
       <assemblyIdentity name="BusinessFacturador" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0nsY2PBMsLIKUf700plKk6G/8fub7mQCh0BXAFDXQDU=</dsig:DigestValue>
+        <dsig:DigestValue>HFrV/uz4nO7wTUvFaxw+H612mqn2H27tq89/fHXc3ik=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

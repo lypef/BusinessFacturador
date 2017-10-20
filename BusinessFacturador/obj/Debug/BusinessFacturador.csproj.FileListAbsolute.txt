@@ -103,4 +103,3 @@ C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFa
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Debug\BusinessFacturador.pdb
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Debug\MultiFacturasSDK.dll
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Debug\Catalogo.dll
-C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Debug\BusinessFacturador.csprojResolveAssemblyReference.cache

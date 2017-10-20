@@ -32,7 +32,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.CbxDemo = new System.Windows.Forms.CheckBox();
             this.CbMailPersonalizado = new System.Windows.Forms.CheckBox();
             this.TxtMailR = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -46,38 +45,6 @@
             this.TxtMail = new System.Windows.Forms.TextBox();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.expcolonia = new System.Windows.Forms.TextBox();
-            this.label41 = new System.Windows.Forms.Label();
-            this.expnoext = new System.Windows.Forms.TextBox();
-            this.explocalidad = new System.Windows.Forms.TextBox();
-            this.label42 = new System.Windows.Forms.Label();
-            this.label43 = new System.Windows.Forms.Label();
-            this.expcp = new System.Windows.Forms.TextBox();
-            this.label44 = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
-            this.expais = new System.Windows.Forms.TextBox();
-            this.expestado = new System.Windows.Forms.TextBox();
-            this.label46 = new System.Windows.Forms.Label();
-            this.expmunicipio = new System.Windows.Forms.TextBox();
-            this.expcalle = new System.Windows.Forms.TextBox();
-            this.label47 = new System.Windows.Forms.Label();
-            this.label48 = new System.Windows.Forms.Label();
-            this.dfcp = new System.Windows.Forms.TextBox();
-            this.label49 = new System.Windows.Forms.Label();
-            this.label50 = new System.Windows.Forms.Label();
-            this.dfpais = new System.Windows.Forms.TextBox();
-            this.dfestado = new System.Windows.Forms.TextBox();
-            this.label36 = new System.Windows.Forms.Label();
-            this.dfmunicipio = new System.Windows.Forms.TextBox();
-            this.dflocalidad = new System.Windows.Forms.TextBox();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.dfcolonia = new System.Windows.Forms.TextBox();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.dfnoext = new System.Windows.Forms.TextBox();
-            this.dfcalle = new System.Windows.Forms.TextBox();
-            this.label31 = new System.Windows.Forms.Label();
             this.connombre = new System.Windows.Forms.TextBox();
             this.conrfc = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
@@ -104,13 +71,13 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.inifactura = new System.Windows.Forms.RadioButton();
-            this.ininomina = new System.Windows.Forms.RadioButton();
-            this.inifaemisiones = new System.Windows.Forms.RadioButton();
-            this.inifaclientes = new System.Windows.Forms.RadioButton();
-            this.inifaconceptos = new System.Windows.Forms.RadioButton();
-            this.ininoemision = new System.Windows.Forms.RadioButton();
             this.ininoempleados = new System.Windows.Forms.RadioButton();
+            this.ininoemision = new System.Windows.Forms.RadioButton();
+            this.inifaconceptos = new System.Windows.Forms.RadioButton();
+            this.inifaclientes = new System.Windows.Forms.RadioButton();
+            this.inifaemisiones = new System.Windows.Forms.RadioButton();
+            this.ininomina = new System.Windows.Forms.RadioButton();
+            this.inifactura = new System.Windows.Forms.RadioButton();
             this.tabPage5.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.tabPage7.SuspendLayout();
@@ -143,7 +110,6 @@
             // 
             // groupBox10
             // 
-            this.groupBox10.Controls.Add(this.CbxDemo);
             this.groupBox10.Controls.Add(this.CbMailPersonalizado);
             this.groupBox10.Controls.Add(this.TxtMailR);
             this.groupBox10.Controls.Add(this.label20);
@@ -161,16 +127,6 @@
             this.groupBox10.TabIndex = 14;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "DATOS DE CORREO";
-            // 
-            // CbxDemo
-            // 
-            this.CbxDemo.AutoSize = true;
-            this.CbxDemo.Location = new System.Drawing.Point(229, 205);
-            this.CbxDemo.Name = "CbxDemo";
-            this.CbxDemo.Size = new System.Drawing.Size(117, 17);
-            this.CbxDemo.TabIndex = 12;
-            this.CbxDemo.Text = "Activar modo demo";
-            this.CbxDemo.UseVisualStyleBackColor = true;
             // 
             // CbMailPersonalizado
             // 
@@ -287,38 +243,6 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.expcolonia);
-            this.panel1.Controls.Add(this.label41);
-            this.panel1.Controls.Add(this.expnoext);
-            this.panel1.Controls.Add(this.explocalidad);
-            this.panel1.Controls.Add(this.label42);
-            this.panel1.Controls.Add(this.label43);
-            this.panel1.Controls.Add(this.expcp);
-            this.panel1.Controls.Add(this.label44);
-            this.panel1.Controls.Add(this.label45);
-            this.panel1.Controls.Add(this.expais);
-            this.panel1.Controls.Add(this.expestado);
-            this.panel1.Controls.Add(this.label46);
-            this.panel1.Controls.Add(this.expmunicipio);
-            this.panel1.Controls.Add(this.expcalle);
-            this.panel1.Controls.Add(this.label47);
-            this.panel1.Controls.Add(this.label48);
-            this.panel1.Controls.Add(this.dfcp);
-            this.panel1.Controls.Add(this.label49);
-            this.panel1.Controls.Add(this.label50);
-            this.panel1.Controls.Add(this.dfpais);
-            this.panel1.Controls.Add(this.dfestado);
-            this.panel1.Controls.Add(this.label36);
-            this.panel1.Controls.Add(this.dfmunicipio);
-            this.panel1.Controls.Add(this.dflocalidad);
-            this.panel1.Controls.Add(this.label37);
-            this.panel1.Controls.Add(this.label38);
-            this.panel1.Controls.Add(this.dfcolonia);
-            this.panel1.Controls.Add(this.label39);
-            this.panel1.Controls.Add(this.label40);
-            this.panel1.Controls.Add(this.dfnoext);
-            this.panel1.Controls.Add(this.dfcalle);
-            this.panel1.Controls.Add(this.label31);
             this.panel1.Controls.Add(this.connombre);
             this.panel1.Controls.Add(this.conrfc);
             this.panel1.Controls.Add(this.label32);
@@ -347,278 +271,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(375, 372);
             this.panel1.TabIndex = 18;
-            // 
-            // expcolonia
-            // 
-            this.expcolonia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.expcolonia.Location = new System.Drawing.Point(15, 1114);
-            this.expcolonia.Name = "expcolonia";
-            this.expcolonia.Size = new System.Drawing.Size(333, 26);
-            this.expcolonia.TabIndex = 20;
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(31, 1098);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(88, 13);
-            this.label41.TabIndex = 104;
-            this.label41.Text = "Expedido colonia";
-            // 
-            // expnoext
-            // 
-            this.expnoext.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.expnoext.Location = new System.Drawing.Point(15, 1059);
-            this.expnoext.Name = "expnoext";
-            this.expnoext.Size = new System.Drawing.Size(333, 26);
-            this.expnoext.TabIndex = 19;
-            // 
-            // explocalidad
-            // 
-            this.explocalidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.explocalidad.Location = new System.Drawing.Point(15, 1005);
-            this.explocalidad.Name = "explocalidad";
-            this.explocalidad.Size = new System.Drawing.Size(333, 26);
-            this.explocalidad.TabIndex = 18;
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(31, 989);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(96, 13);
-            this.label42.TabIndex = 102;
-            this.label42.Text = "Expedido localidad";
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(30, 1043);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(86, 13);
-            this.label43.TabIndex = 101;
-            this.label43.Text = "Expedido no. ext";
-            // 
-            // expcp
-            // 
-            this.expcp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.expcp.Location = new System.Drawing.Point(15, 949);
-            this.expcp.Name = "expcp";
-            this.expcp.Size = new System.Drawing.Size(333, 26);
-            this.expcp.TabIndex = 17;
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(30, 928);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(66, 13);
-            this.label44.TabIndex = 100;
-            this.label44.Text = "Expedido cp";
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(31, 870);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(73, 13);
-            this.label45.TabIndex = 98;
-            this.label45.Text = "Expedido pais";
-            // 
-            // expais
-            // 
-            this.expais.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.expais.Location = new System.Drawing.Point(15, 886);
-            this.expais.Name = "expais";
-            this.expais.Size = new System.Drawing.Size(333, 26);
-            this.expais.TabIndex = 16;
-            // 
-            // expestado
-            // 
-            this.expestado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.expestado.Location = new System.Drawing.Point(15, 829);
-            this.expestado.Name = "expestado";
-            this.expestado.Size = new System.Drawing.Size(335, 26);
-            this.expestado.TabIndex = 15;
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(31, 813);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(86, 13);
-            this.label46.TabIndex = 94;
-            this.label46.Text = "Expedido estado";
-            // 
-            // expmunicipio
-            // 
-            this.expmunicipio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.expmunicipio.Location = new System.Drawing.Point(15, 771);
-            this.expmunicipio.Name = "expmunicipio";
-            this.expmunicipio.Size = new System.Drawing.Size(335, 26);
-            this.expmunicipio.TabIndex = 14;
-            // 
-            // expcalle
-            // 
-            this.expcalle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.expcalle.Location = new System.Drawing.Point(15, 710);
-            this.expcalle.Name = "expcalle";
-            this.expcalle.Size = new System.Drawing.Size(335, 26);
-            this.expcalle.TabIndex = 13;
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(31, 694);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(76, 13);
-            this.label47.TabIndex = 92;
-            this.label47.Text = "Expedido calle";
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(31, 755);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(98, 13);
-            this.label48.TabIndex = 91;
-            this.label48.Text = "Expedido municipio";
-            // 
-            // dfcp
-            // 
-            this.dfcp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dfcp.Location = new System.Drawing.Point(15, 647);
-            this.dfcp.Name = "dfcp";
-            this.dfcp.Size = new System.Drawing.Size(335, 26);
-            this.dfcp.TabIndex = 12;
-            // 
-            // label49
-            // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(30, 631);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(93, 13);
-            this.label49.TabIndex = 90;
-            this.label49.Text = "Domicilio fiscal CP";
-            // 
-            // label50
-            // 
-            this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(29, 569);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(98, 13);
-            this.label50.TabIndex = 88;
-            this.label50.Text = "Domicilio fiscal pais";
-            // 
-            // dfpais
-            // 
-            this.dfpais.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dfpais.Location = new System.Drawing.Point(15, 585);
-            this.dfpais.Name = "dfpais";
-            this.dfpais.Size = new System.Drawing.Size(335, 26);
-            this.dfpais.TabIndex = 11;
-            // 
-            // dfestado
-            // 
-            this.dfestado.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dfestado.Location = new System.Drawing.Point(15, 531);
-            this.dfestado.Name = "dfestado";
-            this.dfestado.Size = new System.Drawing.Size(335, 26);
-            this.dfestado.TabIndex = 10;
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(30, 515);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(111, 13);
-            this.label36.TabIndex = 84;
-            this.label36.Text = "Domicilio fiscal estado";
-            // 
-            // dfmunicipio
-            // 
-            this.dfmunicipio.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dfmunicipio.Location = new System.Drawing.Point(15, 474);
-            this.dfmunicipio.Name = "dfmunicipio";
-            this.dfmunicipio.Size = new System.Drawing.Size(335, 26);
-            this.dfmunicipio.TabIndex = 9;
-            // 
-            // dflocalidad
-            // 
-            this.dflocalidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dflocalidad.Location = new System.Drawing.Point(15, 418);
-            this.dflocalidad.Name = "dflocalidad";
-            this.dflocalidad.Size = new System.Drawing.Size(335, 26);
-            this.dflocalidad.TabIndex = 8;
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(29, 402);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(121, 13);
-            this.label37.TabIndex = 82;
-            this.label37.Text = "Domicilio fiscal localidad";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(29, 458);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(123, 13);
-            this.label38.TabIndex = 81;
-            this.label38.Text = "Domicilio fiscal municipio";
-            // 
-            // dfcolonia
-            // 
-            this.dfcolonia.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dfcolonia.Location = new System.Drawing.Point(15, 363);
-            this.dfcolonia.Name = "dfcolonia";
-            this.dfcolonia.Size = new System.Drawing.Size(335, 26);
-            this.dfcolonia.TabIndex = 7;
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(29, 347);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(113, 13);
-            this.label39.TabIndex = 80;
-            this.label39.Text = "Domicilio fiscal colonia";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(18, 293);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(111, 13);
-            this.label40.TabIndex = 78;
-            this.label40.Text = "Domicilio fiscal no. ext";
-            // 
-            // dfnoext
-            // 
-            this.dfnoext.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dfnoext.Location = new System.Drawing.Point(15, 309);
-            this.dfnoext.Name = "dfnoext";
-            this.dfnoext.Size = new System.Drawing.Size(335, 26);
-            this.dfnoext.TabIndex = 6;
-            // 
-            // dfcalle
-            // 
-            this.dfcalle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dfcalle.Location = new System.Drawing.Point(15, 252);
-            this.dfcalle.Name = "dfcalle";
-            this.dfcalle.Size = new System.Drawing.Size(335, 26);
-            this.dfcalle.TabIndex = 5;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(18, 236);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(101, 13);
-            this.label31.TabIndex = 74;
-            this.label31.Text = "Domicilio fiscal calle";
             // 
             // connombre
             // 
@@ -691,7 +343,7 @@
             // IvaInclu
             // 
             this.IvaInclu.AutoSize = true;
-            this.IvaInclu.Location = new System.Drawing.Point(268, 1493);
+            this.IvaInclu.Location = new System.Drawing.Point(269, 556);
             this.IvaInclu.Name = "IvaInclu";
             this.IvaInclu.Size = new System.Drawing.Size(80, 17);
             this.IvaInclu.TabIndex = 26;
@@ -701,7 +353,7 @@
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(17, 1436);
+            this.label29.Location = new System.Drawing.Point(18, 499);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(84, 13);
             this.label29.TabIndex = 61;
@@ -710,7 +362,7 @@
             // TxtPassFact
             // 
             this.TxtPassFact.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtPassFact.Location = new System.Drawing.Point(8, 1452);
+            this.TxtPassFact.Location = new System.Drawing.Point(9, 515);
             this.TxtPassFact.Name = "TxtPassFact";
             this.TxtPassFact.Size = new System.Drawing.Size(345, 26);
             this.TxtPassFact.TabIndex = 24;
@@ -718,7 +370,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(259, 1414);
+            this.button7.Location = new System.Drawing.Point(260, 477);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(89, 24);
             this.button7.TabIndex = 23;
@@ -729,7 +381,7 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(17, 1369);
+            this.label28.Location = new System.Drawing.Point(18, 432);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(72, 13);
             this.label28.TabIndex = 57;
@@ -739,14 +391,14 @@
             // 
             this.Txtkey.Enabled = false;
             this.Txtkey.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txtkey.Location = new System.Drawing.Point(8, 1383);
+            this.Txtkey.Location = new System.Drawing.Point(9, 446);
             this.Txtkey.Name = "Txtkey";
             this.Txtkey.Size = new System.Drawing.Size(345, 26);
             this.Txtkey.TabIndex = 58;
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(259, 1348);
+            this.button6.Location = new System.Drawing.Point(260, 411);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(89, 24);
             this.button6.TabIndex = 22;
@@ -757,7 +409,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(17, 1301);
+            this.label27.Location = new System.Drawing.Point(18, 364);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(70, 13);
             this.label27.TabIndex = 54;
@@ -767,14 +419,14 @@
             // 
             this.Txtcer.Enabled = false;
             this.Txtcer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Txtcer.Location = new System.Drawing.Point(8, 1317);
+            this.Txtcer.Location = new System.Drawing.Point(9, 380);
             this.Txtcer.Name = "Txtcer";
             this.Txtcer.Size = new System.Drawing.Size(345, 26);
             this.Txtcer.TabIndex = 55;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(259, 1214);
+            this.button4.Location = new System.Drawing.Point(260, 277);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(89, 24);
             this.button4.TabIndex = 20;
@@ -785,7 +437,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(17, 1169);
+            this.label26.Location = new System.Drawing.Point(18, 232);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(161, 13);
             this.label26.TabIndex = 51;
@@ -795,14 +447,14 @@
             // 
             this.UrlFacAll.Enabled = false;
             this.UrlFacAll.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UrlFacAll.Location = new System.Drawing.Point(8, 1185);
+            this.UrlFacAll.Location = new System.Drawing.Point(9, 248);
             this.UrlFacAll.Name = "UrlFacAll";
             this.UrlFacAll.Size = new System.Drawing.Size(345, 26);
             this.UrlFacAll.TabIndex = 52;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(259, 1282);
+            this.button3.Location = new System.Drawing.Point(260, 345);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(89, 24);
             this.button3.TabIndex = 21;
@@ -813,7 +465,7 @@
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(17, 1235);
+            this.label25.Location = new System.Drawing.Point(18, 298);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(67, 13);
             this.label25.TabIndex = 48;
@@ -823,7 +475,7 @@
             // 
             this.UrlLogoFact.Enabled = false;
             this.UrlLogoFact.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UrlLogoFact.Location = new System.Drawing.Point(8, 1251);
+            this.UrlLogoFact.Location = new System.Drawing.Point(9, 314);
             this.UrlLogoFact.Name = "UrlLogoFact";
             this.UrlLogoFact.Size = new System.Drawing.Size(345, 26);
             this.UrlLogoFact.TabIndex = 49;
@@ -866,60 +518,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "SELECCIONE EL MODULO DE INICIO";
             // 
-            // inifactura
+            // ininoempleados
             // 
-            this.inifactura.AutoSize = true;
-            this.inifactura.Location = new System.Drawing.Point(18, 32);
-            this.inifactura.Name = "inifactura";
-            this.inifactura.Size = new System.Drawing.Size(93, 17);
-            this.inifactura.TabIndex = 0;
-            this.inifactura.TabStop = true;
-            this.inifactura.Text = "Nueva factura";
-            this.inifactura.UseVisualStyleBackColor = true;
-            // 
-            // ininomina
-            // 
-            this.ininomina.AutoSize = true;
-            this.ininomina.Location = new System.Drawing.Point(18, 55);
-            this.ininomina.Name = "ininomina";
-            this.ininomina.Size = new System.Drawing.Size(94, 17);
-            this.ininomina.TabIndex = 1;
-            this.ininomina.TabStop = true;
-            this.ininomina.Text = "Nueva nomina";
-            this.ininomina.UseVisualStyleBackColor = true;
-            // 
-            // inifaemisiones
-            // 
-            this.inifaemisiones.AutoSize = true;
-            this.inifaemisiones.Location = new System.Drawing.Point(17, 78);
-            this.inifaemisiones.Name = "inifaemisiones";
-            this.inifaemisiones.Size = new System.Drawing.Size(125, 17);
-            this.inifaemisiones.TabIndex = 2;
-            this.inifaemisiones.TabStop = true;
-            this.inifaemisiones.Text = "Facturas > Emisiones";
-            this.inifaemisiones.UseVisualStyleBackColor = true;
-            // 
-            // inifaclientes
-            // 
-            this.inifaclientes.AutoSize = true;
-            this.inifaclientes.Location = new System.Drawing.Point(18, 101);
-            this.inifaclientes.Name = "inifaclientes";
-            this.inifaclientes.Size = new System.Drawing.Size(115, 17);
-            this.inifaclientes.TabIndex = 3;
-            this.inifaclientes.TabStop = true;
-            this.inifaclientes.Text = "Facturas > Clientes";
-            this.inifaclientes.UseVisualStyleBackColor = true;
-            // 
-            // inifaconceptos
-            // 
-            this.inifaconceptos.AutoSize = true;
-            this.inifaconceptos.Location = new System.Drawing.Point(18, 124);
-            this.inifaconceptos.Name = "inifaconceptos";
-            this.inifaconceptos.Size = new System.Drawing.Size(129, 17);
-            this.inifaconceptos.TabIndex = 4;
-            this.inifaconceptos.TabStop = true;
-            this.inifaconceptos.Text = "Facturas > Conceptos";
-            this.inifaconceptos.UseVisualStyleBackColor = true;
+            this.ininoempleados.AutoSize = true;
+            this.ininoempleados.Location = new System.Drawing.Point(18, 170);
+            this.ininoempleados.Name = "ininoempleados";
+            this.ininoempleados.Size = new System.Drawing.Size(125, 17);
+            this.ininoempleados.TabIndex = 6;
+            this.ininoempleados.TabStop = true;
+            this.ininoempleados.Text = "Nomina > Empleados";
+            this.ininoempleados.UseVisualStyleBackColor = true;
             // 
             // ininoemision
             // 
@@ -932,16 +540,60 @@
             this.ininoemision.Text = "Nomina > Emision";
             this.ininoemision.UseVisualStyleBackColor = true;
             // 
-            // ininoempleados
+            // inifaconceptos
             // 
-            this.ininoempleados.AutoSize = true;
-            this.ininoempleados.Location = new System.Drawing.Point(18, 170);
-            this.ininoempleados.Name = "ininoempleados";
-            this.ininoempleados.Size = new System.Drawing.Size(125, 17);
-            this.ininoempleados.TabIndex = 6;
-            this.ininoempleados.TabStop = true;
-            this.ininoempleados.Text = "Nomina > Empleados";
-            this.ininoempleados.UseVisualStyleBackColor = true;
+            this.inifaconceptos.AutoSize = true;
+            this.inifaconceptos.Location = new System.Drawing.Point(18, 124);
+            this.inifaconceptos.Name = "inifaconceptos";
+            this.inifaconceptos.Size = new System.Drawing.Size(129, 17);
+            this.inifaconceptos.TabIndex = 4;
+            this.inifaconceptos.TabStop = true;
+            this.inifaconceptos.Text = "Facturas > Conceptos";
+            this.inifaconceptos.UseVisualStyleBackColor = true;
+            // 
+            // inifaclientes
+            // 
+            this.inifaclientes.AutoSize = true;
+            this.inifaclientes.Location = new System.Drawing.Point(18, 101);
+            this.inifaclientes.Name = "inifaclientes";
+            this.inifaclientes.Size = new System.Drawing.Size(115, 17);
+            this.inifaclientes.TabIndex = 3;
+            this.inifaclientes.TabStop = true;
+            this.inifaclientes.Text = "Facturas > Clientes";
+            this.inifaclientes.UseVisualStyleBackColor = true;
+            // 
+            // inifaemisiones
+            // 
+            this.inifaemisiones.AutoSize = true;
+            this.inifaemisiones.Location = new System.Drawing.Point(17, 78);
+            this.inifaemisiones.Name = "inifaemisiones";
+            this.inifaemisiones.Size = new System.Drawing.Size(125, 17);
+            this.inifaemisiones.TabIndex = 2;
+            this.inifaemisiones.TabStop = true;
+            this.inifaemisiones.Text = "Facturas > Emisiones";
+            this.inifaemisiones.UseVisualStyleBackColor = true;
+            // 
+            // ininomina
+            // 
+            this.ininomina.AutoSize = true;
+            this.ininomina.Location = new System.Drawing.Point(18, 55);
+            this.ininomina.Name = "ininomina";
+            this.ininomina.Size = new System.Drawing.Size(94, 17);
+            this.ininomina.TabIndex = 1;
+            this.ininomina.TabStop = true;
+            this.ininomina.Text = "Nueva nomina";
+            this.ininomina.UseVisualStyleBackColor = true;
+            // 
+            // inifactura
+            // 
+            this.inifactura.AutoSize = true;
+            this.inifactura.Location = new System.Drawing.Point(18, 32);
+            this.inifactura.Name = "inifactura";
+            this.inifactura.Size = new System.Drawing.Size(93, 17);
+            this.inifactura.TabIndex = 0;
+            this.inifactura.TabStop = true;
+            this.inifactura.Text = "Nueva factura";
+            this.inifactura.UseVisualStyleBackColor = true;
             // 
             // Configuracion
             // 
@@ -984,38 +636,6 @@
         private System.Windows.Forms.TextBox TxtMail;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox expcolonia;
-        private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.TextBox expnoext;
-        private System.Windows.Forms.TextBox explocalidad;
-        private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.TextBox expcp;
-        private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.Label label45;
-        private System.Windows.Forms.TextBox expais;
-        private System.Windows.Forms.TextBox expestado;
-        private System.Windows.Forms.Label label46;
-        private System.Windows.Forms.TextBox expmunicipio;
-        private System.Windows.Forms.TextBox expcalle;
-        private System.Windows.Forms.Label label47;
-        private System.Windows.Forms.Label label48;
-        private System.Windows.Forms.TextBox dfcp;
-        private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.Label label50;
-        private System.Windows.Forms.TextBox dfpais;
-        private System.Windows.Forms.TextBox dfestado;
-        private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.TextBox dfmunicipio;
-        private System.Windows.Forms.TextBox dflocalidad;
-        private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.TextBox dfcolonia;
-        private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.TextBox dfnoext;
-        private System.Windows.Forms.TextBox dfcalle;
-        private System.Windows.Forms.Label label31;
         private System.Windows.Forms.TextBox connombre;
         private System.Windows.Forms.TextBox conrfc;
         private System.Windows.Forms.Label label32;
@@ -1040,7 +660,6 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox UrlLogoFact;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.CheckBox CbxDemo;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton ininoempleados;
