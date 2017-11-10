@@ -285,49 +285,14 @@ namespace DocumentoPDF
 
         private void ObtenerNodoImpuestos()
         {
-            float valFloat;
-            XmlNodeList impuestos = xDoc.GetElementsByTagName("cfdi:Impuestos");
-            float.TryParse(((XmlElement)impuestos[0]).GetAttribute("totalImpuestosTrasladados"), out valFloat);
-            _templatePDF.totalImpuestosRetenidos = valFloat;
+            XmlNodeList impuestos = xDoc.GetElementsByTagName("cfdi:Traslado");
 
-            if (xDoc.GetElementsByTagName("cfdi:Traslados") == null)
-                return;
-            XmlNodeList traslados = xDoc.GetElementsByTagName("cfdi:Traslados");
+            ImpuestoCFD a = new ImpuestoCFD();
+            //a.impuesto = ((XmlElement)impuestos[impuestos.Count - 1]).GetAttribute("Impuesto");
+            a.tasa = float.Parse(((XmlElement)impuestos[impuestos.Count - 1]).GetAttribute("TasaOCuota"));
+            a.importe = float.Parse(((XmlElement)impuestos[impuestos.Count - 1]).GetAttribute("Importe"));
 
-            if (((XmlElement)traslados[0]).GetElementsByTagName("cfdi:Traslado") == null)
-                return;
-            XmlNodeList lista = ((XmlElement)traslados[0]).GetElementsByTagName("cfdi:Traslado");
-
-            foreach (XmlElement nodo in lista)
-            {
-                ImpuestoCFD a = new ImpuestoCFD();
-                a.impuesto = nodo.GetAttribute("impuesto");
-                float.TryParse(nodo.GetAttribute("tasa"), out valFloat);
-                a.tasa = valFloat;
-
-                float.TryParse(nodo.GetAttribute("importe"), out valFloat);
-                a.importe = valFloat;
-
-                _templatePDF.impuestos.Add(a);
-            }
-
-            XmlNodeList retenciones = xDoc.GetElementsByTagName("cfdi:Retenciones");
-            if (retenciones.Count > 0)
-            {
-
-                if (((XmlElement)retenciones[0]).GetElementsByTagName("cfdi:Retencion") == null)
-                    return;
-                XmlNodeList listaRetenciones = ((XmlElement)retenciones[0]).GetElementsByTagName("cfdi:Retencion");
-
-                foreach (XmlElement nodo in listaRetenciones)
-                {
-                    RetencionCFD r = new RetencionCFD();
-                    r.impuesto = nodo.GetAttribute("impuesto");
-                    float.TryParse(nodo.GetAttribute("importe"), out valFloat);
-                    r.importe = valFloat;
-                    _templatePDF.retenciones.Add(r);
-                }
-            }
+            _templatePDF.impuestos.Add(a);
         }
 
         #endregion
@@ -388,12 +353,12 @@ namespace DocumentoPDF
 
             if (_templatePDF.emisor.RegimenFiscal == "603")
             {
-                regimen_fiscal = "Regimen Fiscal: 603 Personas Morales con Fines no Lucrativos";
+                regimen_fiscal = "Regimen Fiscal: 603 Personas Morales con Fines " + "\n" + " no Lucrativos";
             }
 
             if (_templatePDF.emisor.RegimenFiscal == "605")
             {
-                regimen_fiscal = "Regimen Fiscal: 605 Sueldos y Salarios e Ingresos Asimilados a Salarios";
+                regimen_fiscal = "Regimen Fiscal: 605 Sueldos y Salarios e Ingresos" + "\n" + " Asimilados a Salarios";
             }
 
             if (_templatePDF.emisor.RegimenFiscal == "606")
@@ -413,17 +378,17 @@ namespace DocumentoPDF
 
             if (_templatePDF.emisor.RegimenFiscal == "610")
             {
-                regimen_fiscal = "Regimen Fiscal: 610 Residentes en el Extranjero sin Establecimiento Permanente en México";
+                regimen_fiscal = "Regimen Fiscal: 610 Residentes en el Extranjero sin " + "\n" + "Establecimiento Permanente en México";
             }
 
             if (_templatePDF.emisor.RegimenFiscal == "611")
             {
-                regimen_fiscal = "Regimen Fiscal: 611 Ingresos por Dividendos (socios y accionistas)";
+                regimen_fiscal = "Regimen Fiscal: 611 Ingresos por Dividendos (socios y " + "\n" + "accionistas)";
             }
 
             if (_templatePDF.emisor.RegimenFiscal == "612")
             {
-                regimen_fiscal = "Regimen Fiscal: 612 Personas Físicas con Actividades Empresariales y Profesionales";
+                regimen_fiscal = "Regimen Fiscal: 612 Personas Físicas con Actividades " + "\n" + " Empresariales y Profesionales";
             }
 
             if (_templatePDF.emisor.RegimenFiscal == "614")
@@ -437,7 +402,7 @@ namespace DocumentoPDF
             }
             if (_templatePDF.emisor.RegimenFiscal == "620")
             {
-                regimen_fiscal = "Regimen Fiscal: 620 Sociedades Cooperativas de Producción que optan por diferir sus ingresos";
+                regimen_fiscal = "Regimen Fiscal: 620 Sociedades Cooperativas de" + "\n" + " Producción que optan por diferir sus ingresos";
             }
 
             if (_templatePDF.emisor.RegimenFiscal == "621")
@@ -447,7 +412,7 @@ namespace DocumentoPDF
 
             if (_templatePDF.emisor.RegimenFiscal == "622")
             {
-                regimen_fiscal = "Regimen Fiscal: 622 Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras";
+                regimen_fiscal = "Regimen Fiscal: 622 Actividades Agrícolas, " + "\n" + "Ganaderas, Silvícolas y Pesqueras";
             }
 
             if (_templatePDF.emisor.RegimenFiscal == "624")
@@ -462,22 +427,22 @@ namespace DocumentoPDF
 
             if (_templatePDF.emisor.RegimenFiscal == "607")
             {
-                regimen_fiscal = "Regimen Fiscal: 607 Régimen de Enajenación o Adquisición de Bienes";
+                regimen_fiscal = "Regimen Fiscal: 607 Régimen de Enajenación " + "\n" + "o Adquisición de Bienes";
             }
 
             if (_templatePDF.emisor.RegimenFiscal == "629")
             {
-                regimen_fiscal = "Regimen Fiscal: 629 De los Regímenes Fiscales Preferentes y de las Empresas Multinacionales";
+                regimen_fiscal = "Regimen Fiscal: 629 De los Regímenes Fiscales " + "\n" + " Preferentes y de las Empresas Multinacionales";
             }
 
             if (_templatePDF.emisor.RegimenFiscal == "630")
             {
-                regimen_fiscal = "Regimen Fiscal: 630 Enajenación de acciones en bolsa de valores";
+                regimen_fiscal = "Regimen Fiscal: 630 Enajenación de " + "\n" + " acciones en bolsa de valores";
             }
 
             if (_templatePDF.emisor.RegimenFiscal == "615")
             {
-                regimen_fiscal = "Regimen Fiscal: 615 Régimen de los ingresos por obtención de premios";
+                regimen_fiscal = "Regimen Fiscal: 615 Régimen de los ingresos " + "\n" + "por obtención de premios";
             }
 
             p1.Add(new Phrase(regimen_fiscal, new Font(Font.FontFamily.HELVETICA, 10)));
@@ -935,7 +900,7 @@ namespace DocumentoPDF
 
             foreach (ImpuestoCFD i in _templatePDF.impuestos)
             {
-                tablaImportes.AddCell(new Phrase(i.impuesto + " " + i.tasa.ToString("F2") + "%:", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
+                tablaImportes.AddCell(new Phrase("IVA " + i.impuesto + " " + i.tasa.ToString("F2") + " %:", new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD)));
                 tablaImportes.AddCell(new Phrase(i.importe.ToString("C"), new Font(Font.FontFamily.HELVETICA, 8)));
             }
 

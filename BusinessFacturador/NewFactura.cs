@@ -234,8 +234,10 @@ namespace HostelSystem
                 if (MessageBox.Show("SE EMITIRA LA SIGUIENTE FACTURA.\n\n" + articulos + "\nTOTAL: $" + total.ToString() + "\n\nPARA: " + datos.ReturnDatosCliente(huesped, "nombre") + "(" + datos.ReturnDatosCliente(huesped, "RFC") + ")", "EMISION FACTURA - " + datos.ReturnDatos("connombre", 1), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     mov = 1;
-                    Image1.Load(@"C:\HostelData\resources\spin.gif");
+                    Image1.Load(coneccion.ReturnLocalData() + @"\resources\spin.gif");
                     Image1.SizeMode = PictureBoxSizeMode.Zoom;
+                    Image2.Load(coneccion.ReturnLocalData() + @"\resources\spin.gif");
+                    Image2.SizeMode = PictureBoxSizeMode.Zoom;
 
 
                     string MetodoPagoInvoke = "", TipoComprobanteInvoke = "", usocfdiinvoke = "", metodopagoinvokev = "";
@@ -250,11 +252,13 @@ namespace HostelSystem
                     if (form.FactAction(conceptos, iva, huesped, MetodoPagoInvoke, TipoComprobanteInvoke, total.ToString(), ids, usocfdiinvoke, metodopagoinvokev) == 0)
                     {
                         Image1.Image = Properties.Resources.Libre128;
+                        Image2.Image = Properties.Resources.Libre128;
                         status = 0;
                     }
                     else
                     {
                         Image1.Image = Properties.Resources.Ocupada128;
+                        Image2.Image = Properties.Resources.Ocupada128;
                         status = 0;
                     }
                     form.Dispose();

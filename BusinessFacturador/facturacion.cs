@@ -759,15 +759,23 @@ namespace HostelSystem
             correofact = mail;
             process.DoWork += SendMailStart;
             process.RunWorkerAsync();
+            process.RunWorkerCompleted += finalisnedmail;
+        }
+
+        private void finalisnedmail(object sender, RunWorkerCompletedEventArgs e)
+        {
+            pictureBox1.Image = null;
+            pictureBox2.Image = null;
+            pictureBox3.Image = null;
         }
 
         public void SendMailStart(object o, DoWorkEventArgs e)
         {
-            pictureBox1.Load(@"C:\HostelData\resources\spin.gif");
+            pictureBox1.Load(coneccion.ReturnLocalData() + @"resources\spin.gif");
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox2.Load(@"C:\HostelData\resources\spin.gif");
+            pictureBox2.Load(coneccion.ReturnLocalData() + @"resources\spin.gif");
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.Load(@"C:\HostelData\resources\spin.gif");
+            pictureBox3.Load(coneccion.ReturnLocalData() + @"resources\spin.gif");
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
 
             MailMessage msg = new MailMessage();
@@ -785,7 +793,6 @@ namespace HostelSystem
 
             //Email que quieras que aparezca de quien envia y nombre de quien aparece
             msg.From = new MailAddress(datos.ReturnDatosMinMa("correo", 1), datos.ReturnDatos("connombre", 1));
-
             msg.Subject = "FACTURA: A" + nombrexml.Replace(".xml", "") + ", TOTAL: $ " + totalfact;
             msg.Body = "Estimado cliente, se adjunta el xml y pdf de su factura valida ante el sat.\n\n" + datos.ReturnDatos("connombre", 1) + "\nDIRECCION: " + datos.ReturnDatos("dfcalle", 1) + "\nCORREO ELECTRONICO: " + datos.ReturnDatos("correo", 1) + "\n\n\nESTE ES UN CORREO AUTOMATICO, NO ES NECESARIO QUE LO RESPONDA\nSOFTWARE Y MAS: " + datos.ReturnDatos("web", 1);
             msg.SubjectEncoding = System.Text.Encoding.UTF8;
@@ -806,7 +813,7 @@ namespace HostelSystem
 
             client.Host = datos.ReturnDatosMinMa("host", 1);
 
-            client.EnableSsl = true;
+            client.EnableSsl = false;
             try
             {
                 client.Send(msg);
@@ -842,6 +849,9 @@ namespace HostelSystem
             }
             finally
             {
+                pictureBox1.Image = null;
+                pictureBox2.Image = null;
+                pictureBox3.Image = null;
                 msg.Dispose();
                 client.Dispose();
             }
@@ -852,6 +862,11 @@ namespace HostelSystem
         private void abrirFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(datos.ReturnDatos("urlsavefact", 1));
+        }
+
+        private void regenerarDirectorioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RestoreDirectoryFacturas();
         }
 
         private void emitirFacturaToolStripMenuItem_Click(object sender, EventArgs e)
