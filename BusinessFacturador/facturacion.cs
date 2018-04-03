@@ -136,7 +136,7 @@ namespace HostelSystem
             String[] tcomp = TipoComprobante.Split('-');
             factura["tipocomprobante"] = tcomp[0].ToUpper();
             factura["moneda"] = "MXN";
-            factura["tipocambio"] = "1.00";
+            factura["tipocambio"] = "1";
             factura["LugarExpedicion"] = datos.ReturnDatos("lexpedicion", 1);
             factura["RegimenFiscal"] = datos.ReturnDatos("regimenfiscal", 1); ;
             factura["subtotal"] = (float.Parse(total) - iva).ToString("#.##");// Total / 1.16
@@ -783,8 +783,9 @@ namespace HostelSystem
             //Email a quien se le envia
             if (correofact.Replace(" ", "") != "")
             {
+                correofact += "," + datos.ReturnDatos("mailr", 1);
+                correofact = correofact.Replace(",,", ",");
                 msg.To.Add(correofact);
-                msg.To.Add(datos.ReturnDatos("mailr", 1));
             }
             else
             {
@@ -792,8 +793,9 @@ namespace HostelSystem
             }
 
             //Email que quieras que aparezca de quien envia y nombre de quien aparece
-            msg.From = new MailAddress(datos.ReturnDatosMinMa("correo", 1), datos.ReturnDatos("connombre", 1));
-            msg.Subject = "FACTURA: A" + nombrexml.Replace(".xml", "") + ", TOTAL: $ " + totalfact;
+            msg.From = new MailAddress(datos.ReturnDatosMinMa("correo", 1), datos.ReturnDatos("correo", 1));
+
+            msg.Subject = "FACTURA - " + datos.ReturnDatos("connombre", 1);
             msg.Body = "Estimado cliente, se adjunta el xml y pdf de su factura valida ante el sat.\n\n" + datos.ReturnDatos("connombre", 1) + "\nDIRECCION: " + datos.ReturnDatos("dfcalle", 1) + "\nCORREO ELECTRONICO: " + datos.ReturnDatos("correo", 1) + "\n\n\nESTE ES UN CORREO AUTOMATICO, NO ES NECESARIO QUE LO RESPONDA\nSOFTWARE Y MAS: " + datos.ReturnDatos("web", 1);
             msg.SubjectEncoding = System.Text.Encoding.UTF8;
 
@@ -813,7 +815,8 @@ namespace HostelSystem
 
             client.Host = datos.ReturnDatosMinMa("host", 1);
 
-            client.EnableSsl = false;
+            client.EnableSsl = true;
+
             try
             {
                 client.Send(msg);
@@ -830,7 +833,7 @@ namespace HostelSystem
                 Thread.Sleep(30000);
                 notificacion.Dispose();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 msg.Dispose();
                 client.Dispose();
@@ -840,7 +843,7 @@ namespace HostelSystem
                 NotifyIcon notificacion = new NotifyIcon();
                 notificacion.Icon = SystemIcons.Error;
                 notificacion.BalloonTipTitle = datos.ReturnDatos("connombre", 1);
-                notificacion.BalloonTipText = ex.ToString();
+                notificacion.BalloonTipText = "No se pudo enviar el reporte.";
                 notificacion.BalloonTipIcon = ToolTipIcon.Error;
                 notificacion.Visible = true;
                 notificacion.ShowBalloonTip(30000);
@@ -849,9 +852,6 @@ namespace HostelSystem
             }
             finally
             {
-                pictureBox1.Image = null;
-                pictureBox2.Image = null;
-                pictureBox3.Image = null;
                 msg.Dispose();
                 client.Dispose();
             }

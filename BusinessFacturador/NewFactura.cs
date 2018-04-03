@@ -206,7 +206,7 @@ namespace HostelSystem
                     contra0["Importe"] = (((float.Parse(item.Cells["monto"].Value.ToString()) * float.Parse(item.Cells["cantidad"].Value.ToString())) / 1.160000) * 0.160000).ToString("#.##");
                     iva += float.Parse(contra0["Importe"]);
                     contra0["Impuesto"] = "002";
-                    contra0["TasaOCuota"] = "0.1600";
+                    contra0["TasaOCuota"] = "0.160000";
                     contra0["TipoFactor"] = "Tasa";
                     conimp0tras.AgregaSubnodo(contra0);
                     conimp0.AgregaSubnodo(conimp0tras);
@@ -397,28 +397,7 @@ namespace HostelSystem
         {
             AddProductFAct();
         }
-
-        private void DtvProductFact_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (mov == 1)
-            {
-                loadventas(DtvVentas, "select * from ventas  order by id desc");
-                LoadDtvHuespeds(ComboClientes, "select * from huespedes order by id desc");
-                LoadReadyFact(DtvProductFact);
-                mov = 0;
-            }else
-            {
-                try
-                {
-                    DtvProductFact.Rows.RemoveAt(DtvProductFact.CurrentRow.Index);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Verifique su seleccion", "No Found", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                }
-            }
-        }
-
+        
         private void button4_Click(object sender, EventArgs e)
         {
             SearchVentas();
@@ -519,6 +498,7 @@ namespace HostelSystem
 
             loadventas(DtvVentas, "select * from ventas where id_huesped = " + huesped + " order by id desc");
         }
+        
 
         public bool IsNumeric(object Expression)
 

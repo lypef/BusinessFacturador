@@ -145,7 +145,6 @@
             this.DtvProductFact.Name = "DtvProductFact";
             this.DtvProductFact.Size = new System.Drawing.Size(423, 204);
             this.DtvProductFact.TabIndex = 1;
-            this.DtvProductFact.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DtvProductFact_CellDoubleClick);
             this.DtvProductFact.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DtvProductFact_MouseDown);
             // 
             // MenuVentas
