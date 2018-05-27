@@ -6,14 +6,20 @@ using System.Data.SqlClient;
 using System.Threading;
 using System.Timers;
 using System.Net.Mail;
+using System.Data.OleDb;
+using System.Data;
+using System.Collections.Generic;
+using System.Text;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace HostelSystem
 {
     public partial class Control : Form
     {
         Datos datos = new Datos();
-
         Conexion coneccion = new Conexion();
+        static string ruta_xls = "";
+        static int rowCount = 0;
 
         public static string BodyMail;
         string nivel = "";
@@ -26,6 +32,9 @@ namespace HostelSystem
             nivel = level;
             usersystem = usersystemtmp;
             this.Text = "BUSINESS FACTURADOR - CONTRIBUYENTE: " + datos.ReturnDatos("conrfc", 1) + ", " + datos.ReturnDatos("connombre", 1);
+
+            PorcentajeCompletado.Visible = false;
+            PorcentajeCompletado.BackColor = Color.Transparent;
             ShowFormIni();
         }
 
@@ -145,7 +154,7 @@ namespace HostelSystem
             Panel.Controls.Add(form);
             form.Show();
         }
-
+        
         private void ShowConceptos()
         {
             CleanPanel();
@@ -1101,6 +1110,77 @@ namespace HostelSystem
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             ShowClientes();
+        }
+        
+
+        private void importarXLSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Archivo Excel (*.xls;*.xlsx)|*.xls;*.xlsx"; 
+            open.FilterIndex = 4;
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                PorcentajeCompletado.Visible = true;
+                PorcentajeCompletado.Text = "CARGANDO ...";
+                ruta_xls = open.FileName;
+                Excel.Application xlApp = new Excel.Application();
+                Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(ruta_xls);
+                Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
+                Excel.Range xlRange = xlWorksheet.UsedRange;
+                Excel.Range range = xlWorksheet.UsedRange;
+                rowCount = range.Rows.Count;
+                
+                process1.WorkerReportsProgress = true;
+                process1.ProgressChanged += new ProgressChangedEventHandler(bgw_ProgressChanged);
+                process1.DoWork += ImportarXLS;
+                process1.RunWorkerCompleted += BarraCero;
+                process1.RunWorkerAsync();
+            }
+        }
+
+        private void BarraCero(object sender, RunWorkerCompletedEventArgs e)
+        {
+            PorcentajeCompletado.Visible = false;
+        }
+
+        private void bgw_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            PorcentajeCompletado.Text = ((float.Parse(e.ProgressPercentage.ToString()) / rowCount) * 100).ToString("#.##") + " % COMPLETADO";
+        }
+
+        private void ImportarXLS(object sender, DoWorkEventArgs e)
+        {
+            Excel.Application xlApp = new Excel.Application();
+            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(ruta_xls);
+            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
+            Excel.Range xlRange = xlWorksheet.UsedRange;
+
+
+            for (int i = 1; i <= rowCount; i++)
+            {
+                if (xlRange.Cells[i, 1] != null && xlRange.Cells[i, 1].value2 != null && xlRange.Cells[i, 2] != null && xlRange.Cells[i, 2].value2 != null && xlRange.Cells[i, 3] != null && xlRange.Cells[i, 3].value2 != null)
+                {
+                    Console.WriteLine(xlRange.Cells[i, 1].Value2.ToString() + xlRange.Cells[i, 2].Value2.ToString() + xlRange.Cells[i, 3].Value2.ToString());
+                    try
+                    {
+                        coneccion.cnn.Open();
+                        coneccion.sql = "insert into conceptos (id,concepto, monto) values ('" + xlRange.Cells[i, 1].Value2.ToString() + "', '" + xlRange.Cells[i, 2].Value2.ToString() + "', '" + xlRange.Cells[i, 3].Value2.ToString() + "' )";
+                        coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
+                        coneccion.comandosql.ExecuteReader();
+                        coneccion.cnn.Close();
+                    }
+                    catch (Exception)
+                    {
+                        coneccion.cnn.Close();
+                    }
+                    process1.ReportProgress(i, 0);
+                }
+            }
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            
         }
     }
 }

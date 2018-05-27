@@ -47,6 +47,10 @@
             this.TxtMontoEdit = new System.Windows.Forms.TextBox();
             this.BtnUpdate = new System.Windows.Forms.Button();
             this.BtnDeleteHuesped = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.Txt_id = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.txt_id_edit = new System.Windows.Forms.TextBox();
             this.Gbhuesped.SuspendLayout();
             this.TabHuespedes.SuspendLayout();
             this.TabAdd.SuspendLayout();
@@ -77,6 +81,8 @@
             // TabAdd
             // 
             this.TabAdd.BackColor = System.Drawing.SystemColors.Control;
+            this.TabAdd.Controls.Add(this.label4);
+            this.TabAdd.Controls.Add(this.Txt_id);
             this.TabAdd.Controls.Add(this.BtnConsultar);
             this.TabAdd.Controls.Add(this.TxtSearchConcepto);
             this.TabAdd.Controls.Add(this.DtvConceptos);
@@ -128,7 +134,7 @@
             this.BtnAddHuesped.Location = new System.Drawing.Point(678, 6);
             this.BtnAddHuesped.Name = "BtnAddHuesped";
             this.BtnAddHuesped.Size = new System.Drawing.Size(148, 54);
-            this.BtnAddHuesped.TabIndex = 3;
+            this.BtnAddHuesped.TabIndex = 4;
             this.BtnAddHuesped.Text = "Agregar";
             this.BtnAddHuesped.UseVisualStyleBackColor = true;
             this.BtnAddHuesped.Click += new System.EventHandler(this.BtnAddHuesped_Click);
@@ -147,7 +153,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
-            this.label6.Location = new System.Drawing.Point(50, 39);
+            this.label6.Location = new System.Drawing.Point(311, 39);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(73, 18);
             this.label6.TabIndex = 66;
@@ -164,15 +170,17 @@
             // TxtMonto
             // 
             this.TxtMonto.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
-            this.TxtMonto.Location = new System.Drawing.Point(129, 36);
+            this.TxtMonto.Location = new System.Drawing.Point(390, 36);
             this.TxtMonto.Name = "TxtMonto";
-            this.TxtMonto.Size = new System.Drawing.Size(543, 24);
-            this.TxtMonto.TabIndex = 2;
+            this.TxtMonto.Size = new System.Drawing.Size(282, 24);
+            this.TxtMonto.TabIndex = 3;
             this.TxtMonto.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxtMonto_KeyPress);
             // 
             // TabModif
             // 
             this.TabModif.BackColor = System.Drawing.SystemColors.Control;
+            this.TabModif.Controls.Add(this.label5);
+            this.TabModif.Controls.Add(this.txt_id_edit);
             this.TabModif.Controls.Add(this.label2);
             this.TabModif.Controls.Add(this.label3);
             this.TabModif.Controls.Add(this.TxtConceptoEdit);
@@ -199,7 +207,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
-            this.label3.Location = new System.Drawing.Point(57, 78);
+            this.label3.Location = new System.Drawing.Point(57, 55);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 18);
             this.label3.TabIndex = 108;
@@ -217,7 +225,7 @@
             // TxtMontoEdit
             // 
             this.TxtMontoEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
-            this.TxtMontoEdit.Location = new System.Drawing.Point(136, 75);
+            this.TxtMontoEdit.Location = new System.Drawing.Point(136, 52);
             this.TxtMontoEdit.Name = "TxtMontoEdit";
             this.TxtMontoEdit.Size = new System.Drawing.Size(543, 24);
             this.TxtMontoEdit.TabIndex = 2;
@@ -230,7 +238,7 @@
             this.BtnUpdate.Location = new System.Drawing.Point(689, 15);
             this.BtnUpdate.Name = "BtnUpdate";
             this.BtnUpdate.Size = new System.Drawing.Size(133, 41);
-            this.BtnUpdate.TabIndex = 3;
+            this.BtnUpdate.TabIndex = 4;
             this.BtnUpdate.Text = "Actualizar";
             this.BtnUpdate.UseVisualStyleBackColor = true;
             this.BtnUpdate.Click += new System.EventHandler(this.BtnUpdate_Click);
@@ -244,11 +252,47 @@
             this.BtnDeleteHuesped.Location = new System.Drawing.Point(689, 65);
             this.BtnDeleteHuesped.Name = "BtnDeleteHuesped";
             this.BtnDeleteHuesped.Size = new System.Drawing.Size(133, 41);
-            this.BtnDeleteHuesped.TabIndex = 4;
+            this.BtnDeleteHuesped.TabIndex = 5;
             this.BtnDeleteHuesped.Text = "Eliminar";
             this.BtnDeleteHuesped.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.BtnDeleteHuesped.UseVisualStyleBackColor = true;
             this.BtnDeleteHuesped.Click += new System.EventHandler(this.BtnDeleteHuesped_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.label4.Location = new System.Drawing.Point(93, 39);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(30, 18);
+            this.label4.TabIndex = 69;
+            this.label4.Text = "ID :";
+            // 
+            // Txt_id
+            // 
+            this.Txt_id.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.Txt_id.Location = new System.Drawing.Point(129, 36);
+            this.Txt_id.Name = "Txt_id";
+            this.Txt_id.Size = new System.Drawing.Size(176, 24);
+            this.Txt_id.TabIndex = 2;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.label5.Location = new System.Drawing.Point(57, 85);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(30, 18);
+            this.label5.TabIndex = 110;
+            this.label5.Text = "ID :";
+            // 
+            // txt_id_edit
+            // 
+            this.txt_id_edit.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F);
+            this.txt_id_edit.Location = new System.Drawing.Point(136, 82);
+            this.txt_id_edit.Name = "txt_id_edit";
+            this.txt_id_edit.Size = new System.Drawing.Size(543, 24);
+            this.txt_id_edit.TabIndex = 3;
             // 
             // conceptos
             // 
@@ -290,5 +334,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox TxtConceptoEdit;
         private System.Windows.Forms.TextBox TxtMontoEdit;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox Txt_id;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox txt_id_edit;
     }
 }

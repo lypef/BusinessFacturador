@@ -33,6 +33,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usuariosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.importarXLSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.conceptosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.abrirDirecrotioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -65,6 +68,8 @@
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.cambiarALIMPIEZAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cambiarAMANTENIMIENTOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.process1 = new System.ComponentModel.BackgroundWorker();
+            this.PorcentajeCompletado = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.MenuMantenimiento.SuspendLayout();
             this.MenuLimpieza.SuspendLayout();
@@ -91,6 +96,9 @@
             // 
             this.archivoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.usuariosToolStripMenuItem1,
+            this.toolStripSeparator4,
+            this.importarXLSToolStripMenuItem,
+            this.toolStripSeparator3,
             this.conceptosToolStripMenuItem,
             this.abrirDirecrotioToolStripMenuItem,
             this.toolStripSeparator1,
@@ -113,6 +121,24 @@
             this.usuariosToolStripMenuItem1.Size = new System.Drawing.Size(282, 26);
             this.usuariosToolStripMenuItem1.Text = "Usuarios";
             this.usuariosToolStripMenuItem1.Click += new System.EventHandler(this.usuariosToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(279, 6);
+            // 
+            // importarXLSToolStripMenuItem
+            // 
+            this.importarXLSToolStripMenuItem.Image = global::HostelSystem.Properties.Resources.cardboard_box_48;
+            this.importarXLSToolStripMenuItem.Name = "importarXLSToolStripMenuItem";
+            this.importarXLSToolStripMenuItem.Size = new System.Drawing.Size(282, 26);
+            this.importarXLSToolStripMenuItem.Text = "Importar XLS";
+            this.importarXLSToolStripMenuItem.Click += new System.EventHandler(this.importarXLSToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(279, 6);
             // 
             // conceptosToolStripMenuItem
             // 
@@ -348,12 +374,28 @@
             this.cambiarAMANTENIMIENTOToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
             this.cambiarAMANTENIMIENTOToolStripMenuItem.Text = "Cambiar a MANTENIMIENTO";
             // 
+            // process1
+            // 
+            this.process1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            // 
+            // PorcentajeCompletado
+            // 
+            this.PorcentajeCompletado.AutoSize = true;
+            this.PorcentajeCompletado.BackColor = System.Drawing.Color.Lime;
+            this.PorcentajeCompletado.ForeColor = System.Drawing.Color.Black;
+            this.PorcentajeCompletado.Location = new System.Drawing.Point(749, 9);
+            this.PorcentajeCompletado.Name = "PorcentajeCompletado";
+            this.PorcentajeCompletado.Size = new System.Drawing.Size(113, 13);
+            this.PorcentajeCompletado.TabIndex = 4;
+            this.PorcentajeCompletado.Text = "100 % COMPLETADO";
+            // 
             // Control
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(888, 522);
+            this.Controls.Add(this.PorcentajeCompletado);
             this.Controls.Add(this.Panel);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -407,5 +449,10 @@
         private System.Windows.Forms.ToolStripMenuItem conceptosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem importarXLSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.ComponentModel.BackgroundWorker process1;
+        private System.Windows.Forms.Label PorcentajeCompletado;
     }
 }

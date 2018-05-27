@@ -61,13 +61,13 @@ namespace HostelSystem
 
         private void AddConcepto()
         {
-            if (TxtConcepto.Text.Replace(" ", "") != "")
+            if (TxtConcepto.Text.Replace(" ", "") != "" && Txt_id.Text.Replace(" ", "") != "")
             {
                 try
                 {
                     coneccion.cnn.Close();
 
-                    coneccion.sql = "insert into conceptos (concepto, monto) values ('" + TxtConcepto.Text.ToUpper() + "', '" + TxtMonto.Text.ToUpper() + "' )";
+                    coneccion.sql = "insert into conceptos (id,concepto, monto) values ('"+Txt_id.Text+"','" + TxtConcepto.Text.ToUpper() + "', '" + TxtMonto.Text.ToUpper() + "' )";
                     coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                     coneccion.cnn.Open();
                     coneccion.comandosql.ExecuteReader();
@@ -78,6 +78,7 @@ namespace HostelSystem
                     {
                         TxtConcepto.Text = "";
                         TxtMonto.Text = "";
+                        Txt_id.Text = "";
                     }
 
                 }
@@ -111,7 +112,7 @@ namespace HostelSystem
         }
 
        
-        private void FunctionEditConcepto(int id)
+        private void FunctionEditConcepto(Decimal id)
         {
             BtnDeleteHuesped.Name = id.ToString();
             try
@@ -125,6 +126,7 @@ namespace HostelSystem
 
                 if (Reg.Read())
                 {
+                    txt_id_edit.Text = Reg[0].ToString();
                     TxtConceptoEdit.Text = Reg[1].ToString();
                     TxtMontoEdit.Text = Reg[2].ToString();
                 }
@@ -143,7 +145,7 @@ namespace HostelSystem
             try
             {
                 DataGridViewRow row = this.DtvConceptos.Rows[e.RowIndex];
-                FunctionEditConcepto(Convert.ToInt32(row.Cells["id"].Value.ToString()));
+                FunctionEditConcepto(Decimal.Parse(row.Cells["id"].Value.ToString()));
                 TabHuespedes.SelectedIndex = 1;
             }
             catch (Exception ex)
@@ -163,7 +165,7 @@ namespace HostelSystem
             {
                 if (MessageBox.Show("El concepto se actualizara con los cambios establecidos. ¿Esta seguro?", "UPDATE", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    UpdateConcepto(Convert.ToInt32(BtnDeleteHuesped.Name));
+                    UpdateConcepto(Decimal.Parse(BtnDeleteHuesped.Name));
                     CleanModif();
                     loadConceptos(DtvConceptos, "select * from conceptos");
                     TabHuespedes.SelectedIndex = 0;
@@ -181,11 +183,11 @@ namespace HostelSystem
             TxtMontoEdit.Text = "";
             BtnDeleteHuesped.Name = "boton";
         }
-        private void UpdateConcepto(int id)
+        private void UpdateConcepto(Decimal id)
         {
             try
             {
-                coneccion.sql = "update conceptos set concepto = '" + TxtConceptoEdit.Text.ToUpper() + "', monto = '" + TxtMontoEdit.Text.ToUpper() + "' where id = '" + id + "'";
+                coneccion.sql = "update conceptos set id = '"+txt_id_edit.Text.Replace(" ","")+"', concepto = '" + TxtConceptoEdit.Text.ToUpper() + "', monto = '" + TxtMontoEdit.Text.ToUpper() + "' where id = '" + id + "'";
                 coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
                 coneccion.cnn.Open();
                 SqlDataReader Reg = null;

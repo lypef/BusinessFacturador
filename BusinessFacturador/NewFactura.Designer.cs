@@ -61,6 +61,8 @@
             this.usocfdi = new System.Windows.Forms.ComboBox();
             this.TipoComprobante = new System.Windows.Forms.ComboBox();
             this.Forma_pago = new System.Windows.Forms.ComboBox();
+            this.Clave_ProductoServicio = new System.Windows.Forms.ComboBox();
+            this.Clave_Unidad = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DtvVentas)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -130,9 +132,9 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.DtvProductFact);
-            this.groupBox3.Location = new System.Drawing.Point(451, 187);
+            this.groupBox3.Location = new System.Drawing.Point(451, 246);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(429, 223);
+            this.groupBox3.Size = new System.Drawing.Size(429, 164);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "PRODUCTOS A FACTURAR";
@@ -143,7 +145,7 @@
             this.DtvProductFact.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DtvProductFact.Location = new System.Drawing.Point(3, 16);
             this.DtvProductFact.Name = "DtvProductFact";
-            this.DtvProductFact.Size = new System.Drawing.Size(423, 204);
+            this.DtvProductFact.Size = new System.Drawing.Size(423, 145);
             this.DtvProductFact.TabIndex = 1;
             this.DtvProductFact.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DtvProductFact_MouseDown);
             // 
@@ -317,6 +319,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.Clave_ProductoServicio);
+            this.groupBox4.Controls.Add(this.Clave_Unidad);
             this.groupBox4.Controls.Add(this.ComboClientes);
             this.groupBox4.Controls.Add(this.Metodo_pago);
             this.groupBox4.Controls.Add(this.usocfdi);
@@ -324,7 +328,7 @@
             this.groupBox4.Controls.Add(this.Forma_pago);
             this.groupBox4.Location = new System.Drawing.Point(454, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(429, 169);
+            this.groupBox4.Size = new System.Drawing.Size(429, 228);
             this.groupBox4.TabIndex = 16;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Opciones | cfdi 3.3";
@@ -334,7 +338,7 @@
             this.ComboClientes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboClientes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ComboClientes.FormattingEnabled = true;
-            this.ComboClientes.Location = new System.Drawing.Point(7, 19);
+            this.ComboClientes.Location = new System.Drawing.Point(6, 19);
             this.ComboClientes.Name = "ComboClientes";
             this.ComboClientes.Size = new System.Drawing.Size(412, 28);
             this.ComboClientes.TabIndex = 19;
@@ -346,7 +350,7 @@
             this.Metodo_pago.Items.AddRange(new object[] {
             "PUE - Pago en una sola exhibición",
             "PPD -Pago en parcialidades o diferido\t\t"});
-            this.Metodo_pago.Location = new System.Drawing.Point(7, 134);
+            this.Metodo_pago.Location = new System.Drawing.Point(6, 134);
             this.Metodo_pago.Name = "Metodo_pago";
             this.Metodo_pago.Size = new System.Drawing.Size(412, 21);
             this.Metodo_pago.TabIndex = 23;
@@ -415,10 +419,66 @@
             "28-Tarjeta de Débito",
             "29-Tarjeta de Servicio",
             "99-Otros"});
-            this.Forma_pago.Location = new System.Drawing.Point(7, 53);
+            this.Forma_pago.Location = new System.Drawing.Point(6, 53);
             this.Forma_pago.Name = "Forma_pago";
             this.Forma_pago.Size = new System.Drawing.Size(412, 21);
             this.Forma_pago.TabIndex = 20;
+            // 
+            // Clave_ProductoServicio
+            // 
+            this.Clave_ProductoServicio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Clave_ProductoServicio.FormattingEnabled = true;
+            this.Clave_ProductoServicio.Items.AddRange(new object[] {
+            "E48 - Unidad de servicio",
+            "H87 - Pieza",
+            "EA - Elemento (Pieza) unidad de medida Inglesa",
+            "E48 - Unidad de servicio",
+            "KGM - Kilogramo",
+            "GRM - Gramo",
+            "A9 - Tarífa",
+            "MTR - Metro",
+            "INH - Pulgada",
+            "FOT - Pie",
+            "YRD - Yarda",
+            "SMI - Milla (milla estatal)",
+            "MTK - Metro cuadrado",
+            "CMK - Centímetro cuadrado",
+            "MTQ - Metro cúbico",
+            "LTR - Litro",
+            "GLI - Galón (UK)",
+            "GLL - Galón (EUA)",
+            "HUR - Hora",
+            "DAY - Día",
+            "ANN - Año",
+            "C62 - Uno",
+            "5B - Batch",
+            "AB - Paquete a granel",
+            "LO - Lote [unidad de adquisición]",
+            "XLT - Lote",
+            "LH - Hora de trabajo",
+            "AS - Variedad",
+            "HEA - Cabeza",
+            "IE - Personas",
+            "NMP - Número de paquetes",
+            "SET - Conjunto",
+            "ZZ - Mutuamente definido",
+            "XBX - Caja",
+            "XKI - Kit (Conjunto de piezas)",
+            "XOK - Bloque"});
+            this.Clave_ProductoServicio.Location = new System.Drawing.Point(6, 188);
+            this.Clave_ProductoServicio.Name = "Clave_ProductoServicio";
+            this.Clave_ProductoServicio.Size = new System.Drawing.Size(412, 21);
+            this.Clave_ProductoServicio.TabIndex = 27;
+            // 
+            // Clave_Unidad
+            // 
+            this.Clave_Unidad.FormattingEnabled = true;
+            this.Clave_Unidad.Items.AddRange(new object[] {
+            "01010101 - No existe en el catalogo"});
+            this.Clave_Unidad.Location = new System.Drawing.Point(6, 161);
+            this.Clave_Unidad.Name = "Clave_Unidad";
+            this.Clave_Unidad.Size = new System.Drawing.Size(412, 21);
+            this.Clave_Unidad.TabIndex = 26;
             // 
             // NewFactura
             // 
@@ -487,5 +547,7 @@
         private System.Windows.Forms.ComboBox usocfdi;
         private System.Windows.Forms.ComboBox TipoComprobante;
         private System.Windows.Forms.ComboBox Forma_pago;
+        private System.Windows.Forms.ComboBox Clave_ProductoServicio;
+        private System.Windows.Forms.ComboBox Clave_Unidad;
     }
 }
