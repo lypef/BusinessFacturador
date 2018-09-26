@@ -78,6 +78,8 @@
             this.inifaemisiones = new System.Windows.Forms.RadioButton();
             this.ininomina = new System.Windows.Forms.RadioButton();
             this.inifactura = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TxtSerie = new System.Windows.Forms.TextBox();
             this.tabPage5.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.tabPage7.SuspendLayout();
@@ -243,6 +245,8 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.TxtSerie);
             this.panel1.Controls.Add(this.connombre);
             this.panel1.Controls.Add(this.conrfc);
             this.panel1.Controls.Add(this.label32);
@@ -343,7 +347,7 @@
             // IvaInclu
             // 
             this.IvaInclu.AutoSize = true;
-            this.IvaInclu.Location = new System.Drawing.Point(269, 556);
+            this.IvaInclu.Location = new System.Drawing.Point(264, 558);
             this.IvaInclu.Name = "IvaInclu";
             this.IvaInclu.Size = new System.Drawing.Size(80, 17);
             this.IvaInclu.TabIndex = 26;
@@ -595,6 +599,23 @@
             this.inifactura.Text = "Nueva factura";
             this.inifactura.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 559);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(37, 13);
+            this.label1.TabIndex = 74;
+            this.label1.Text = "Serie :";
+            // 
+            // TxtSerie
+            // 
+            this.TxtSerie.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TxtSerie.Location = new System.Drawing.Point(58, 551);
+            this.TxtSerie.Name = "TxtSerie";
+            this.TxtSerie.Size = new System.Drawing.Size(200, 26);
+            this.TxtSerie.TabIndex = 25;
+            // 
             // Configuracion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -669,5 +690,7 @@
         private System.Windows.Forms.RadioButton inifaemisiones;
         private System.Windows.Forms.RadioButton ininomina;
         private System.Windows.Forms.RadioButton inifactura;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox TxtSerie;
     }
 }

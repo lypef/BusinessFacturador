@@ -100,7 +100,21 @@ namespace HostelSystem
 
         private void SearchConcepto()
         {
-            loadConceptos(DtvConceptos, "select * from conceptos where concepto like '%" + TxtSearchConcepto.Text + "%' ");
+            if (IsNumeric(TxtSearchConcepto.Text))
+            {
+                try
+                {
+                    loadConceptos(DtvConceptos, "select * from conceptos where id = '" + TxtSearchConcepto.Text + "' order by id desc");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Algo extraño sucedio", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                loadConceptos(DtvConceptos, "select * from conceptos where concepto like '%" + TxtSearchConcepto.Text + "%' ");
+            }
         }
 
         private void TxtSearchConcepto_KeyPress(object sender, KeyPressEventArgs e)
@@ -111,7 +125,13 @@ namespace HostelSystem
             }
         }
 
-       
+        public bool IsNumeric(object Expression)
+        {
+            bool isNum;
+            double retNum;isNum = Double.TryParse(Convert.ToString(Expression), out retNum);
+            return isNum;
+        }
+
         private void FunctionEditConcepto(Decimal id)
         {
             BtnDeleteHuesped.Name = id.ToString();

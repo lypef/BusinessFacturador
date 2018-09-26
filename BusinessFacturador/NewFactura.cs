@@ -37,8 +37,9 @@ namespace HostelSystem
                 dtv.Columns.Add("unidad", "UNIDAD");
                 dtv.Columns.Add("cantidad", "CANTIDAD");
                 dtv.Columns.Add("concepto", "CONCEPTO");
-
                 dtv.Columns.Add("monto", "MONTO");
+                dtv.Columns.Add("cv_ps", "C. Producto");
+                dtv.Columns.Add("cv_unidad", "C. unidad");
                 dtv.Columns["monto"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader;
                 
                 dtv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -61,7 +62,12 @@ namespace HostelSystem
             
             try
             {
-                dtv.Rows.Add( id, unidad.ToUpper(), cantidad, concepto.ToUpper(), precio);
+                String[] cv_ps0 = Clave_ProductoServicio.Text.Split('-');
+                String[] cv_un0 = Clave_Unidad.Text.Split('-');
+                string cv_ProductoServicio = cv_ps0[0].ToString().Replace(" ", "");
+                string cv_Unidad = cv_un0[0].ToString().Replace(" ", "");
+                
+                dtv.Rows.Add( id, unidad.ToUpper(), cantidad, concepto.ToUpper(), precio, cv_Unidad, cv_ProductoServicio);
             }
             catch(Exception ex)
             {
@@ -176,18 +182,7 @@ namespace HostelSystem
             Thread.CurrentThread.CurrentCulture = ci;
             int cont = 0;
             List<int> ids = new List<int>();
-
-            string cv_ps = "", cv_un = "";
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => cv_ps = Clave_ProductoServicio.Text));
-                Invoke(new Action(() => cv_un = Clave_Unidad.Text));
-            }
-            String[] cv_ps0 = cv_ps.Split('-');
-            String[] cv_un0 = cv_un.Split('-');
-            cv_ps = cv_ps0[0].ToString().Replace(" ", "");
-            cv_un = cv_un0[0].ToString().Replace(" ", "");
-
+            
             foreach (DataGridViewRow item in DtvProductFact.Rows)
             {
                 if (item.Cells[0].Value != null)
@@ -205,11 +200,12 @@ namespace HostelSystem
                     }
 
                     MFObject concepto0 = new MFObject(cont.ToString());
-                    concepto0["ClaveProdServ"] = cv_un;
+
+                    concepto0["ClaveProdServ"] = item.Cells["cv_ps"].Value.ToString();
                     concepto0["NoIdentificacion"] = item.Cells["id"].Value.ToString();
                     concepto0["Cantidad"] = item.Cells["cantidad"].Value.ToString();
                     concepto0["Unidad"] = item.Cells["unidad"].Value.ToString();
-                    concepto0["ClaveUnidad"] = cv_ps;
+                    concepto0["ClaveUnidad"] = item.Cells["cv_unidad"].Value.ToString();
                     concepto0["Descripcion"] = item.Cells["concepto"].Value.ToString();
                     concepto0["ValorUnitario"] = (float.Parse(item.Cells["monto"].Value.ToString()) / 1.160000).ToString("#.##");
                     concepto0["Importe"] = ((float.Parse(item.Cells["monto"].Value.ToString()) * float.Parse(item.Cells["cantidad"].Value.ToString())) / 1.160000).ToString("#.##");
@@ -421,11 +417,18 @@ namespace HostelSystem
         {
             if (IsNumeric(TxtConceptos.Text))
             {
-                loadventas(DtvVentas, "select * from conceptos where id = '" + TxtConceptos.Text + "' order by id desc");
-                LoadReadyFactAdd(DtvProductFact, DtvVentas.SelectedRows[0].Cells[0].Value.ToString(), 1, DtvVentas.SelectedRows[0].Cells[1].Value.ToString(), DtvVentas.SelectedRows[0].Cells[3].Value.ToString(), DtvVentas.SelectedRows[0].Cells[4].Value.ToString());
-                TxtConceptos.Text = "";
-                TxtConceptos.Focus();
-                loadventas(DtvVentas, "select * from conceptos where concepto like '%" + TxtConceptos.Text + "%' order by id desc");
+                try
+                {
+                    loadventas(DtvVentas, "select * from conceptos where id = '" + TxtConceptos.Text + "' order by id desc");
+                    LoadReadyFactAdd(DtvProductFact, DtvVentas.SelectedRows[0].Cells[0].Value.ToString(), 1, DtvVentas.SelectedRows[0].Cells[1].Value.ToString(), DtvVentas.SelectedRows[0].Cells[3].Value.ToString(), DtvVentas.SelectedRows[0].Cells[4].Value.ToString());
+                    TxtConceptos.Text = "";
+                    TxtConceptos.Focus();
+                    loadventas(DtvVentas, "select * from conceptos where concepto like '%" + TxtConceptos.Text + "%' order by id desc");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Algo extraño sucedio", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {

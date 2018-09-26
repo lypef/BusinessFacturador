@@ -15,6 +15,7 @@ namespace HostelSystem
             InitializeComponent();
             this.CenterToScreen();
             LoadValues();
+            TxtSerie.Text = Properties.Settings.Default.serie;
         }
 
         private void LoadValues()
@@ -267,6 +268,8 @@ namespace HostelSystem
                 coneccion.cnn.Open();
                 coneccion.comandosql.ExecuteReader();
                 coneccion.cnn.Close();
+                Properties.Settings.Default.serie = TxtSerie.Text.ToUpper();
+                Properties.Settings.Default.Save();
                 MessageBox.Show("Configuracion actualizada.", "ACTUALIZADO",MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Dispose();
             }
@@ -275,5 +278,6 @@ namespace HostelSystem
                 MessageBox.Show(a.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
+        
     }
 }

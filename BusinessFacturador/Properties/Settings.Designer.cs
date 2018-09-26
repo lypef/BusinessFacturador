@@ -22,5 +22,17 @@ namespace HostelSystem.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("A")]
+        public string serie {
+            get {
+                return ((string)(this["serie"]));
+            }
+            set {
+                this["serie"] = value;
+            }
+        }
     }
 }

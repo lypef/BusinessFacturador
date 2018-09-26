@@ -123,7 +123,7 @@ namespace HostelSystem
             sdk.Iniciales.Add("html_a_txt", "NO");
 
             MFObject factura = new MFObject("factura");
-            factura["serie"] = "A";
+            factura["serie"] = Properties.Settings.Default.serie;
             factura["folio"] = nombre_doc;
             factura["fecha_expedicion"] = DateTime.Now.ToString("s");
 
@@ -186,7 +186,7 @@ namespace HostelSystem
             if (Convert.ToInt32(respuesta.Codigo_MF_Numero) == 0)
             {
                 GeneratePdfFactura(datos.ReturnDatos("urlsavefact", 1) + nombre_doc + ".xml", datos.ReturnDatos("urlsavefact", 1) + nombre_doc + ".pdf", datos.ReturnDatos("urllogofact", 1), ReturnDatosHuesped("mail", IdHuesped), nombre_doc, total);
-                Notificacion("Factura A" + nombre_doc + " timbrada correctamente", 1);
+                Notificacion("Factura " + Properties.Settings.Default.serie  + " " + nombre_doc + " timbrada correctamente", 1);
                 AddFactureDB(nombre_doc + ".xml", IdHuesped, "VALIDA");
             }
             else
@@ -425,11 +425,11 @@ namespace HostelSystem
 
                 if (MessageBox.Show("Cancelar factura : " + rowtmp.Cells["nombre"].Value.ToString(), "CANCELAR FACTURA PDF- " + datos.ReturnDatos("connombre", 1), MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    pictureBox1.Load(@"C:\HostelData\resources\spin.gif");
+                    pictureBox1.Load(coneccion.ReturnLocalData() + @"\resources\spin.gif");
                     pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-                    pictureBox2.Load(@"C:\HostelData\resources\spin.gif");
+                    pictureBox2.Load(coneccion.ReturnLocalData() + @"\resources\spin.gif");
                     pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
-                    pictureBox3.Load(@"C:\HostelData\resources\spin.gif");
+                    pictureBox3.Load(coneccion.ReturnLocalData() + @"\resources\spin.gif");
                     pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
                     CancellFactura(Convert.ToInt32(rowtmp.Cells["id"].Value), datos.ReturnDatos("urlsavefact", 1) + rowtmp.Cells["nombre"].Value.ToString());
                 }
@@ -793,10 +793,10 @@ namespace HostelSystem
             }
 
             //Email que quieras que aparezca de quien envia y nombre de quien aparece
-            msg.From = new MailAddress(datos.ReturnDatosMinMa("correo", 1), datos.ReturnDatos("correo", 1));
+            msg.From = new MailAddress(datos.ReturnDatosMinMa("mailr", 1).ToLower(), datos.ReturnDatos("mailr", 1).ToLower());
 
             msg.Subject = "FACTURA - " + datos.ReturnDatos("connombre", 1);
-            msg.Body = "Estimado cliente, se adjunta el xml y pdf de su factura valida ante el sat.\n\n" + datos.ReturnDatos("connombre", 1) + "\nDIRECCION: " + datos.ReturnDatos("dfcalle", 1) + "\nCORREO ELECTRONICO: " + datos.ReturnDatos("correo", 1) + "\n\n\nESTE ES UN CORREO AUTOMATICO, NO ES NECESARIO QUE LO RESPONDA\nSOFTWARE Y MAS: " + datos.ReturnDatos("web", 1);
+            msg.Body = "ESTIMADO CLIENTE, SE ADJUNTA XML Y PDF DE SU FACTURA VALIDA ANTE EL SAT, EMITIDA POR: " + datos.ReturnDatos("connombre", 1) + "\n\n\nESTE ES UN CORREO AUTOMATICO, NO ES NECESARIO QUE LO RESPONDA\n\nCLTA DESARROLLO Y DISTRIBUICION DE SOFTWARE: " + datos.ReturnDatos("web", 1);
             msg.SubjectEncoding = System.Text.Encoding.UTF8;
 
             foreach (var item in lista)
