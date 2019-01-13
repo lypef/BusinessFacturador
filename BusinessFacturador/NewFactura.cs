@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
-using MultiFacturasSDK;
+using FacturacionSDK;
 using System.Globalization;
 using System.Threading;
 

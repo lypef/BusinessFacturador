@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using MultiFacturasSDK;
+using FacturacionSDK;
 using System.IO;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Threading;
 using System.Net.Mail;
+using System.Xml;
 
 namespace HostelSystem
 {
@@ -524,38 +525,61 @@ namespace HostelSystem
             pictureBox3.Image = null;
         }
 
+        private string ReturnUUID(string xml)
+        {
+            XmlDocument xDoc = new XmlDocument();
+            xDoc.Load(xml);
+            string uuid = "";
+
+            XmlNodeList tfDigital = xDoc.GetElementsByTagName("tfd:TimbreFiscalDigital");
+            if (tfDigital.Count <= 0)
+                return "";
+
+            if (((XmlElement)tfDigital[0]).GetAttribute("UUID") != null)
+                uuid = ((XmlElement)tfDigital[0]).GetAttribute("UUID");
+
+            return uuid;
+        }
+
         public void CancellFacturaAction(object o, DoWorkEventArgs e)
         {
             sdk = new MFSDK();
-            sdk.Iniciales.Add("cfdi", rutaxml);
-            sdk.Iniciales.Add("cancelar", "SI");
             sdk.AgregaObjeto(PAC());
-            sdk.AgregaObjeto(Conf());
+            sdk.Iniciales.Add("modulo", "cancelacion2018");
+            sdk.Iniciales.Add("accion", "cancelar");
+            sdk.Iniciales.Add("produccion", "SI");
+            sdk.Iniciales.Add("uuid", ReturnUUID(rutaxml));
+            sdk.Iniciales.Add("rfc", datos.ReturnDatos("conrfc", 1));
+            sdk.Iniciales.Add("password", datos.ReturnDatosMinMa("passfact", 1));
+            sdk.Iniciales.Add("b64Cer", datos.ReturnDatos("urlcer", 1));
+            sdk.Iniciales.Add("b64Key", datos.ReturnDatos("urlkey", 1));
+            //sdk.AgregaObjeto(Conf());
             // Se timbra el CFDI
             SDKRespuesta respuesta = sdk.Timbrar(@"C:\sdk2\timbrar32.bat", @"C:\sdk2\timbrados\", "factura", false);
-            if (respuesta.Codigo_MF_Numero == "0")
+            //if (respuesta.Codigo_MF_Numero == "0")
+            //{
+            Conexion coneccion = new Conexion();
+            try
             {
-                Conexion coneccion = new Conexion();
-                try
-                {
 
-                    coneccion.cnn.Close();
+                coneccion.cnn.Close();
 
-                    coneccion.sql = "update facturas set status = 'CANCELADA' where id = '" + idfacturadb + "'";
-                    coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
-                    coneccion.cnn.Open();
-                    coneccion.comandosql.ExecuteReader();
-                    coneccion.cnn.Close();
-                }
-                catch (Exception)
-                { coneccion.cnn.Close(); }
-                //UpdateDTV();
-                Notificacion(respuesta.Codigo_MF_Texto, 1);
+                coneccion.sql = "update facturas set status = 'CANCELADA' where id = '" + idfacturadb + "'";
+                coneccion.comandosql = new SqlCommand(coneccion.sql, coneccion.cnn);
+                coneccion.cnn.Open();
+                coneccion.comandosql.ExecuteReader();
+                coneccion.cnn.Close();
             }
-            else
-            {
-                Notificacion(respuesta.Codigo_MF_Texto, 3);
-            }
+            catch (Exception)
+            { coneccion.cnn.Close(); }
+            //UpdateDTV();
+            //Notificacion(respuesta.Codigo_MF_Texto, 1);
+            Notificacion("Orden de cancelacion enviada", 1);
+            //} 
+            //else
+            //{
+            //  Notificacion("Error !", 3);
+            //}
         }
         private void enviarPorCorreoToolStripMenuItem1_Click(object sender, EventArgs e)
         {

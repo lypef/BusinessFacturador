@@ -36,9 +36,7 @@ C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFa
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Release\BusinessFacturador.pdb
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Release\IlogicSoftwares.dll
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Release\Microsoft.SqlServer.Types.dll
-C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Release\MultiFacturasSDK.dll
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Release\MySql.Data.dll
-C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Release\Catalogo.dll
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Release\HostelSystem.clientes.resources
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Release\HostelSystem.conceptos.resources
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Release\HostelSystem.Configuracion.resources
@@ -53,4 +51,4 @@ C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFa
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Release\BusinessFacturador.application
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Release\BusinessFacturador.exe
 C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Release\BusinessFacturador.pdb
-C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\obj\Release\BusinessFacturador.csprojResolveAssemblyReference.cache
+C:\Users\ISC\Documents\Visual Studio 2015\Projects\BusinessFacturador\BusinessFacturador\bin\Release\FacturacionSDK.dll
