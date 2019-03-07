@@ -141,7 +141,7 @@ namespace HostelSystem
             factura["LugarExpedicion"] = datos.ReturnDatos("lexpedicion", 1);
             factura["RegimenFiscal"] = datos.ReturnDatos("regimenfiscal", 1); ;
             factura["subtotal"] = (float.Parse(total) - iva).ToString("#.##");// Total / 1.16
-            factura["descuento"] = "0.00";
+            factura["descuento"] = "";
             factura["total"] = total;//Total con iva
 
             MFObject emisor = new MFObject("emisor");
